@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <div class="banner w-50">
+    	<img alt="banner pic" src="/img/horse-banner.jpg" width="900">
+    </div>
+    <div class="w-50 ">
+	    <div class="mb-4 text-center">
+	    	<h2>LOGO</h2>
+	    </div>
+	    <div class="mb-2 text-center">
+	    	<h3>HorsePower</h3>
+	    </div>
+	    <div class="d-flex justify-content-center">
+		    <div class="toggle my-2">
+	            <input type="checkbox" id="toggle-checkbox" aria-checked="false">
+	            <label id="toggle-label" data-translation="toggle.accessibility.label" data-locator-id="loginRegister-tab-select" for="toggle-checkbox">Toggle to sign up or login. Ticked is sign up, not ticked is log in.</label>
+	           	<div class="text-container" role="presentation">
+	              	<span id="login-text" data-translation="tab.login.title" style="width: 52px;" class="">Log in</span>
+	              	<span id="signup-text" data-translation="tab.signup.title" class="inactive-text">Sign up</span>
+	            </div>
+	            <span class="slider" role="presentation" id="slider" style="width: 124px; opacity: 1;"></span>
+	          </div>
+        </div>
+        <div class="d-flex justify-content-center aligin-items-center">
+		    <div class="signInBox d-none">
+		    	<div class="w-100">
+		    		<span class="font-weight-bold">Email Address</span>
+		    		<input type="text" class="form-control" id="loginEmail" name="loginEmail"
+					placeholder="Enter email address">
+					<span class="font-weight-bold">Password</span>
+		    		<input type="password" class="form-control" id="loginPassword" name="loginPassword"
+					placeholder="Enter password">
+					<div class="text-center  my-4">
+						<a class="font-weight-bold" href="">Forgot Password?</a>
+					</div>
+					<div class="d-flex justify-content-center m-3">
+						<button type="submit" id="signInBtn" class="btn btn-dark col-12">LOG IN</button>
+					</div>
+		    	</div>
+		    </div>
+		    <div class="signUpBox">
+		    	<div class="w-100">
+		    		<span class="font-weight-bold">First Name</span>
+		    		<input type="text" class="form-control mb-3" id="firstName" name="firstName"
+					placeholder="Enter first name">
+		    		<span class="font-weight-bold">Last Name</span>
+		    		<input type="text" class="form-control mb-3" id="lastName" name="lastName"
+					placeholder="Enter last name">
+		    		<span class="font-weight-bold">Date of Birth</span>
+		    		<input type="text" class="form-control mb-3" id="dob" name="dob"
+					placeholder="Select Date">
+		    		<span class="font-weight-bold">Email Address</span>
+		    		<input type="text" class="form-control mb-3" id="email" name="email"
+					placeholder="Enter last name">
+					<span class="font-weight-bold">Password</span>
+		    		<input type="password" class="form-control" id="password" name="password"
+					placeholder="Enter password">
+					<div class="my-4">
+						<input type="checkbox"><span class="ml-2">Tick here to receive our exclusive offers.</span> 
+					</div>
+					<div class="d-flex justify-content-center m-3">
+						<button type="submit" id="signUpBtn" class="btn btn-dark col-12">SIGN UP</button>
+					</div>
+		    	</div>
+		    </div>
+	    </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+    	$(document).ready(function() {
+    		// alert("준비");
+    		$("#signUpBtn").on('click', function(e) {
+    			e.preventDefault;
+    			alert("sign up");
+    		});
+    	});
+    </script>
+</th:block>
