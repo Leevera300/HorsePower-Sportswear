@@ -18,13 +18,6 @@ header {
 
 .signUpBox {width: 375px;}
 
-
-#fields-container {
-        transition: height 700ms;
-        /* hide all fields until js loads in */
-        display: none;
-        overflow: visible;}
-
 .toggle {
         position: relative;
         display: inline-block;

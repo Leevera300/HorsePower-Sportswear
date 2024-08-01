@@ -22,7 +22,16 @@ public class UserBO {
 				.dob(dob)
 				.email(email)
 				.password(password)
+				.authority("user")
 				.build());
+	}
+	
+	public UserEntity getUserEntityByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
+	public UserEntity getUserEntityByEmailAndPassword(String email, String password) {
+		return userRepository.findByEmailAndPassword(email, password);
 	}
 	
 }

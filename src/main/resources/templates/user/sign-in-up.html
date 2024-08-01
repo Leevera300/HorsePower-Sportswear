@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/defaultLayout}">
+      layout:decorate="~{layout/defaultLayout}"
+      style="--slider-left: 0;">
 <div layout:fragment="content" class="content d-flex justify-content-center">
     <div class="banner w-50">
-    	<img alt="banner pic" src="/img/horse-banner.jpg" width="900">
+    	<img class="w-100 h-100" alt="banner pic" src="/img/horse-banner.jpg">
     </div>
     <div class="w-50 ">
 	    <div class="mb-4 text-center">
@@ -25,7 +27,7 @@
 	          </div>
         </div>
         <div class="d-flex justify-content-center aligin-items-center">
-		    <div class="signInBox d-none">
+		    <div class="signInBox">
 		    	<div class="w-100">
 		    		<span class="font-weight-bold">Email Address</span>
 		    		<input type="text" class="form-control" id="loginEmail" name="loginEmail"
@@ -41,7 +43,7 @@
 					</div>
 		    	</div>
 		    </div>
-		    <div class="signUpBox">
+		    <div class="signUpBox d-none">
 		    	<div class="w-100">
 		    		<span class="font-weight-bold">First Name</span>
 		    		<input type="text" class="form-control mb-3" id="firstName" name="firstName"
@@ -53,14 +55,19 @@
 		    		<input type="text" class="form-control mb-3" id="dob" name="dob"
 					placeholder="Select Date">
 		    		<span class="font-weight-bold">Email Address</span>
-		    		<input type="text" class="form-control mb-3" id="email" name="email"
-					placeholder="Enter last name">
+		    		<div class="d-flex justify-content-center aligin-items-center  mb-3">
+		    			<input type="text" class="form-control" id="email" name="email"
+						placeholder="Enter email address">
+						<button type="button" id="loginemailCheckBtn" class="btn btn-success">check</button>
+					</div>
+					<div class="ml-3">
+						<div id="emailCheck" class="small text-danger d-none">Enter an email address.</div>
+						<div id="emailCheckDuplicated" class="small text-danger d-none">Email is already in use.</div>
+						<div id="emailCheckOk" class="small text-success d-none">Email is good for sign up.</div>
+					</div>
 					<span class="font-weight-bold">Password</span>
 		    		<input type="password" class="form-control" id="password" name="password"
 					placeholder="Enter password">
-					<div class="my-4">
-						<input type="checkbox"><span class="ml-2">Tick here to receive our exclusive offers.</span> 
-					</div>
 					<div class="d-flex justify-content-center m-3">
 						<button type="submit" id="signUpBtn" class="btn btn-dark col-12">SIGN UP</button>
 					</div>
@@ -74,9 +81,143 @@
     <script>
     	$(document).ready(function() {
     		// alert("준비");
+    		$("#loginemailCheckBtn").on('click', function() {
+    			// alert("check");
+    			let email = $("#email").val().trim();
+    			// alert(email);
+    			$("#email").on('change', function() {
+					$("#emailCheck").addClass("d-none");
+					$("#emailCheckDuplicated").addClass("d-none");
+					$("#emailCheckOk").addClass("d-none");
+				});
+    			if (!email) {
+    				$("#emailCheck").removeClass("d-none");
+    			}
+    			
+    			$.ajax({
+    				type:"POST"
+    				, url:"/horsepower/user/is-duplicated-email"
+    				, data:{"email":email}
+    			
+    				, success:function(data) {
+    					if (data.is_duplicated_email) { // 중복
+							$("#emailCheckDuplicated").removeClass("d-none");
+						} else { // 사용가능
+							$("#emailCheckOk").removeClass("d-none");
+						}
+    				}
+    				
+    				, error:function(e) {
+    					alert("An error has occured while checking your email.")
+    				}
+    			});
+    		});
+    		
     		$("#signUpBtn").on('click', function(e) {
     			e.preventDefault;
-    			alert("sign up");
+    			// alert("sign up");
+    			let firstName = $("#firstName").val().trim();
+    			
+    			if (!firstName) {
+    				alert("Enter your first name.")
+    				return false;
+    			}
+    			
+    			let lastName = $("#lastName").val().trim();
+    			
+    			if (!lastName) {
+    				alert("Enter your last name.")
+    				return false; 
+    			}
+    			
+    			let dob = $("#dob").val().trim();
+    			
+    			if (!dob) {
+    				alert("Enter your date of birth.")
+    				return false;
+    			}
+    			
+    			let email = $("#email").val().trim();
+    			
+    			if (!email) {
+    				alert("Enter your email address.")
+    				return false;
+    			}
+    			
+    			let password = $("#password").val();
+    			
+    			if (!password) {
+    				alert("Enter your password.")
+    				return false;
+    			}
+    			
+    			// alert(password);
+    			
+    			if ($("#emailCheckOk").hasClass("d-none")) {
+					alert("Please check if your email address is available.");
+					return false;
+				}
+    			
+    			$.ajax({
+    				type:"POST"
+    				, url:"/horsepower/user/sign-up"
+    				, data:{"firstName": firstName,
+    					"lastName": lastName,
+    					"dob": dob,
+    					"email": email,
+    					"password": password}
+    			
+    				, success:function(data) {
+    					if (data.code == 200) {
+    						alert("Welcome to the family!")
+    						return;
+    					} else {
+    						alert(data.error_message);
+    						return;
+    					}
+    				}
+    				
+    				, error:function(e) {
+    					alert("Error has occured while signing you up. \n Please try again.")
+    				}
+    			});
+    		});
+    		
+    		$("#signInBtn").on('click', function(e) {
+    			e.preventDefault();
+    			// alert("sign in");
+    			let email = $("#loginEmail").val().trim();
+    			let password = $("#loginPassword").val();
+    			// alert(password);
+    			if (!email) {
+    				alert("Enter your email address.");
+    				return false;
+    			}
+    			if (!password) {
+    				alert("Enter your password.");
+    				return false;
+    			}
+    			
+    			$.ajax({
+    				type:"POST"
+    				, url:"/horsepower/user/sign-in"
+    				, data:{"email":email,
+    					"password":password}
+    			
+    				, success:function(data) {
+    					if (data.code == 200) {
+    						alert("Welcome back!")
+							return;
+   	 					} else {
+    					alert(data.error_message);
+    					return;
+    					}
+    				}
+    				
+    				, error:function(e) {
+    					alert("Error has occured while signing you in.")
+    				}
+    			});
     		});
     	});
     </script>
