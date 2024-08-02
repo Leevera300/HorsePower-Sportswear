@@ -17,79 +17,11 @@ header {
 .signInBox {width: 375px;}
 
 .signUpBox {width: 375px;}
-
-.toggle {
-        position: relative;
-        display: inline-block;
-        height: 44px;
-        border-radius: 100px;
-        padding: 0 4px;
-        margin-bottom: 24px;
-        color: transparent;
-        font-size: 0;
-        background-color: #e7e7e7;}
-
-.toggle input {
-        appearance: none;
-        -webkit-appearance: none;
-        position: absolute;}
-
-.toggle input:focus-visible {
-        ~ .slider {
-          outline: 4px auto blue;
-          outline: 4px auto -webkit-focus-ring-color;}
-      }
-
-.toggle input:active {
-        outline: none;}
-
-.slider {
-        position: absolute;
-        top: 0;
-        left: var(--slider-left);
-        height: 44px;
-        border-radius: 100px;
-        background-color: #fff;
-        z-index: 2;
-        transition: all 0.25s ease-in-out;
-        border: 4px solid #e7e7e7;
-        opacity: 0;}
-
-#toggle-label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 44px;
-        z-index: 1;
-        cursor: pointer;}
-#toggle-label:hover + div {
-        .inactive-text {
-          color: #000;}
-      }
-
-
-.text-container {
-        z-index: 3;
-        width: 100%;
-        height: 44px;
-        position: relative;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-grow: 0;
-        color: #000;
-        text-transform: uppercase;
-        font-family: Montserrat;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 17px;
-        pointer-events: none;
-        padding: 0 32px;
-        gap: 68px;
-        text-align: center;}
+        
+.product_titles {width: 100%;
+		background-color:LightGray;}
+		
+.addProductDetail {height: 200px;}
 
 footer {padding-top: 6.751rem;}
 		

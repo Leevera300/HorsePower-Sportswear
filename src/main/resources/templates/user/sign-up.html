@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayout}"
-      style="--slider-left: 0;">
+      style="--slider-right: 0;">
 <div layout:fragment="content" class="content d-flex justify-content-center">
     <div class="banner w-50">
     	<img class="w-100 h-100" alt="banner pic" src="/img/horse-banner.jpg">
@@ -15,35 +15,12 @@
 	    <div class="mb-2 text-center">
 	    	<h3>HorsePower</h3>
 	    </div>
-	    <div class="d-flex justify-content-center">
-		    <div class="toggle my-2">
-	            <input type="checkbox" id="toggle-checkbox" aria-checked="false">
-	            <label id="toggle-label" data-translation="toggle.accessibility.label" data-locator-id="loginRegister-tab-select" for="toggle-checkbox">Toggle to sign up or login. Ticked is sign up, not ticked is log in.</label>
-	           	<div class="text-container" role="presentation">
-	              	<span id="login-text" data-translation="tab.login.title" style="width: 52px;" class="">Log in</span>
-	              	<span id="signup-text" data-translation="tab.signup.title" class="inactive-text">Sign up</span>
-	            </div>
-	            <span class="slider" role="presentation" id="slider" style="width: 124px; opacity: 1;"></span>
-	          </div>
+	    <div class="d-flex justify-content-center my-3">
+		    <a href="/horsepower/user/sign-in"><button class="btn btn-secondary mr-3">Log In</button></a>
+		    <a href="/horsepower/user/sign-up"><button class="btn btn-secondary ml-3">Sign Up</button></a>
         </div>
         <div class="d-flex justify-content-center aligin-items-center">
-		    <div class="signInBox">
-		    	<div class="w-100">
-		    		<span class="font-weight-bold">Email Address</span>
-		    		<input type="text" class="form-control" id="loginEmail" name="loginEmail"
-					placeholder="Enter email address">
-					<span class="font-weight-bold">Password</span>
-		    		<input type="password" class="form-control" id="loginPassword" name="loginPassword"
-					placeholder="Enter password">
-					<div class="text-center  my-4">
-						<a class="font-weight-bold" href="">Forgot Password?</a>
-					</div>
-					<div class="d-flex justify-content-center m-3">
-						<button type="submit" id="signInBtn" class="btn btn-dark col-12">LOG IN</button>
-					</div>
-		    	</div>
-		    </div>
-		    <div class="signUpBox d-none">
+		    <div class="signUpBox">
 		    	<div class="w-100">
 		    		<span class="font-weight-bold">First Name</span>
 		    		<input type="text" class="form-control mb-3" id="firstName" name="firstName"
@@ -70,6 +47,9 @@
 					placeholder="Enter password">
 					<div class="d-flex justify-content-center m-3">
 						<button type="submit" id="signUpBtn" class="btn btn-dark col-12">SIGN UP</button>
+					</div>
+					<div class="d-flex justify-content-center">
+						<div class="g-signin2" data-onsuccess="onSignIn">Sign Up</div>
 					</div>
 		    	</div>
 		    </div>
@@ -183,42 +163,19 @@
     			});
     		});
     		
-    		$("#signInBtn").on('click', function(e) {
-    			e.preventDefault();
-    			// alert("sign in");
-    			let email = $("#loginEmail").val().trim();
-    			let password = $("#loginPassword").val();
-    			// alert(password);
-    			if (!email) {
-    				alert("Enter your email address.");
-    				return false;
+    		function onSignIn(googleUser) {
+    			  var profile = googleUser.getBasicProfile();
+    			  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    			  console.log('Name: ' + profile.getName());
+    			  console.log('Image URL: ' + profile.getImageUrl());
+    			  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     			}
-    			if (!password) {
-    				alert("Enter your password.");
-    				return false;
-    			}
-    			
-    			$.ajax({
-    				type:"POST"
-    				, url:"/horsepower/user/sign-in"
-    				, data:{"email":email,
-    					"password":password}
-    			
-    				, success:function(data) {
-    					if (data.code == 200) {
-    						alert("Welcome back!")
-							return;
-   	 					} else {
-    					alert(data.error_message);
-    					return;
-    					}
-    				}
-    				
-    				, error:function(e) {
-    					alert("Error has occured while signing you in.")
-    				}
-    			});
-    		});
+    		
+    		if (checkbox.checked) {
+                fieldsContainer.classList.remove("fields-container--login-active");
+              } else {
+                fieldsContainer.classList.remove("fields-container--signup-active");
+              }
     	});
     </script>
 </th:block>

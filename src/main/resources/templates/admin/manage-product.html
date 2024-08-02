@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayoutAdmin}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <table class="table">
+    	<thead>
+    		<tr>
+    			<th>Product ID</th>
+    			<th>Product Name</th>
+    			<th>Category</th>
+    			<th>Created At</th>
+    			<th>Delete User</th>
+    			<th>Edit User</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<tr>
+    			<td>1</td>
+    			<td>abcde</td>
+    			<td>MEN'S</td>
+    			<td>1234123</td>
+    			<td><a href=""><button class="btn btn-danger">DELETE</button></a></td>
+    			<td><a href=""><button class="btn btn-warning">EDIT</button></a></td>
+    		</tr>
+    	</tbody>
+    </table>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+    </script>
+</th:block>

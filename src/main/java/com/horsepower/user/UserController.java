@@ -10,9 +10,14 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 
-	@GetMapping("/sign-in-up")
-	public String signInUp() {
-		return "user/sign-in-up";
+	@GetMapping("/sign-in")
+	public String signIn() {
+		return "user/sign-in";
+	}
+	
+	@GetMapping("/sign-up")
+	public String signUp() {
+		return "user/sign-up";
 	}
 	
 	@RequestMapping("/sign-out")
@@ -20,7 +25,8 @@ public class UserController {
 		session.removeAttribute("userId");
 		session.removeAttribute("userEmail");
 		session.removeAttribute("userFirstName");
+		session.removeAttribute("userAuthority");
 		
-		return "redirect:/horsepower/user/sign-in-up";
+		return "redirect:/horsepower/user/sign-in";
 	}
 }

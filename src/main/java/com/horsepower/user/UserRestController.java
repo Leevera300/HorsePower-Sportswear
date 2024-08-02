@@ -83,6 +83,7 @@ public class UserRestController {
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userEmail", user.getEmail());
 			session.setAttribute("userFirstName", user.getFirstName());
+			session.setAttribute("userAuthority", user.getAuthority());
 				
 			result.put("code", 200);
 			result.put("result", "success");
