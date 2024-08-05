@@ -22,18 +22,36 @@
     			<div>Product Description</div>
     			<textarea rows=5 cols=100></textarea>
     		</div>
-    		<div class="my-2">
-    			<input type="file" id="imgFile" accept=".jpg, .png, .gif" class="d-none">
-    			<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
-    			width=25>
-    			
-    			<div id="fileName" class="ml-2"></div>
-    			
-    			<input type="button" id="addFile" class="d-none">
-    			<img src="/img/plus-sign.jpg" alt="imgFile"
-    			width=25>
+    		<div>
+	    		<div class="firstImg my-2">
+	    			<input type="file" id="imgFile1" accept=".jpg, .png, .gif" class="d-none">
+	    			<a href="" id="imgUploadBtn1"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
+	    			width=25></a>
+	    			
+	    			<div id="fileName1" class="ml-2"></div>
+	    			
+	    			<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile"
+	    			width=25></a>
+	    		</div>
+	    		<div class="my-2 d-none" id="secondImg">
+	    			<input type="file" id="imgFile2" accept=".jpg, .png, .gif" class="d-none">
+	    			<a href="" id="imgUploadBtn2"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
+	    			width=25></a>
+	    			
+	    			<div id="fileName2" class="ml-2"></div>
+	    			
+	    			<a href="" id="imgAddBtn2"><img src="/img/plus-sign.jpg" alt="imgFile"
+	    			width=25></a>
+	    		</div>
+	    		<div class="my-2 d-none" id="thirdImg">
+	    			<input type="file" id="imgFile3" accept=".jpg, .png, .gif" class="d-none">
+	    			<a href="" id="imgUploadBtn"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
+	    			width=25></a>
+	    			
+	    			<div id="fileName3" class="ml-2"></div>
+	    		</div>
     		</div>
-    		<div class="productDetail d-flex justify-cotent-center my-5">
+    		<div class="productDetail d-flex my-5">
     			<div>
     				<div>
     					<div>Color</div>
@@ -70,5 +88,45 @@
 
 <th:block layout:fragment="script">
     <script>
+    $(document).ready(function() {
+    	$("#imgUploadBtn1").on('click', function(e) {
+    		e.preventDefault();
+    		$("#imgFile1").click();
+    	});
+    	
+    	$("#imgFile1").on('change', function(e) {
+    		//alert("hi");
+    		//return;
+    		let file1 = e.target.files[0];
+			if (file1 == null) {
+				$("#imgFile1").val("");
+				$("#fileName1").text("");
+				return;
+			}
+			
+			let fileName1 = e.target.files[0].name;
+			console.log(fileName1);
+			
+			let ext = fileName1.split(".").pop().toLowerCase();
+			console.log(ext);
+			
+			if (ext != "gif" && ext != "png" && ext != "jpg") {
+				alert("이미지 파일만 업로드 할수 있습니다. (.gif, .png, .jpg)");
+				$("#imgFile1").val(""); 
+				$("#fileName1").text(""); 
+				return;
+			}
+			
+			$("#fileName1").text(fileName1);
+    	});
+    	
+    	$("#imgAddBtn1").on('click', function(e) {
+    		e.preventDefault;
+    		let fileName1 = $("#fileName1").val();
+    		
+	    	$("#secondImg").removeClass("d-none");
+	    	
+    	});
+    });
     </script>
 </th:block>

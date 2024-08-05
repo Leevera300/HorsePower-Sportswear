@@ -3,28 +3,30 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayoutAdmin}">
 <div layout:fragment="content" class="content d-flex justify-content-center">
-    <table class="table">
-    	<thead>
-    		<tr>
-    			<th>Order #</th>
-    			<th>User Email</th>
-    			<th>Order Status</th>
-    			<th>Ordered Date</th>
-    			<th>Delete Order</th>
-    			<th>Edit Order</th>
-    		</tr>
-    	</thead>
-    	<tbody>
-    		<tr>
-    			<td>1</td>
-    			<td>aaaa</td>
-    			<td>preparing</td>
-    			<td>1234</td>
-    			<td><a href=""><button class="btn btn-danger">DELETE</button></a></td>
-    			<td><a href=""><button class="btn btn-warning">EDIT</button></a></td>
-    		</tr>
-    	</tbody>
-    </table>
+    <div>
+	    <table class="table">
+	    	<thead>
+	    		<tr>
+	    			<th>Order #</th>
+	    			<th>User Email</th>
+	    			<th>Order Status</th>
+	    			<th>Ordered Date</th>
+	    			<th>Delete Order</th>
+	    			<th>Edit Order</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr>
+	    			<td>1</td>
+	    			<td>aaaa</td>
+	    			<td>preparing</td>
+	    			<td>1234</td>
+	    			<td><a href=""><button class="btn btn-danger">DELETE</button></a></td>
+	    			<td><a href=""><button class="btn btn-warning">EDIT</button></a></td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+    </div>
 </div>
 
 <th:block layout:fragment="script">

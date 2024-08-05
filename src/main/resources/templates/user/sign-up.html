@@ -60,6 +60,12 @@
 <th:block layout:fragment="script">
     <script>
     	$(document).ready(function() {
+    		$.datepicker.setDefaults({
+                dateFormat: 'yy-mm-dd'
+            });
+    	$('#dob').datepicker({
+            showButtonPanel: true
+    	});
     		// alert("준비");
     		$("#loginemailCheckBtn").on('click', function() {
     			// alert("check");

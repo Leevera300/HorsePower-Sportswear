@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayoutAdmin}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <div>
+	    <table class="table">
+	    	<thead>
+	    		<tr>
+	    			<th>User ID</th>
+	    			<th>First Name</th>
+	    			<th>Last Name</th>
+	    			<th>Date of Birth</th>
+	    			<th>User Email</th>
+	    			<th>User Authority</th>
+	    			<th>Created At</th>
+	    			<th>Save</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr>
+	    			<td id="userId" th:text="${user.Id}">1</td>
+	    			<td><input type="text" id="firstName" th:value="${user.firstName}"></td>
+	    			<td><input type="text" id="lastName" th:value="${user.lastName}"></td>
+	    			<td><input type="text" id="dob" th:value="${user.dob}"></td>
+	    			<td><input type="text" id="email" th:value="${user.email}"></td>
+	    			<td>
+	    				<select id="authority" class="form-control">
+	            			<option value="user">user</option>
+	            			<option value="Admin">Admin</option>
+	        			</select></td>
+	    			<td th:text="${user.createdAt}">0000</td>
+	    			<td><a href=""><button class="saveBtn btn btn-warning" th:data-user-id=${user.id}>SAVE</button></a></td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+    </div>
+</div>
+
+
+<th:block layout:fragment="script">
+    <script>
+    	$(document).ready(function() {
+        	$.datepicker.setDefaults({
+            	dateFormat: 'yy-mm-dd'
+                });
+        	$('#dob').datepicker({
+                showButtonPanel: true
+        	});
+        	
+    		$(".saveBtn").on('click', function(e) {
+    			e.preventDefault;
+    			// alert("save");
+    			let userId = $(this).data("user-id");
+    			//alert(userId);
+    			//return;
+    			
+    			let firstName = $("#firstName").val().trim();
+    			if (!firstName) {
+    				alert("Please input user's first name.");
+    				return;
+    			}
+    			
+    			let lastName = $("#lastName").val().trim();
+    			if (!lastName) {
+    				alert("Please input user's last name.");
+    				return;
+    			}
+    			
+    			let dob = $("#dob").val();
+    			if (!dob) {
+    				alert("Please input user's Date of Birth.");
+    				return;
+    			}
+    			
+    			let email = $("#email").val().trim();
+    			if (!email) {
+    				alert("Please input user's email address.");
+    				return;
+    			}
+    			
+    			let authority = $("#authority").val();
+				// alert(authority);
+				
+				$.ajax({
+					type:"PUT"
+					, url:"/horsepower/admin/manage-user-update"
+					, data:{"userId":userId,
+						"firstName":firstName,
+						"lastName":lastName,
+						"dob":dob,
+						"email":email,
+						"authority":authority}
+				
+					, success:function(data) {
+						if (data.code == 200) {
+							alert("User's information has been updated.");
+							location.href = "/horsepower/admin/manage-user";
+						} else {
+							alert(code.error_message);
+						}
+					}
+					
+					, error:function(e) {
+						alert("Failed to update user's information.");
+					}
+				});
+    		});
+    	});
+    </script>
+</th:block>

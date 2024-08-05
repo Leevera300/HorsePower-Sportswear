@@ -3,31 +3,59 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayoutAdmin}">
 <div layout:fragment="content" class="content d-flex justify-content-center">
-    <table class="table">
-    	<thead>
-    		<tr>
-    			<th>User ID</th>
-    			<th>User Email</th>
-    			<th>User Authority</th>
-    			<th>Created At</th>
-    			<th>Delete User</th>
-    			<th>Edit User</th>
-    		</tr>
-    	</thead>
-    	<tbody>
-    		<tr>
-    			<td>1</td>
-    			<td>aaaa</td>
-    			<td>user</td>
-    			<td>1234</td>
-    			<td><a href=""><button class="btn btn-danger">DELETE</button></a></td>
-    			<td><a href=""><button class="btn btn-warning">EDIT</button></a></td>
-    		</tr>
-    	</tbody>
-    </table>
+    <div>
+	    <table class="table">
+	    	<thead>
+	    		<tr>
+	    			<th>User ID</th>
+	    			<th>User Email</th>
+	    			<th>User Authority</th>
+	    			<th>Created At</th>
+	    			<th>Delete User</th>
+	    			<th>Edit User</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr class="userInfo" th:each="user : ${usersList}">
+	    			<td th:text="${user.id}">1</td>
+	    			<td th:text="${user.email}">aaaa</td>
+	    			<td th:text="${user.authority}">user</td>
+	    			<td th:text="${user.createdAt}">1234</td>
+	    			<td><a href=""><button class="deleteBtn btn btn-danger" th:data-user-id=${user.id}>DELETE</button></a></td>
+	    			<td><a th:href="|/horsepower/admin/manage-user-edit?userId=${user.id}|"><button class="editBtn btn btn-warning" th:data-user-id=${user.id}>EDIT</button></a></td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+    </div>
 </div>
 
 <th:block layout:fragment="script">
     <script>
+    $(document).ready(function() {
+    	$(".deleteBtn").on('click', function(e) {
+    		e.preventDefault();
+    		let userId = $(this).data("user-id");
+    		// alert(userId);
+    		
+    		$.ajax({
+    			type:"DELETE"
+    			, url:"/horsepower/admin/manage-user-delete"
+    			, data:{"userId": userId}
+    		
+    			, success:function(data) {
+    				if (data.code == 200) {
+    					alert("User has been deleted.");
+    					location.reload(true);
+    				}
+    			}
+    			
+    			, error:function(e) {
+    				alert("Failed to delete user.");
+    			}
+    		});
+    		
+    	});
+    	
+    });
     </script>
 </th:block>
