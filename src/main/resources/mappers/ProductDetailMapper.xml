@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.horsepower.product.mapper.ProductDetailMapper">
+ 	<insert id="insertProdcutDetail" parameterType="map">
+ 		INSERT INTO
+ 			`product_detial`
+ 		(
+ 			`productId`
+			, `color`
+			, `size`
+			, `quantity`
+			, `sale`
+			, `price`
+			, `createdAt`
+			, `updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{productId}
+ 			, #{color}
+ 			, #{size}
+ 			, #{quantity}
+ 			, #{sale}
+ 			, #{price}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ </mapper>

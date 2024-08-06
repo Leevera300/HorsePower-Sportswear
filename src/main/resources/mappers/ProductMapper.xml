@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.horsepower.product.mapper.ProductMapper">
+ 	<insert id="insertProdcut" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+ 		INSERT INTO
+ 			`product`
+ 		(
+ 			`name`
+			, `description`
+			, `category`
+			, `createdAt`
+			, `updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{productName}
+ 			, #{productDesc}
+ 			, #{category}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ 	
+ 	<select id="getProductByProdcutName" parameterType="String" resultType="com.horsepower.product.domain.Product">
+ 		SELECT
+ 			`id`
+			, `name`
+			, `description`
+			, `category`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product`
+		WHERE
+			`name` = #{productName}
+ 	</select>
+ </mapper>

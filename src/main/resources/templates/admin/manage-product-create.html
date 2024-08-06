@@ -20,7 +20,7 @@
     		</div>
     		<div>
     			<div>Product Description</div>
-    			<textarea rows=5 cols=100></textarea>
+    			<textarea rows=5 cols=100 id="productDesc"></textarea>
     		</div>
     		<div>
 	    		<div class="firstImg my-2">
@@ -31,7 +31,7 @@
 	    			<div id="fileName1" class="ml-2"></div>
 	    			
 	    			<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile"
-	    			width=25></a>
+	    			width=25 class="mt-5"></a>
 	    		</div>
 	    		<div class="my-2 d-none" id="secondImg">
 	    			<input type="file" id="imgFile2" accept=".jpg, .png, .gif" class="d-none">
@@ -56,24 +56,33 @@
     				<div>
     					<div>Color</div>
     					<select id="color" class="form-control">
-            				<option>--select size--</option>
+            				<option>--select color--</option>
             				<option value="Blue">Blue</option>
             				<option value="Red">Red</option>
             				<option value="Yellow">Yellow</option>
+            				<option value="White">White</option>
         				</select>
     				</div>
     				<div>
     					<div>Size</div>
     					<select id="size" class="form-control">
             				<option>--select size--</option>
-            				<option value="small">Small</option>
-            				<option value="medium">Medium</option>
-            				<option value="large">Large</option>
+            				<option value="S">Small</option>
+            				<option value="M">Medium</option>
+            				<option value="L">Large</option>
         				</select>
     				</div>
     				<div>
     					<div>Quantity</div>
-    					<input type="text" id="quantity" class="form-control" name="quantity">
+    					<input type="text" id="quantity" class="form-control col-4" name="quantity">
+    				</div>
+    				<div>
+    					<div>Price</div>
+    					<input type="text" id="price" class="form-control col-4" name="price">
+    				</div>
+    				<div>
+    					<div>Sale</div>
+    					<input type="text" id="sale" class="form-control col-4" name="sale">
     				</div>
     			</div>
     			<div class="addProductDetail d-flex align-items-center mx-5">
@@ -82,6 +91,9 @@
     				width=25>
     			</div>
     		</div>
+    		<div class="d-flex justify-content-end">
+				<button class="addBtn btn btn-success">ADD</button>
+			</div>
     	</div>
     </div>
 </div>
@@ -120,12 +132,116 @@
 			$("#fileName1").text(fileName1);
     	});
     	
-    	$("#imgAddBtn1").on('click', function(e) {
-    		e.preventDefault;
-    		let fileName1 = $("#fileName1").val();
+    	//$("#imgAddBtn1").on('click', function(e) {
+    		//e.preventDefault;
+    		//let fileName1 = $("#fileName1").val();
     		
-	    	$("#secondImg").removeClass("d-none");
+	    	//$("#secondImg").removeClass("d-none");
 	    	
+    	//});
+    	
+    	$(".addBtn").on('click', function() {
+    		//alert("add");
+    		
+    		let productName = $("#productName").val().trim();
+    		if (!productName) {
+    			alert("Please input product name.");
+    			return;
+    		}
+    		
+    		let category = $("#category").val();
+    		if (category == "--select category--") {
+    			alert("Please input category.");
+    			return;
+    		}
+    		
+    		let productDesc = $("#productDesc").val();
+    		if (!productDesc) {
+    			alert("Please input product description.");
+    			return;
+    		}
+    		
+    		let fileName1 = $("#imgFile1").val();
+    		if (!fileName1) {
+    			alert("Please input image File.");
+    			return;
+    		}
+    		
+    		if (fileName1) {
+				let ext = fileName1.split(".").pop().toLowerCase();
+				//console.log(ext);
+				
+				if($.inArray(ext, ["jpg", "gif", "png"]) == -1) {
+					alert("Upload image files only. (.jpg, .gif, .png)");
+					$("#imgFile1").val(""); // 파일 초기화
+					return;
+				}
+			}
+    		
+    		let color = $("#color").val();
+    		if (color == "--select color--") {
+    			alert("Please input color.");
+    			return;
+    		}
+    		
+    		let size = $("#size").val();
+    		if (size == "--select size--") {
+    			alert("Please input size.");
+    			return;
+    		}
+    		
+    		let quantity = $("#quantity").val().trim();
+    		if (quantity == "--select quantity--") {
+    			alert("Please input quantity.");
+    			return;
+    		}
+    		
+    		let price = $("#price").val().trim();
+    		if (!price) {
+    			alert("Please input product price.");
+    			return;
+    		}
+    		
+    		let sale = $("#sale").val().trim();
+    		
+    		//alert(quantity);
+    		//return;
+    		
+    		let formData = new FormData();
+				formData.append("productName", productName); 
+				formData.append("category", category); 
+				formData.append("productDesc", productDesc); 
+				formData.append("imgFile1", $("#imgFile1")[0].files[0]);
+				formData.append("color", color); 
+				formData.append("size", size); 
+				formData.append("quantity", quantity);
+				formData.append("price", price);
+				formData.append("sale", sale);
+    		
+    		$.ajax({
+    			type:"POST"
+				, url:"/horsepower/admin/product-manage-add"
+				, data:formData
+				, enctype:"multipart/form-data" 
+				, processData:false
+				, contentType:false
+				
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("Product has been successfully added.");
+						location.href = "/horsepower/admin/manage-product"
+					} else if (data.code == 403) {
+						alert(data.error_message);
+						location.href = "/horsepower/product/product-list";
+					} else {
+						alert(data.error_message);
+					}
+				}
+    		
+    			, error:function(e) {
+    				alert("Failed to add the product.");
+    			}
+    		});
     	});
     });
     </script>
