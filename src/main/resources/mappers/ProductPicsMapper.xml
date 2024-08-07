@@ -19,4 +19,17 @@
  			, NOW()
  		)
  	</insert>
+ 	
+ 	<select id="selectProductPicsByProductId" parameterType="int" resultType="com.horsepower.product.domain.ProductPics">
+ 		SELECT
+ 			`id`
+			, `productId`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product_pics`
+		WHERE
+			`productId` = #{productId}
+ 	</select>
  </mapper>

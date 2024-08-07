@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayoutAdmin}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <div id="wrap" class="d-flex justify-content-center">
+    	<div>
+    		<div>
+    			<div>Product Name</div>
+    			<input type="text" id="productName" class="form-control col-4" name="productName"
+    			th:value="${productInfo.product.name}">
+    		</div>
+    		<div>
+    			<div>Category</div>
+    			<select id="category" class="form-control col-4" >
+            		<option th:text="${productInfo.product.category}" th:value="${productInfo.product.category}">--select category--</option>
+            		<option th:unless="|${productInfo.product.category} == MEN'S|" value="MEN'S">MEN'S</option>
+            		<option th:unless="|${productInfo.product.category} == WOMEN'S|" value="WOMEN'S">WOMEN'S</option>
+            		<option th:unless="|${productInfo.product.category} == ACCESSORIES|" value="ACCESSORIES">ACCESSORIES</option>
+        		</select>
+    		</div>
+    		<div>
+    			<div>Product Description</div>
+    			<textarea rows=5 cols=100 id="productDesc"
+    			th:text="${productInfo.product.description}"></textarea>
+    		</div>
+    		<div>
+	    		<div th:each="productPic : ${productInfo.productPics}" class="firstImg my-2">
+	    			<img th:src="${productPic.imagePath}" alt="productImg" width="300">
+	    			
+	    			<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile"
+	    			width=25 class="mt-5"></a>
+	    		</div>
+    		</div>
+    		<div class="productDetail d-flex my-5">
+    			<div>
+    				<div>
+    					<div>Color</div>
+    					<select id="color" class="form-control">
+            				<option th:text="${productInfo.productDetail.color}" th:value="${productInfo.productDetail.color}">--select color--</option>
+            				<option value="Blue">Blue</option>
+            				<option value="Red">Red</option>
+            				<option value="Yellow">Yellow</option>
+            				<option value="White">White</option>
+        				</select>
+    				</div>
+    				<div>
+    					<div>Size</div>
+    					<select id="size" class="form-control">
+            				<option th:text="${productInfo.productDetail.size}" th:value="${productInfo.productDetail.size}">--select size--</option>
+            				<option value="S">S</option>
+            				<option value="M">M</option>
+            				<option value="L">L</option>
+        				</select>
+    				</div>
+    				<div>
+    					<div>Quantity</div>
+    					<input type="text" id="quantity" class="form-control col-4" name="quantity"
+    					th:value=${productInfo.productDetail.quantity}>
+    				</div>
+    				<div>
+    					<div>Price</div>
+    					<input type="text" id="price" class="form-control col-4" name="price"
+    					th:value=${productInfo.productDetail.price}>
+    				</div>
+    				<div>
+    					<div>Sale</div>
+    					<input type="text" id="sale" class="form-control col-4" name="sale"
+    					th:value=${productInfo.productDetail.sale}>
+    				</div>
+    			</div>
+    			<div class="addProductDetail d-flex align-items-center mx-5">
+    				<input type="button" id="addFile" class="d-none">
+    				<img src="/img/plus-sign.jpg" alt="imgFile"
+    				width=25>
+    			</div>
+    		</div>
+    		<div class="d-flex justify-content-end">
+				<button class="saveBtn btn btn-success">SAVE</button>
+			</div>
+    	</div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+    </script>
+</th:block>

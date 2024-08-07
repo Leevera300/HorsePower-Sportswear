@@ -23,7 +23,7 @@ public class FileManagerService {
 		public String uploadFile(MultipartFile file) {
 			// folder(directory) 생성
 			// 예:1_17348493489/sun.png
-			String directoryName = file + "_" + System.currentTimeMillis();
+			String directoryName = "horsepowerProduct_" + System.currentTimeMillis();
 			// D:\Michael (마이클)\project\horsepower\horsepower_workspace\images/aaaa_17348493489/
 			String filePath = FILE_UPLOAD_PATH + directoryName + "/";
 			

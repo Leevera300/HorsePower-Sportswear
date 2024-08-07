@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.horsepower.product.bo.ProductBO;
+import com.horsepower.product.domain.ProductInfo;
 import com.horsepower.user.bo.UserBO;
 import com.horsepower.user.entity.UserEntity;
 
@@ -20,6 +22,9 @@ public class AdminController {
 	
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private ProductBO productBO;
 
 	@GetMapping("/manage-user")
 	public String manageUser(HttpSession session,
@@ -63,6 +68,10 @@ public class AdminController {
 	public String manageProduct(HttpSession session,
 			Model model) {
 		
+		List<ProductInfo> productInfoList = productBO.getProductInfo();
+		
+		model.addAttribute("productInfoList", productInfoList);
+		
 		String authority = (String)session.getAttribute("userAuthority");
 		
 		if (authority.contains("Admin")) {
@@ -71,6 +80,37 @@ public class AdminController {
 			return "redirect:/horsepower/product/product-list";
 		}
 		
+	}
+	
+	
+	@GetMapping("/manage-product-create")
+	public String manageProductCreate(HttpSession session) {
+		String authority = (String)session.getAttribute("userAuthority");
+		
+		if (authority.contains("Admin")) {
+			return "admin/manage-product-create";
+		} else {
+			return "redirect:/horsepower/product/product-list";
+		}
+		
+	}
+	
+	@GetMapping("/manage-product-edit")
+	public String manageProdcutEdit(
+			@RequestParam("productId") int productId,
+			HttpSession session,
+			Model model) {
+		ProductInfo productInfo = productBO.getProductInfoByProductId(productId);
+		
+		model.addAttribute("productInfo", productInfo);
+
+		String authority = (String)session.getAttribute("userAuthority");
+		
+		if (authority.contains("Admin")) {
+			return "admin/manage-product-edit";
+		} else {
+			return "redirect:/horsepower/product/product-list";
+		}
 	}
 	
 	@GetMapping("/order-status")
@@ -83,18 +123,6 @@ String authority = (String)session.getAttribute("userAuthority");
 			return "redirect:/horsepower/product/product-list";
 		}
 		
-		
-	}
-	
-	@GetMapping("/manage-product-create")
-	public String manageProductCreate(HttpSession session) {
-		String authority = (String)session.getAttribute("userAuthority");
-		
-		if (authority.contains("Admin")) {
-			return "admin/manage-product-create";
-		} else {
-			return "redirect:/horsepower/product/product-list";
-		}
 		
 	}
 }

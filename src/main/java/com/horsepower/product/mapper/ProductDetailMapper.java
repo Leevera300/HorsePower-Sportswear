@@ -3,6 +3,8 @@ package com.horsepower.product.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.horsepower.product.domain.ProductDetail;
+
 @Mapper
 public interface ProductDetailMapper {
 
@@ -13,4 +15,6 @@ public interface ProductDetailMapper {
 			@Param("quantity") int quantity, 
 			@Param("price") double price, 
 			@Param("sale") Integer sale);
+	
+	public ProductDetail selectProductDetailByProductId(int productId);
 }

@@ -4,7 +4,7 @@
  <mapper namespace="com.horsepower.product.mapper.ProductDetailMapper">
  	<insert id="insertProdcutDetail" parameterType="map">
  		INSERT INTO
- 			`product_detial`
+ 			`product_detail`
  		(
  			`productId`
 			, `color`
@@ -27,4 +27,21 @@
  			, NOW()
  		)
  	</insert>
+ 	
+ 	<select id="selectProductDetailByProductId" parameterType="int" resultType="com.horsepower.product.domain.ProductDetail">
+ 	SELECT
+ 		`id`
+		, `productId`
+		, `color`
+		, `size`
+		, `quantity`
+		, `sale`
+		, `price`
+		, `createdAt`
+		 ,`updatedAt`
+	FROM
+		`product_detail`
+	WHERE
+		`productId` = #{productId}
+ 	</select>
  </mapper>

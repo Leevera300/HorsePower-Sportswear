@@ -1,7 +1,11 @@
 package com.horsepower.product.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.horsepower.product.domain.ProductPics;
 
 @Mapper
 public interface ProductPicsMapper {
@@ -10,4 +14,5 @@ public interface ProductPicsMapper {
 			@Param("productId") int productId,
 			@Param("imagePath") String imagePath);
 
+	public List<ProductPics> selectProductPicsByProductId(int productId);
 }

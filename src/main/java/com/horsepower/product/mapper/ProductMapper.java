@@ -1,16 +1,18 @@
 package com.horsepower.product.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.horsepower.product.domain.Product;
 
 @Mapper
 public interface ProductMapper {
 
-	public Product insertProdcut(
-			@Param("productName") String productName, 
-			@Param("category")String category, 
-			@Param("productDesc")String productDesc);
+	public void insertProduct(Product product);
+	
+	public List<Product> selectProduct();
+	
+	public Product selectProductById(int id);
 	
 }

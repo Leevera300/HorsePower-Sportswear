@@ -1,5 +1,7 @@
 package com.horsepower.product.domain;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,5 +13,5 @@ public class ProductInfo {
 	
 	private ProductDetail productDetail;
 	
-	private ProductPics productPics;
+	private List<ProductPics> productPics;
 }

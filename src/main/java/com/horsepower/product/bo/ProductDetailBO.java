@@ -3,6 +3,7 @@ package com.horsepower.product.bo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.horsepower.product.domain.ProductDetail;
 import com.horsepower.product.mapper.ProductDetailMapper;
 
 @Service
@@ -15,5 +16,10 @@ public class ProductDetailBO {
 			double price, Integer sale) {
 		
 		productDetailMapper.insertProdcutDetail(productId, color, size, quantity, price, sale);
+	}
+	
+	public ProductDetail getProductDetailByProductId(int productId) {
+		
+		return productDetailMapper.selectProductDetailByProductId(productId);
 	}
 }

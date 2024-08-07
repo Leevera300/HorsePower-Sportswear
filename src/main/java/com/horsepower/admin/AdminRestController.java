@@ -98,9 +98,6 @@ public class AdminRestController {
 			return result;
 		}
 		
-		if (sale == null) {
-			sale = 0;
-		}
 		
 		productBO.addProduct(productName, category, productDesc, imgFile1, color, size, quantity, price, sale);
 		

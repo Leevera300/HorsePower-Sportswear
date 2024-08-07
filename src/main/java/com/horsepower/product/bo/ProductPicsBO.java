@@ -1,10 +1,13 @@
 package com.horsepower.product.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.horsepower.common.FileManagerService;
+import com.horsepower.product.domain.ProductPics;
 import com.horsepower.product.mapper.ProductPicsMapper;
 
 @Service
@@ -25,5 +28,10 @@ public class ProductPicsBO {
 		}
 		
 		productPicsMapper.insertProductPics(productId, imagePath);
+	}
+	
+	public List<ProductPics> getProductPicsByProductId(int productId) {
+		
+		return productPicsMapper.selectProductPicsByProductId(productId);
 	}
 }

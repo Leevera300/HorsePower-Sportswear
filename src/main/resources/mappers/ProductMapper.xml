@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.horsepower.product.mapper.ProductMapper">
- 	<insert id="insertProdcut" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+ 	<insert id="insertProduct" parameterType="com.horsepower.product.domain.Product">
  		INSERT INTO
  			`product`
  		(
@@ -14,15 +14,18 @@
  		)
  		VALUES
  		(
- 			#{productName}
- 			, #{productDesc}
+ 			#{name}
+ 			, #{description}
  			, #{category}
  			, NOW()
  			, NOW()
  		)
+ 		<selectKey keyProperty="id" resultType="int" order="AFTER" >
+        SELECT LAST_INSERT_ID()
+    	</selectKey>
  	</insert>
  	
- 	<select id="getProductByProdcutName" parameterType="String" resultType="com.horsepower.product.domain.Product">
+ 	<select id="selectProductById" parameterType="int" resultType="com.horsepower.product.domain.Product">
  		SELECT
  			`id`
 			, `name`
@@ -33,6 +36,17 @@
 		FROM
 			`product`
 		WHERE
-			`name` = #{productName}
+			`id` = #{id}
+ 	</select>
+ 	<select id="selectProduct" resultType="com.horsepower.product.domain.Product">
+ 		SELECT
+ 			`id`
+			, `name`
+			, `description`
+			, `category`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product`
  	</select>
  </mapper>

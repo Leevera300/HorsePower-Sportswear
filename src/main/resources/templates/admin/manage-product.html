@@ -16,13 +16,13 @@
 	    		</tr>
 	    	</thead>
 	    	<tbody>
-	    		<tr>
-	    			<td>1</td>
-	    			<td>abcde</td>
-	    			<td>MEN'S</td>
-	    			<td>1234123</td>
-	    			<td><a href=""><button class="btn btn-danger">DELETE</button></a></td>
-	    			<td><a href=""><button class="btn btn-warning">EDIT</button></a></td>
+	    		<tr th:each="productInfo : ${productInfoList}">
+	    			<td th:text="${productInfo.product.id}">1</td>
+	    			<td th:text="${productInfo.product.name}">abcde</td>
+	    			<td th:text="${productInfo.product.category}">MEN'S</td>
+	    			<td th:text="${#temporals.format(productInfo.product.createdAt, 'yyyy-MM-dd HH:mm:ss')}">1234123</td>
+	    			<td><a href=""><button class="deleteBtn btn btn-danger" th:data-product-id="${productInfo.product.id}">DELETE</button></a></td>
+	    			<td><a th:href="|/horsepower/admin/manage-product-edit?productId=${productInfo.product.id}|"><button class="editBtn btn btn-warning">EDIT</button></a></td>
 	    		</tr>
 	    	</tbody>
 	    </table>
@@ -34,5 +34,31 @@
 
 <th:block layout:fragment="script">
     <script>
+    $(document).ready(function() {
+    	//alert("ready");
+    	$(".deleteBtn").on('click', function(e) {
+    		let productId = $(this).data("product-id");
+    		//alert(productId);
+    		
+    		$.ajax({
+    			type:"GET"
+    			, url:"/horsepower/admin/manage-product-delete"
+    			, data:{"productId":productId}
+    		
+    			, success:function(data) {
+    				if (data.code == 200) {
+    					alert("Producthas been deleted.");
+    					location.reload(true);
+    				} else {
+						alert(code.error_message);
+					}
+    			}
+    			
+    			, error:function(e) {
+    				alert("Failed to delete product.");
+    			}
+    		});
+    	});
+    });
     </script>
 </th:block>
