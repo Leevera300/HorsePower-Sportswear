@@ -3,6 +3,7 @@ package com.horsepower.product.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.horsepower.product.domain.Product;
 
@@ -13,6 +14,18 @@ public interface ProductMapper {
 	
 	public List<Product> selectProduct();
 	
+	public List<Product> selectProductOrderByCreatedAtDESC();
+	
+	public List<Product> selectProductOrderByUpdatedAt();
+	
 	public Product selectProductById(int id);
+	
+	public void deleteProductById(int id);
+	
+	public void updateProductById(
+			@Param("id") int id, 
+			@Param("name") String name, 
+			@Param("category") String category,  
+			@Param("description") String description);
 	
 }

@@ -24,13 +24,21 @@
     			<textarea rows=5 cols=100 id="productDesc"
     			th:text="${productInfo.product.description}"></textarea>
     		</div>
-    		<div>
+    		<div class="d-flex">
 	    		<div th:each="productPic : ${productInfo.productPics}" class="firstImg my-2">
 	    			<img th:src="${productPic.imagePath}" alt="productImg" width="300">
 	    			
-	    			<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile"
-	    			width=25 class="mt-5"></a>
+	    			
 	    		</div>
+	    			<div>
+		    			<a href="" id="imgUpdateBtn1" class="mx-3"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
+		    			width=25></a>
+		    			<input type="file" id="imgFile1" accept=".jpg, .png, .gif" class="d-none">
+		    			<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile"
+		    			width=25 class="mt-5"></a>
+		    			
+		    			<div id="fileName1" class="ml-2"></div>
+	    			</div>
     		</div>
     		<div class="productDetail d-flex my-5">
     			<div>
@@ -76,7 +84,7 @@
     			</div>
     		</div>
     		<div class="d-flex justify-content-end">
-				<button class="saveBtn btn btn-success">SAVE</button>
+				<button class="saveBtn btn btn-success" th:data-product-id="${productInfo.product.id}">SAVE</button>
 			</div>
     	</div>
     </div>
@@ -84,5 +92,142 @@
 
 <th:block layout:fragment="script">
     <script>
+    $(document).ready(function() {
+    	//alert("ready");
+    	$("#imgUpdateBtn1").on('click', function(e) {
+    		e.preventDefault();
+    		$("#imgFile1").click();
+    	});
+    	
+    	$("#imgFile1").on('change', function(e) {
+    		//alert("hi");
+    		//return;
+    		let file1 = e.target.files[0];
+			if (file1 == null) {
+				$("#imgFile1").val("");
+				$("#fileName1").text("");
+				return;
+			}
+			
+			let fileName1 = e.target.files[0].name;
+			console.log(fileName1);
+			
+			let ext = fileName1.split(".").pop().toLowerCase();
+			console.log(ext);
+			
+			if (ext != "gif" && ext != "png" && ext != "jpg") {
+				alert("이미지 파일만 업로드 할수 있습니다. (.gif, .png, .jpg)");
+				$("#imgFile1").val(""); 
+				$("#fileName1").text(""); 
+				return;
+			}
+			
+			$("#fileName1").text(fileName1);
+    	});
+    	
+    	$(".saveBtn").on('click', function() {
+    		//alert("add");
+    		//return;
+    		let productId = $(this).data("product-id");
+    		
+    		let productName = $("#productName").val().trim();
+    		if (!productName) {
+    			alert("Please input product name.");
+    			return;
+    		}
+    		
+    		let category = $("#category").val();
+    		if (category == "--select category--") {
+    			alert("Please input category.");
+    			return;
+    		}
+    		
+    		let productDesc = $("#productDesc").val();
+    		if (!productDesc) {
+    			alert("Please input product description.");
+    			return;
+    		}
+    		
+    		let fileName1 = $("#imgFile1").val();
+    		
+    		
+    		if (fileName1) {
+				let ext = fileName1.split(".").pop().toLowerCase();
+				//console.log(ext);
+				
+				if($.inArray(ext, ["jpg", "gif", "png"]) == -1) {
+					alert("Upload image files only. (.jpg, .gif, .png)");
+					$("#imgFile1").val(""); // 파일 초기화
+					return;
+				}
+			}
+    		
+    		let color = $("#color").val();
+    		if (color == "--select color--") {
+    			alert("Please input color.");
+    			return;
+    		}
+    		
+    		let size = $("#size").val();
+    		if (size == "--select size--") {
+    			alert("Please input size.");
+    			return;
+    		}
+    		
+    		let quantity = $("#quantity").val().trim();
+    		if (quantity == "--select quantity--") {
+    			alert("Please input quantity.");
+    			return;
+    		}
+    		
+    		let price = $("#price").val().trim();
+    		if (!price) {
+    			alert("Please input product price.");
+    			return;
+    		}
+    		
+    		let sale = $("#sale").val().trim();
+    		
+    		//alert(productId);
+    		//return;
+    		
+    		let formData = new FormData();
+				formData.append("productId", productId); 
+				formData.append("productName", productName); 
+				formData.append("category", category); 
+				formData.append("productDesc", productDesc); 
+				formData.append("imgFile1", $("#imgFile1")[0].files[0]);
+				formData.append("color", color); 
+				formData.append("size", size); 
+				formData.append("quantity", quantity);
+				formData.append("price", price);
+				formData.append("sale", sale);
+    		
+    		$.ajax({
+    			type:"PUT"
+				, url:"/horsepower/admin/product-manage-update"
+				, data:formData
+				, enctype:"multipart/form-data" 
+				, processData:false
+				, contentType:false
+				
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("Product has been successfully updated.");
+						location.href = "/horsepower/admin/manage-product"
+					} else if (data.code == 403) {
+						alert(data.error_message);
+						location.href = "/horsepower/product/product-list";
+					} else {
+						alert(data.error_message);
+					}
+				}
+    		
+    			, error:function(e) {
+    				alert("Failed to update the product.");
+    			}
+    		});
+    	});    	
+    });
     </script>
 </th:block>

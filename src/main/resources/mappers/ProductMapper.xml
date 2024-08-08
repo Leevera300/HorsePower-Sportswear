@@ -49,4 +49,50 @@
 		FROM
 			`product`
  	</select>
+ 	
+ 	<select id="selectProductOrderByCreatedAtDESC" resultType="com.horsepower.product.domain.Product">
+ 		SELECT
+ 			`id`
+			, `name`
+			, `description`
+			, `category`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product`
+		ORDER BY
+			`createdAt` DESC
+ 	</select>
+ 	<select id="selectProductOrderByUpdatedAt" resultType="com.horsepower.product.domain.Product">
+ 		SELECT
+ 			`id`
+			, `name`
+			, `description`
+			, `category`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product`
+		ORDER BY
+			`updatedAt`
+ 	</select>
+ 	
+ 	<update id="updateProductById" parameterType="map">
+ 		UPDATE
+ 			`product`
+ 		SET
+ 			`name` = #{name}
+			, `description` = #{name}
+			, `category` = #{name}
+			, `updatedAt`= NOW()
+ 		WHERE
+ 			`id` = #{id}
+ 	</update>
+ 	
+ 	<delete id="deleteProductById" parameterType="int">
+ 		DELETE FROM
+ 			`product`
+ 		WHERE
+ 			`id` = #{id}
+ 	</delete>
  </mapper>

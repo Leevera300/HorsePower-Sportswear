@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,4 +107,58 @@ public class AdminRestController {
 		
 		return result;
 	}
+	
+	@GetMapping("/manage-product-delete")
+	public Map<String, Object> prodcutManageDelete(
+			@RequestParam("productId") int productId,
+			HttpSession session) {
+		
+		String authority = (String)session.getAttribute("userAuthority");
+		
+		Map<String, Object> result = new HashMap<>();
+		if (authority.contains("Admin") == false) {
+			result.put("code", 403);
+			result.put("error_message", "Please log in with Admin account.");
+			return result;
+		}
+		
+		productBO.deleteProductById(productId);
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		
+		return result;
+	}
+	
+	@PutMapping("/product-manage-update")
+	public Map<String, Object> prodcutManageUpdate(
+			@RequestParam("productId") int productId,
+			@RequestParam("productName") String productName,
+			@RequestParam("category") String category,
+			@RequestParam("productDesc") String productDesc,
+			@RequestParam(value = "imgFile1", required = false) MultipartFile imgFile1,
+			@RequestParam("color") String color,
+			@RequestParam("size") String size,
+			@RequestParam("quantity") int quantity,
+			@RequestParam("price") double price,
+			@RequestParam(value = "sale", required = false) Integer sale,
+			HttpSession session) {
+		
+		String authority = (String)session.getAttribute("userAuthority");
+		
+		Map<String, Object> result = new HashMap<>();
+		if (authority.contains("Admin") == false) {
+			result.put("code", 403);
+			result.put("error_message", "Please log in with Admin account.");
+			return result;
+		}
+		
+		productBO.updateProductById(productId, productName, category, productDesc, imgFile1, color, size, quantity, price, sale);
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		
+		return result;
+	}
+			
 }

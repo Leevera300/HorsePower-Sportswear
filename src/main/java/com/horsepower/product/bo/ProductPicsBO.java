@@ -10,6 +10,9 @@ import com.horsepower.common.FileManagerService;
 import com.horsepower.product.domain.ProductPics;
 import com.horsepower.product.mapper.ProductPicsMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ProductPicsBO {
 
@@ -33,5 +36,24 @@ public class ProductPicsBO {
 	public List<ProductPics> getProductPicsByProductId(int productId) {
 		
 		return productPicsMapper.selectProductPicsByProductId(productId);
+	}
+	
+	public void deleteProductPicsByProductId(int productId) {
+		
+		List<ProductPics> productPicsList = productPicsMapper.selectProductPicsByProductId(productId);
+		
+		for (ProductPics productPic : productPicsList) {
+			
+			if (productPic == null) {
+				log.warn("[DELETE PRODUCT] ProductPic is null. productId:{}", productId);
+				return;
+			}
+			
+			int rowCount = productPicsMapper.deleteProductPicsByProductId(productId);
+			
+			if (rowCount == 1 && productPic.getImagePath() != null) {
+				fileManagerService.deleteFile(productPic.getImagePath());
+			}
+		}
 	}
 }

@@ -29,19 +29,40 @@
  	</insert>
  	
  	<select id="selectProductDetailByProductId" parameterType="int" resultType="com.horsepower.product.domain.ProductDetail">
- 	SELECT
- 		`id`
-		, `productId`
-		, `color`
-		, `size`
-		, `quantity`
-		, `sale`
-		, `price`
-		, `createdAt`
-		 ,`updatedAt`
-	FROM
-		`product_detail`
-	WHERE
-		`productId` = #{productId}
+ 		SELECT
+	 		`id`
+			, `productId`
+			, `color`
+			, `size`
+			, `quantity`
+			, `sale`
+			, `price`
+			, `createdAt`
+			 ,`updatedAt`
+		FROM
+			`product_detail`
+		WHERE
+			`productId` = #{productId}
  	</select>
+ 	
+ 	<update id="updateProductDetailByProductId" parameterType="map">
+ 		UPDATE
+ 			`product_detail`
+ 		SET
+ 			`color` = #{color}
+			, `size` = #{size}
+			, `quantity` = #{quantity}
+			, `sale` = #{sale}
+			, `price` = #{price}
+			, `updatedAt`= NOW()
+ 		WHERE
+ 			`productId` = #{productId}
+ 	</update>
+ 	
+ 	<delete id="deleteProductDetailByProductId" parameterType="int">
+ 		DELETE FROM
+ 			`product_detail`
+		WHERE
+			`productId` = #{productId}	
+ 	</delete>
  </mapper>

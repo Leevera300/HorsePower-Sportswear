@@ -22,4 +22,15 @@ public class ProductDetailBO {
 		
 		return productDetailMapper.selectProductDetailByProductId(productId);
 	}
+	
+	public void deleteProductDetailByProductId(int productId) {
+		
+		productDetailMapper.deleteProductDetailByProductId(productId);
+	}
+	
+	public void updateProductDetailByProductId(int productId, String color, String size, int quantity, 
+			double price, Integer sale) {
+		
+		productDetailMapper.updateProductDetailByProductId(productId, color, size, quantity, price, sale);
+	}
 }

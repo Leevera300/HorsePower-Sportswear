@@ -9,29 +9,13 @@
 	    </div>
 	   	<section class="w-100 bg-light mb-3">
         	<div class="media-parent-box d-flex justify-content-between">
-            	<article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
-                </article>
-                <article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
-                </article>
-                <article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
-                </article>
-                <article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
+            	<article th:each="newProductInfo : ${newProductInfoList}" class="media-box">
+                	<div th:each="newProductPic : ${newProductInfo.productPics}">
+                		<img th:src="${newProductPic.imagePath}" alt="ProductImg" width=450px; height=300px;>
+                	</div>
+                	<div th:text=${newProductInfo.product.name} class="font-weight-bold">Product Name</div>
+                	<div th:text=${newProductInfo.product.description} class="media-text">Product Detail</div>
+                	<div class="media-text font-weight-bold"><a href="#">Shop now</a></div>
                 </article>
             </div>
         </section>
@@ -40,29 +24,13 @@
 	    </div>
 	    <section class="w-100 bg-light mb-3">
         	<div class="media-parent-box d-flex justify-content-between">
-            	<article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
-                </article>
-                <article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
-                </article>
-                <article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
-                </article>
-                <article class="media-box">
-                	<img src="/img/horse-banner.jpg" alt="영상1" width=450px;>
-                	<div class="font-weight-bold">Product Name</div>
-                	<div class="media-text">Product Detail</div>
-                	<div class="media-text"><a href="#">Shop now</a></div>
+            	<article th:each="hotProductInfo : ${hotProductInfoList}" class="media-box">
+                	<div th:each="hotProductPic : ${hotProductInfo.productPics}">
+                		<img th:src="${hotProductPic.imagePath}" alt="ProductImg" width=450px; height=300px;>
+                	</div>
+                	<div th:text=${hotProductInfo.product.name} class="font-weight-bold">Product Name</div>
+                	<div th:text=${hotProductInfo.product.description} class="media-text">Product Detail</div>
+                	<div class="media-text font-weight-bold"><a href="#">Shop now</a></div>
                 </article>
             </div>
         </section>
@@ -71,5 +39,8 @@
 
 <th:block layout:fragment="script">
     <script>
+    	$(document).ready(function() {
+    		
+    	});
     </script>
 </th:block>

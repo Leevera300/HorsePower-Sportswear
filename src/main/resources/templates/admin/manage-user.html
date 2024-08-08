@@ -20,7 +20,7 @@
 	    			<td th:text="${user.id}">1</td>
 	    			<td th:text="${user.email}">aaaa</td>
 	    			<td th:text="${user.authority}">user</td>
-	    			<td th:text="${user.createdAt}">1234</td>
+	    			<td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm:ss')}">1234</td>
 	    			<td><a href=""><button class="deleteBtn btn btn-danger" th:data-user-id=${user.id}>DELETE</button></a></td>
 	    			<td><a th:href="|/horsepower/admin/manage-user-edit?userId=${user.id}|"><button class="editBtn btn btn-warning" th:data-user-id=${user.id}>EDIT</button></a></td>
 	    		</tr>

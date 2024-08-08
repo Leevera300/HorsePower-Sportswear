@@ -26,7 +26,6 @@ public class ProductBO {
 	@Autowired
 	private ProductMapper productMapper;
 	
-	@SuppressWarnings("null")
 	@Transactional
 	public void addProduct(String name, String category,  String description, MultipartFile imgFile1,
 			 String color, String size, int quantity, double price, Integer sale) {
@@ -65,6 +64,50 @@ public class ProductBO {
 		return productInfoList;
 	}
 	
+	public List<ProductInfo> getProductInfoOrderByCreatedAtDESC() {
+		List<ProductInfo> newProductInfoList = new ArrayList<>();
+		
+		List<Product> newProductList = productMapper.selectProductOrderByCreatedAtDESC();
+
+		for (Product product : newProductList) {
+			ProductInfo productInfo = new ProductInfo();
+			
+			productInfo.setProduct(product);
+			
+			ProductDetail productDetail = productDetailBO.getProductDetailByProductId(product.getId());
+			productInfo.setProductDetail(productDetail);
+			
+			List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(product.getId());
+			productInfo.setProductPics(productPics);
+			
+			newProductInfoList.add(productInfo);
+		}
+		
+		return newProductInfoList;
+	}
+	
+	public List<ProductInfo> getProductInfoOrderByUpdatedAt() {
+		List<ProductInfo> hotProductInfoList = new ArrayList<>();
+		
+		List<Product> hotProductList = productMapper.selectProductOrderByUpdatedAt();
+
+		for (Product product : hotProductList) {
+			ProductInfo productInfo = new ProductInfo();
+			
+			productInfo.setProduct(product);
+			
+			ProductDetail productDetail = productDetailBO.getProductDetailByProductId(product.getId());
+			productInfo.setProductDetail(productDetail);
+			
+			List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(product.getId());
+			productInfo.setProductPics(productPics);
+			
+			hotProductInfoList.add(productInfo);
+		}
+		
+		return hotProductInfoList;
+	}
+	
 	public ProductInfo getProductInfoByProductId(int productId) {
 		ProductInfo productInfo = new ProductInfo();
 		
@@ -78,5 +121,31 @@ public class ProductBO {
 		productInfo.setProductPics(productPics);
 		
 		return productInfo;
+	}
+	
+	public void deleteProductById(int id) {
+		
+		Product product = productMapper.selectProductById(id);
+		
+		productMapper.deleteProductById(id);
+		
+		productDetailBO.deleteProductDetailByProductId(product.getId());
+		
+		productPicsBO.deleteProductPicsByProductId(product.getId());
+	}
+	
+	@Transactional
+	public void updateProductById(int id, String name, String category,  String description, MultipartFile imgFile1,
+			 String color, String size, int quantity, double price, Integer sale) {
+		
+		Product product = productMapper.selectProductById(id);
+		
+		productMapper.updateProductById(id, name, category, description);
+		
+		productDetailBO.updateProductDetailByProductId(product.getId(), color, size, quantity, price, sale);
+		
+		if (imgFile1 != null) {
+			productPicsBO.addProdcutPics(product.getId(), imgFile1);
+		}
 	}
 }

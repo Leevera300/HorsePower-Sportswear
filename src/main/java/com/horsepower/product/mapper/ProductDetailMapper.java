@@ -17,4 +17,14 @@ public interface ProductDetailMapper {
 			@Param("sale") Integer sale);
 	
 	public ProductDetail selectProductDetailByProductId(int productId);
+	
+	public void deleteProductDetailByProductId(int productId);
+	
+	public void updateProductDetailByProductId(
+			@Param("productId") int productId, 
+			@Param("color") String color, 
+			@Param("size") String size, 
+			@Param("quantity") int quantity, 
+			@Param("price") double price, 
+			@Param("sale") Integer sale);
 }

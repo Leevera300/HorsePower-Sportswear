@@ -32,4 +32,11 @@
 		WHERE
 			`productId` = #{productId}
  	</select>
+ 	
+ 	<delete id="deleteProductPicsByProductId" parameterType="int">
+ 		DELETE FROM
+ 			`product_pics`
+ 		WHERE
+			`productId` = #{productId}
+ 	</delete>
  </mapper>

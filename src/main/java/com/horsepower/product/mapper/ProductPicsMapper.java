@@ -15,4 +15,6 @@ public interface ProductPicsMapper {
 			@Param("imagePath") String imagePath);
 
 	public List<ProductPics> selectProductPicsByProductId(int productId);
+	
+	public int deleteProductPicsByProductId(int productId);
 }
