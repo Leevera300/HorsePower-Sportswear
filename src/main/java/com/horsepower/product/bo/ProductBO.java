@@ -51,8 +51,8 @@ public class ProductBO {
 			
 			productInfo.setProduct(product);
 			
-			ProductDetail productDetail = productDetailBO.getProductDetailByProductId(product.getId());
-			productInfo.setProductDetail(productDetail);
+			List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(product.getId());
+			productInfo.setProductDetailList(productDetailList);
 			
 			List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(product.getId());
 			productInfo.setProductPics(productPics);
@@ -74,8 +74,8 @@ public class ProductBO {
 			
 			productInfo.setProduct(product);
 			
-			ProductDetail productDetail = productDetailBO.getProductDetailByProductId(product.getId());
-			productInfo.setProductDetail(productDetail);
+			List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(product.getId());
+			productInfo.setProductDetailList(productDetailList);
 			
 			List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(product.getId());
 			productInfo.setProductPics(productPics);
@@ -96,8 +96,8 @@ public class ProductBO {
 			
 			productInfo.setProduct(product);
 			
-			ProductDetail productDetail = productDetailBO.getProductDetailByProductId(product.getId());
-			productInfo.setProductDetail(productDetail);
+			List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(product.getId());
+			productInfo.setProductDetailList(productDetailList);
 			
 			List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(product.getId());
 			productInfo.setProductPics(productPics);
@@ -114,8 +114,8 @@ public class ProductBO {
 		Product product = productMapper.selectProductById(productId);
 		productInfo.setProduct(product);
 		
-		ProductDetail productDetail = productDetailBO.getProductDetailByProductId(productId);
-		productInfo.setProductDetail(productDetail);
+		List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(productId);
+		productInfo.setProductDetailList(productDetailList);
 		
 		List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(productId);
 		productInfo.setProductPics(productPics);

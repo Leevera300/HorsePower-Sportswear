@@ -11,7 +11,7 @@ public class ProductInfo {
 
 	private Product product;
 	
-	private ProductDetail productDetail;
+	private List<ProductDetail> productDetailList;
 	
 	private List<ProductPics> productPics;
 }

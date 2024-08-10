@@ -1,248 +1,287 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/defaultLayoutAdmin}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayoutAdmin}">
 <div layout:fragment="content" class="content d-flex justify-content-center">
-    <div id="wrap" class="d-flex justify-content-center">
-    	<div>
-    		<div>
-    			<div>Product Name</div>
-    			<input type="text" id="productName" class="form-control col-4" name="productName">
-    		</div>
-    		<div>
-    			<div>Category</div>
-    			<select id="category" class="form-control col-4">
-            		<option>--select category--</option>
-            		<option value="MEN'S">MEN'S</option>
-            		<option value="WOMEN'S">WOMEN'S</option>
-            		<option value="ACCESSORIES">ACCESSORIES</option>
-        		</select>
-    		</div>
-    		<div>
-    			<div>Product Description</div>
-    			<textarea rows=5 cols=100 id="productDesc"></textarea>
-    		</div>
-    		<div>
-	    		<div class="firstImg my-2">
-	    			<input type="file" id="imgFile1" accept=".jpg, .png, .gif" class="d-none">
-	    			<a href="" id="imgUploadBtn1"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
-	    			width=25></a>
-	    			
-	    			<div id="fileName1" class="ml-2"></div>
-	    			
-	    			<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile"
-	    			width=25 class="mt-5"></a>
-	    		</div>
-	    		<div class="my-2 d-none" id="secondImg">
-	    			<input type="file" id="imgFile2" accept=".jpg, .png, .gif" class="d-none">
-	    			<a href="" id="imgUploadBtn2"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
-	    			width=25></a>
-	    			
-	    			<div id="fileName2" class="ml-2"></div>
-	    			
-	    			<a href="" id="imgAddBtn2"><img src="/img/plus-sign.jpg" alt="imgFile"
-	    			width=25></a>
-	    		</div>
-	    		<div class="my-2 d-none" id="thirdImg">
-	    			<input type="file" id="imgFile3" accept=".jpg, .png, .gif" class="d-none">
-	    			<a href="" id="imgUploadBtn"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
-	    			width=25></a>
-	    			
-	    			<div id="fileName3" class="ml-2"></div>
-	    		</div>
-    		</div>
-    		<div class="productDetail d-flex my-5">
-    			<div>
-    				<div>
-    					<div>Color</div>
-    					<select id="color" class="form-control">
-            				<option>--select color--</option>
-            				<option value="Blue">Blue</option>
-            				<option value="Red">Red</option>
-            				<option value="Yellow">Yellow</option>
-            				<option value="White">White</option>
-        				</select>
-    				</div>
-    				<div>
-    					<div>Size</div>
-    					<select id="size" class="form-control">
-            				<option>--select size--</option>
-            				<option value="S">Small</option>
-            				<option value="M">Medium</option>
-            				<option value="L">Large</option>
-        				</select>
-    				</div>
-    				<div>
-    					<div>Quantity</div>
-    					<input type="text" id="quantity" class="form-control col-4" name="quantity">
-    				</div>
-    				<div>
-    					<div>Price</div>
-    					<input type="text" id="price" class="form-control col-4" name="price">
-    				</div>
-    				<div>
-    					<div>Sale</div>
-    					<input type="text" id="sale" class="form-control col-4" name="sale">
-    				</div>
-    			</div>
-    			<div class="addProductDetail d-flex align-items-center mx-5">
-    				<input type="button" id="addFile" class="d-none">
-    				<img src="/img/plus-sign.jpg" alt="imgFile"
-    				width=25>
-    			</div>
-    		</div>
-    		<div class="d-flex justify-content-end">
+	<div id="wrap" class="d-flex justify-content-center">
+		<div>
+			<div>
+				<div>Product Name</div>
+				<input type="text" id="productName" class="form-control col-4" name="productName">
+			</div>
+			<div>
+				<div>Category</div>
+				<select id="category" class="form-control col-4">
+					<option>--select category--</option>
+					<option value="MEN'S">MEN'S</option>
+					<option value="WOMEN'S">WOMEN'S</option>
+					<option value="ACCESSORIES">ACCESSORIES</option>
+				</select>
+			</div>
+			<div>
+				<div>Product Description</div>
+				<textarea rows=5 cols=100 id="productDesc"></textarea>
+			</div>
+			<div>
+				<div class="firstImg my-2">
+					<input type="file" id="imgFile1" accept=".jpg, .png, .gif" class="d-none" multiple>
+					<a href="" id="imgUploadBtn1"><img
+							src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
+							width=25></a>
+
+					<div id="fileName1" class="ml-2"></div>
+
+					<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile" width=25 class="mt-5"></a>
+				</div>
+				<div class="my-2 d-none" id="secondImg">
+					<input type="file" id="imgFile2" accept=".jpg, .png, .gif" class="d-none">
+					<a href="" id="imgUploadBtn2"><img
+							src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
+							width=25></a>
+
+					<div id="fileName2" class="ml-2"></div>
+
+					<a href="" id="imgAddBtn2"><img src="/img/plus-sign.jpg" alt="imgFile" width=25></a>
+				</div>
+				<div class="my-2 d-none" id="thirdImg">
+					<input type="file" id="imgFile3" accept=".jpg, .png, .gif" class="d-none">
+					<a href="" id="imgUploadBtn"><img
+							src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
+							width=25></a>
+
+					<div id="fileName3" class="ml-2"></div>
+				</div>
+			</div>
+			<div class="productDetail d-flex my-5">
+				<div>
+					<div>
+						<div>Color</div>
+						<select id="color" class="form-control">
+							<option>--select color--</option>
+							<option value="Blue">Blue</option>
+							<option value="Red">Red</option>
+							<option value="Yellow">Yellow</option>
+							<option value="White">White</option>
+						</select>
+					</div>
+					<div>
+						<div>Size</div>
+						<select id="size" class="form-control">
+							<option>--select size--</option>
+							<option value="S">Small</option>
+							<option value="M">Medium</option>
+							<option value="L">Large</option>
+						</select>
+					</div>
+					<div>
+						<div>Quantity</div>
+						<input type="text" id="quantity" class="form-control col-4" name="quantity">
+					</div>
+					<div>
+						<div>Price</div>
+						<input type="text" id="price" class="form-control col-4" name="price">
+					</div>
+					<div>
+						<div>Sale</div>
+						<input type="text" id="sale" class="form-control col-4" name="sale">
+					</div>
+				</div>
+				<div class="addProductDetail d-flex align-items-center mx-5">
+					<input type="button" id="addFile" class="d-none">
+					<a href="" id="addProductDetails"><img src="/img/plus-sign.jpg" alt="imgFile" width=25></a>
+				</div>
+			</div>
+			<div class="d-flex justify-content-end">
 				<button class="addBtn btn btn-success">ADD</button>
 			</div>
-    	</div>
-    </div>
+		</div>
+	</div>
 </div>
 
 <th:block layout:fragment="script">
-    <script>
-    $(document).ready(function() {
-    	$("#imgUploadBtn1").on('click', function(e) {
-    		e.preventDefault();
-    		$("#imgFile1").click();
-    	});
-    	
-    	$("#imgFile1").on('change', function(e) {
-    		//alert("hi");
-    		//return;
-    		let file1 = e.target.files[0];
-			if (file1 == null) {
-				$("#imgFile1").val("");
-				$("#fileName1").text("");
-				return;
-			}
-			
-			let fileName1 = e.target.files[0].name;
-			console.log(fileName1);
-			
-			let ext = fileName1.split(".").pop().toLowerCase();
-			console.log(ext);
-			
-			if (ext != "gif" && ext != "png" && ext != "jpg") {
-				alert("이미지 파일만 업로드 할수 있습니다. (.gif, .png, .jpg)");
-				$("#imgFile1").val(""); 
-				$("#fileName1").text(""); 
-				return;
-			}
-			
-			$("#fileName1").text(fileName1);
-    	});
-    	
-    	//$("#imgAddBtn1").on('click', function(e) {
-    		//e.preventDefault;
-    		//let fileName1 = $("#fileName1").val();
-    		
-	    	//$("#secondImg").removeClass("d-none");
-	    	
-    	//});
-    	
-    	$(".addBtn").on('click', function() {
-    		//alert("add");
-    		
-    		let productName = $("#productName").val().trim();
-    		if (!productName) {
-    			alert("Please input product name.");
-    			return;
-    		}
-    		
-    		let category = $("#category").val();
-    		if (category == "--select category--") {
-    			alert("Please input category.");
-    			return;
-    		}
-    		
-    		let productDesc = $("#productDesc").val();
-    		if (!productDesc) {
-    			alert("Please input product description.");
-    			return;
-    		}
-    		
-    		let fileName1 = $("#imgFile1").val();
-    		if (!fileName1) {
-    			alert("Please input image File.");
-    			return;
-    		}
-    		
-    		if (fileName1) {
-				let ext = fileName1.split(".").pop().toLowerCase();
-				//console.log(ext);
-				
-				if($.inArray(ext, ["jpg", "gif", "png"]) == -1) {
-					alert("Upload image files only. (.jpg, .gif, .png)");
-					$("#imgFile1").val(""); // 파일 초기화
+	<script>
+		$(document).ready(function () {
+			$("#imgUploadBtn1").on('click', function (e) {
+				e.preventDefault();
+				$("#imgFile1").click();
+			});
+
+
+			$("#imgFile1").on('change', function (e) {
+				let files = e.target.files;
+				if (files.length == 0) {
+					$("#imgFile1").val("");
+					$("#fileName1").text("");
 					return;
 				}
-			}
-    		
-    		let color = $("#color").val();
-    		if (color == "--select color--") {
-    			alert("Please input color.");
-    			return;
-    		}
-    		
-    		let size = $("#size").val();
-    		if (size == "--select size--") {
-    			alert("Please input size.");
-    			return;
-    		}
-    		
-    		let quantity = $("#quantity").val().trim();
-    		if (quantity == "--select quantity--") {
-    			alert("Please input quantity.");
-    			return;
-    		}
-    		
-    		let price = $("#price").val().trim();
-    		if (!price) {
-    			alert("Please input product price.");
-    			return;
-    		}
-    		
-    		let sale = $("#sale").val().trim();
-    		
-    		//alert(quantity);
-    		//return;
-    		
-    		let formData = new FormData();
-				formData.append("productName", productName); 
-				formData.append("category", category); 
-				formData.append("productDesc", productDesc); 
-				formData.append("imgFile1", $("#imgFile1")[0].files[0]);
-				formData.append("color", color); 
-				formData.append("size", size); 
+
+				for (let i = 0; i < files.length; i++) {
+					let file = files[i];
+					let fileName = file.name;
+					let ext = fileName.split(".").pop().toLowerCase();
+
+					if (ext != "gif" && ext != "png" && ext != "jpg") {
+						alert("You can only upload image files (.gif, .png, .jpg)");
+						$("#imgFile1").val("");
+						$("#fileName1").text("");
+						return;
+					}
+
+					// Display the file name
+					$("#fileName1").append('<p>' + fileName + '</p>');
+				}
+			});
+
+
+			//$("#imgAddBtn1").on('click', function(e) {
+			//e.preventDefault;
+			//let fileName1 = $("#fileName1").val();
+
+			//$("#secondImg").removeClass("d-none");
+
+			//});
+
+			$(".addBtn").on('click', function () {
+				//alert("add");
+
+				let productName = $("#productName").val().trim();
+				if (!productName) {
+					alert("Please input product name.");
+					return;
+				}
+
+				let category = $("#category").val();
+				if (category == "--select category--") {
+					alert("Please input category.");
+					return;
+				}
+
+				let productDesc = $("#productDesc").val();
+				if (!productDesc) {
+					alert("Please input product description.");
+					return;
+				}
+
+				let fileName1 = $("#imgFile1").val();
+				if (!fileName1) {
+					alert("Please input image File.");
+					return;
+				}
+
+				if (fileName1) {
+					let ext = fileName1.split(".").pop().toLowerCase();
+					//console.log(ext);
+
+					if ($.inArray(ext, ["jpg", "gif", "png"]) == -1) {
+						alert("Upload image files only. (.jpg, .gif, .png)");
+						$("#imgFile1").val(""); // 파일 초기화
+						return;
+					}
+				}
+
+				let color = $("#color").val();
+				if (color == "--select color--") {
+					alert("Please input color.");
+					return;
+				}
+
+				let size = $("#size").val();
+				if (size == "--select size--") {
+					alert("Please input size.");
+					return;
+				}
+
+				let quantity = $("#quantity").val().trim();
+				if (quantity == "--select quantity--") {
+					alert("Please input quantity.");
+					return;
+				}
+
+				let price = $("#price").val().trim();
+				if (!price) {
+					alert("Please input product price.");
+					return;
+				}
+
+				let sale = $("#sale").val().trim();
+
+				//alert(quantity);
+				//return;
+
+				let formData = new FormData();
+				formData.append("productName", productName);
+				formData.append("category", category);
+				formData.append("productDesc", productDesc);
+				let files = $("#imgFile1")[0].files;
+				for (let i = 0; i < files.length; i++) {
+					formData.append("imgFile" + (i + 1), files[i]);
+				}
+				$(document).ready(function () {
+					$('.addProductDetail').click(function (e) {
+						e.preventDefault();
+
+						// Clone the last .productDetail
+						var newProductDetail = $('.productDetail:last').clone();
+
+						// Clear the input fields in the cloned .productDetail
+						newProductDetail.find('input').val('');
+						newProductDetail.find('select').prop('selectedIndex', 0);
+
+						// Append the cloned .productDetail to the parent container
+						$('.productDetail:last').after(newProductDetail);
+					});
+				});
+
+				formData.append("color", color);
+				formData.append("size", size);
 				formData.append("quantity", quantity);
 				formData.append("price", price);
 				formData.append("sale", sale);
-    		
-    		$.ajax({
-    			type:"POST"
-				, url:"/horsepower/admin/product-manage-add"
-				, data:formData
-				, enctype:"multipart/form-data" 
-				, processData:false
-				, contentType:false
-				
-				, success:function(data) {
-					if (data.code == 200) {
-						alert("Product has been successfully added.");
-						location.href = "/horsepower/admin/manage-product"
-					} else if (data.code == 403) {
-						alert(data.error_message);
-						location.href = "/horsepower/product/product-list";
-					} else {
-						alert(data.error_message);
+
+				$.ajax({
+					type: "POST"
+					, url: "/horsepower/admin/product-manage-add"
+					, data: formData
+					, enctype: "multipart/form-data"
+					, processData: false
+					, contentType: false
+
+					, success: function (data) {
+						if (data.code == 200) {
+							alert("Product has been successfully added.");
+							location.href = "/horsepower/admin/manage-product"
+						} else if (data.code == 403) {
+							alert(data.error_message);
+							location.href = "/horsepower/product/product-list";
+						} else {
+							alert(data.error_message);
+						}
 					}
-				}
-    		
-    			, error:function(e) {
-    				alert("Failed to add the product.");
-    			}
-    		});
-    	});
-    });
-    </script>
+
+					, error: function (e) {
+						alert("Failed to add the product.");
+					}
+				});
+			});
+			
+			$("#addProductDetails").on('click', function(e) {
+				e.preventDefault();
+				$("#addFile").click();
+			});
+
+			 $('#addFile').click(function(e) {
+			   e.preventDefault();
+
+			   // Clone the last .productDetail
+			   var newProductDetail = $('.productDetail:last').clone();
+
+			   // Clear the input fields in the cloned .productDetail
+			   newProductDetail.find('input').val('');
+			   newProductDetail.find('select').prop('selectedIndex', 0);
+
+			   // Append the cloned .productDetail to the parent container
+			   $('.productDetail:last').after(newProductDetail);
+			 });
+
+		});
+	</script>
 </th:block>

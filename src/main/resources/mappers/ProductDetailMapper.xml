@@ -28,7 +28,7 @@
  		)
  	</insert>
  	
- 	<select id="selectProductDetailByProductId" parameterType="int" resultType="com.horsepower.product.domain.ProductDetail">
+ 	<select id="selectProductDetailListByProductId" parameterType="int" resultType="com.horsepower.product.domain.ProductDetail">
  		SELECT
 	 		`id`
 			, `productId`

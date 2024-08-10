@@ -11,9 +11,18 @@
 			<div th:text="${productInfo.product.description}"></div>
 		</div>	
 		<div class="d-flex justify-content-center align-items-center col-4">
-			<div>
-				<div th:text="${productInfo.product.name}"></div>
-				<div th:text="${productInfo.productDetail.price}"></div>
+			<div class="w-100">
+				<div th:text="${productInfo.product.name}" class="text-center"></div>
+				<div th:each="detail : ${productInfo.productDetailList}">
+					<div th:text="|$ ${detail.price}0 |" class="text-center"></div>
+				</div>
+				<div class="w-100">
+					<button type="button" class="btn btn-dark w-100 my-5">Add to Cart</button>
+				</div>
+				<div class="w-100 bg-light">
+					<div>Standard Delivery</div>
+					<div>Prices and thresholds vary. Refer to our delivery information.</div>
+				</div>
 			</div>
 		</div>	
 	</div>
@@ -22,6 +31,13 @@
 <th:block layout:fragment="script">
     <script>
     	$(document).ready(function() {
-    		
+    		$('.product-detail').slick({
+				dots: true,
+				infinite: true,
+				speed: 300,
+				slidesToShow: 1,
+				adaptiveHeight: true
+			});
+			
     	});
     </script>

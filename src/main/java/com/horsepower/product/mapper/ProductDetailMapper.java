@@ -1,5 +1,7 @@
 package com.horsepower.product.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,7 +18,7 @@ public interface ProductDetailMapper {
 			@Param("price") double price, 
 			@Param("sale") Integer sale);
 	
-	public ProductDetail selectProductDetailByProductId(int productId);
+	public List<ProductDetail> selectProductDetailListByProductId(int productId);
 	
 	public void deleteProductDetailByProductId(int productId);
 	

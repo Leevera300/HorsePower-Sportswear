@@ -1,5 +1,7 @@
 package com.horsepower.product.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +20,9 @@ public class ProductDetailBO {
 		productDetailMapper.insertProdcutDetail(productId, color, size, quantity, price, sale);
 	}
 	
-	public ProductDetail getProductDetailByProductId(int productId) {
+	public List<ProductDetail> getProductDetailListByProductId(int productId) {
 		
-		return productDetailMapper.selectProductDetailByProductId(productId);
+		return productDetailMapper.selectProductDetailListByProductId(productId);
 	}
 	
 	public void deleteProductDetailByProductId(int productId) {
