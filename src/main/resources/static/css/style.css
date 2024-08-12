@@ -23,6 +23,10 @@ header {
 		
 .addProductDetail {height: 200px;}
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black; 
+}
 
 footer {padding-top: 6.751rem;}
 		

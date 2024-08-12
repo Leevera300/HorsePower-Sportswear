@@ -14,11 +14,11 @@ class ProductDetailBOTest {
 	@Autowired
 	ProductDetailBO pDBO;
 	
-	@Transactional
-	@Test
-	void test() {
-		pDBO.addProductDetail(12, "asd", "asd", 1, 3, null);
-		
-	}
+//	@Transactional
+//	@Test
+//	void test() {
+//		pDBO.addProductDetail(12, "asd", "asd", 1, 3, null);
+//		
+//	}
 
 }

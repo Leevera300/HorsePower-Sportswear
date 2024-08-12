@@ -51,8 +51,8 @@
 					<div id="fileName3" class="ml-2"></div>
 				</div>
 			</div>
-			<div class="productDetail d-flex my-5">
-				<div>
+			<div class="d-flex my-5">
+				<div class="productDetail mx-2">
 					<div>
 						<div>Color</div>
 						<select id="color" class="form-control">
@@ -61,6 +61,7 @@
 							<option value="Red">Red</option>
 							<option value="Yellow">Yellow</option>
 							<option value="White">White</option>
+							<option value="Pink">Pink</option>
 						</select>
 					</div>
 					<div>
@@ -130,6 +131,25 @@
 					$("#fileName1").append('<p>' + fileName + '</p>');
 				}
 			});
+			
+			$("#addProductDetails").on('click', function(e) {
+				e.preventDefault();
+				$("#addFile").click();
+			});
+
+			 $('#addFile').click(function(e) {
+			   e.preventDefault();
+
+			   // Clone the last .productDetail
+			   var newProductDetail = $('.productDetail:last').clone();
+
+			   // Clear the input fields in the cloned .productDetail
+			   newProductDetail.find('input').val('');
+			   newProductDetail.find('select').prop('selectedIndex', 0);
+
+			   // Append the cloned .productDetail to the parent container
+			   $('.productDetail:last').after(newProductDetail);
+			 });
 
 
 			//$("#imgAddBtn1").on('click', function(e) {
@@ -203,6 +223,8 @@
 				}
 
 				let sale = $("#sale").val().trim();
+				
+				let files = $("#imgFile1")[0].files;
 
 				//alert(quantity);
 				//return;
@@ -211,7 +233,6 @@
 				formData.append("productName", productName);
 				formData.append("category", category);
 				formData.append("productDesc", productDesc);
-				let files = $("#imgFile1")[0].files;
 				for (let i = 0; i < files.length; i++) {
 					formData.append("imgFile" + (i + 1), files[i]);
 				}
@@ -231,11 +252,15 @@
 					});
 				});
 
-				formData.append("color", color);
-				formData.append("size", size);
-				formData.append("quantity", quantity);
-				formData.append("price", price);
-				formData.append("sale", sale);
+				// For each .productDetail element
+			 	$('.productDetail').each(function(index) {
+			    // Append the value of the input fields to the FormData object with a unique key
+				    formData.append('productDetails[' + index + '].color', $(this).find('#color').val());
+				    formData.append('productDetails[' + index + '].size', $(this).find('#size').val());
+				    formData.append('productDetails[' + index + '].quantity', $(this).find('#quantity').val());
+				    formData.append('productDetails[' + index + '].price', $(this).find('#price').val());
+				    formData.append('productDetails[' + index + '].sale', $(this).find('#sale').val());
+			  	});
 
 				$.ajax({
 					type: "POST"
@@ -263,24 +288,7 @@
 				});
 			});
 			
-			$("#addProductDetails").on('click', function(e) {
-				e.preventDefault();
-				$("#addFile").click();
-			});
-
-			 $('#addFile').click(function(e) {
-			   e.preventDefault();
-
-			   // Clone the last .productDetail
-			   var newProductDetail = $('.productDetail:last').clone();
-
-			   // Clear the input fields in the cloned .productDetail
-			   newProductDetail.find('input').val('');
-			   newProductDetail.find('select').prop('selectedIndex', 0);
-
-			   // Append the cloned .productDetail to the parent container
-			   $('.productDetail:last').after(newProductDetail);
-			 });
+			
 
 		});
 	</script>

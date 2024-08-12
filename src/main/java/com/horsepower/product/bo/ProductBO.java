@@ -28,7 +28,7 @@ public class ProductBO {
 	
 	@Transactional
 	public void addProduct(String name, String category,  String description, MultipartFile imgFile1,
-			 String color, String size, int quantity, double price, Integer sale) {
+			List<ProductDetail> productDetail) {
 		
 		Product product = new Product();
 		product.setName(name);
@@ -36,7 +36,7 @@ public class ProductBO {
 		product.setDescription(description);
 		productMapper.insertProduct(product);
 		
-		productDetailBO.addProductDetail(product.getId(), color, size, quantity, price, sale);
+		productDetailBO.addProductDetail(product.getId(), productDetail);
 		
 		productPicsBO.addProdcutPics(product.getId(), imgFile1);
 	}
@@ -136,13 +136,13 @@ public class ProductBO {
 	
 	@Transactional
 	public void updateProductById(int id, String name, String category,  String description, MultipartFile imgFile1,
-			 String color, String size, int quantity, double price, Integer sale) {
+			List<ProductDetail> productDetail) {
 		
 		Product product = productMapper.selectProductById(id);
 		
 		productMapper.updateProductById(id, name, category, description);
 		
-		productDetailBO.updateProductDetailByProductId(product.getId(), color, size, quantity, price, sale);
+		productDetailBO.updateProductDetailByProductId(product.getId(), productDetail);
 		
 		if (imgFile1 != null) {
 			productPicsBO.addProdcutPics(product.getId(), imgFile1);

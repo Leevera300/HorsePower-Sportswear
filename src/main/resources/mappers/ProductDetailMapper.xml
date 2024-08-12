@@ -57,6 +57,8 @@
 			, `updatedAt`= NOW()
  		WHERE
  			`productId` = #{productId}
+ 			AND `color` = #{color}
+			AND `size` = #{size}
  	</update>
  	
  	<delete id="deleteProductDetailByProductId" parameterType="int">

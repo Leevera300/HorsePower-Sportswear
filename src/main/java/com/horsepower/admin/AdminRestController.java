@@ -1,11 +1,13 @@
 package com.horsepower.admin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.horsepower.product.bo.ProductBO;
+import com.horsepower.product.domain.ProductDetail;
+import com.horsepower.product.domain.ProductDetailListWrapper;
 import com.horsepower.user.bo.UserBO;
 
 import jakarta.servlet.http.HttpSession;
@@ -83,11 +87,7 @@ public class AdminRestController {
 			@RequestParam("category") String category,
 			@RequestParam("productDesc") String productDesc,
 			@RequestParam("imgFile1") MultipartFile imgFile1,
-			@RequestParam("color") String color,
-			@RequestParam("size") String size,
-			@RequestParam("quantity") int quantity,
-			@RequestParam("price") double price,
-			@RequestParam(value = "sale", required = false) Integer sale,
+			@ModelAttribute ProductDetailListWrapper productDetailsWrapper,
 			HttpSession session) {
 		
 		String authority = (String)session.getAttribute("userAuthority");
@@ -99,8 +99,10 @@ public class AdminRestController {
 			return result;
 		}
 		
+		List<ProductDetail> productDetail = productDetailsWrapper.getProductDetails();
 		
-		productBO.addProduct(productName, category, productDesc, imgFile1, color, size, quantity, price, sale);
+		
+		productBO.addProduct(productName, category, productDesc, imgFile1, productDetail);
 		
 		result.put("code", 200);
 		result.put("result", "success");
@@ -137,11 +139,7 @@ public class AdminRestController {
 			@RequestParam("category") String category,
 			@RequestParam("productDesc") String productDesc,
 			@RequestParam(value = "imgFile1", required = false) MultipartFile imgFile1,
-			@RequestParam("color") String color,
-			@RequestParam("size") String size,
-			@RequestParam("quantity") int quantity,
-			@RequestParam("price") double price,
-			@RequestParam(value = "sale", required = false) Integer sale,
+			@ModelAttribute ProductDetailListWrapper productDetailsWrapper,
 			HttpSession session) {
 		
 		String authority = (String)session.getAttribute("userAuthority");
@@ -153,7 +151,9 @@ public class AdminRestController {
 			return result;
 		}
 		
-		productBO.updateProductById(productId, productName, category, productDesc, imgFile1, color, size, quantity, price, sale);
+		List<ProductDetail> productDetail = productDetailsWrapper.getProductDetails();
+		
+		productBO.updateProductById(productId, productName, category, productDesc, imgFile1, productDetail);
 		
 		result.put("code", 200);
 		result.put("result", "success");

@@ -4,8 +4,20 @@
       layout:decorate="~{layout/defaultLayout}">
 <div layout:fragment="content" class="content d-flex justify-content-center">
     <div class="w-100 d-flex">
-		<div th:each="productPic : ${productInfo.productPics}">
-			<img th:src="${productPic.imagePath}" alt="productImg" width=650px; height=600px;>
+		 <div id="productCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+				<div th:each="productPic, stat : ${productInfo.productPics}" th:classappend="${stat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+					<img th:src="${productPic.imagePath}" alt="productImg" width=650px; height=600px;>
+				</div>	
+			</div>
+			<a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
 		</div>	
 		<div class="d-flex justify-content-center align-items-center col-4">
 			<div th:text="${productInfo.product.description}"></div>
@@ -13,11 +25,36 @@
 		<div class="d-flex justify-content-center align-items-center col-4">
 			<div class="w-100">
 				<div th:text="${productInfo.product.name}" class="text-center"></div>
-				<div th:each="detail : ${productInfo.productDetailList}">
-					<div th:text="|$ ${detail.price}0 |" class="text-center"></div>
+				
+				<div th:text="|$ ${#numbers.formatDecimal(productInfo.productDetailList[0].price, 1, 2)}|" class="text-center"></div>
+				
+				<div class="d-flex justify-content-center">
+					<div class="mt-5 mb-2">
+						<select class="form-control">
+	                        <option id="color" th:each="detail : ${#sets.toSet(productInfo.productDetailList.![color])}" th:text="${detail}"></option>
+	                    </select>
+					</div>
 				</div>
+				
+				<div class="d-flex justify-content-center">
+					<div class="mt-5 mb-2">
+						<select class="form-control">
+	                        <option id="size" th:each="detail : ${productInfo.productDetailList}" th:text="${detail.size}">Small</option>
+	                    </select>
+					</div>
+				</div>
+				
 				<div class="w-100">
-					<button type="button" class="btn btn-dark w-100 my-5">Add to Cart</button>
+                    <div>Quantity</div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" id="minusQuantitybtn" class="btn btn-dark">-</button>
+                        <div id="quantity">1</div>
+                        <button type="button" id="addQuantitybtn" class="btn btn-dark">+</button>
+               		</div>
+				</div>
+				
+				<div class="w-100">
+					<button id="addToCartBtn" type="button" class="btn btn-dark w-100 my-5" th:data-product-id="${productInfo.product.id}">Add to Cart</button>
 				</div>
 				<div class="w-100 bg-light">
 					<div>Standard Delivery</div>
@@ -31,13 +68,41 @@
 <th:block layout:fragment="script">
     <script>
     	$(document).ready(function() {
-    		$('.product-detail').slick({
-				dots: true,
-				infinite: true,
-				speed: 300,
-				slidesToShow: 1,
-				adaptiveHeight: true
+			$("#addQuantitybtn").click(function(e) {
+				e.preventDefault();
+				let quantity = $("#quantity").text();
+				if (quantity < 10) {
+					quantity++;
+                    $("#quantity").text(quantity);
+				}
 			});
-			
-    	});
+            $("#minusQuantitybtn").click(function(e) {  
+            	e.preventDefault();
+            	let quantity = $("#quantity").text();
+            	if (quantity > 1) {
+            		quantity--;
+                    $("#quantity").text(quantity);
+            	}
+            });
+            
+            $("#addToCartBtn").on('click', function(e) {
+            	e.preventDefault();
+            	let productId = $(this).data('product-id');
+            	let quantity = $("#quantity").text();
+            	let color = $("#color").val();
+            	let size = $("#size").val();
+            	
+            	$.ajax({
+            		type: "POST",
+            		url: "/horsepower/cart/add",
+            		data: {"producId":productId, 
+            			"quantity":quantity, 
+            			"color":color, 
+            			"size":size}
+            		});
+            	
+            	
+            	//alert(productId);
+            });
+         });
     </script>

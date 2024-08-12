@@ -14,10 +14,13 @@ public class ProductDetailBO {
 	@Autowired
 	private ProductDetailMapper productDetailMapper;
 
-	public void addProductDetail(int productId, String color, String size, int quantity, 
-			double price, Integer sale) {
+	public void addProductDetail(int productId, List<ProductDetail> productDetail) {
 		
-		productDetailMapper.insertProdcutDetail(productId, color, size, quantity, price, sale);
+		for (int i = 0; productDetail.size() > i; i++) {
+			ProductDetail detail = productDetail.get(i);
+			productDetailMapper.insertProdcutDetail(productId, detail.getColor(), detail.getSize(),
+					detail.getQuantity(), detail.getPrice(), detail.getSale());
+		}
 	}
 	
 	public List<ProductDetail> getProductDetailListByProductId(int productId) {
@@ -30,9 +33,12 @@ public class ProductDetailBO {
 		productDetailMapper.deleteProductDetailByProductId(productId);
 	}
 	
-	public void updateProductDetailByProductId(int productId, String color, String size, int quantity, 
-			double price, Integer sale) {
+	public void updateProductDetailByProductId(int productId, List<ProductDetail> productDetail) {
 		
-		productDetailMapper.updateProductDetailByProductId(productId, color, size, quantity, price, sale);
+		for (int i = 0; productDetail.size() > i; i++) {
+			ProductDetail detail = productDetail.get(i);
+			productDetailMapper.updateProductDetailByProductId(productId, detail.getColor(), detail.getSize(),
+					detail.getQuantity(), detail.getPrice(), detail.getSale());
+		}
 	}
 }
