@@ -85,24 +85,39 @@
             	}
             });
             
+            
             $("#addToCartBtn").on('click', function(e) {
             	e.preventDefault();
             	let productId = $(this).data('product-id');
-            	let quantity = $("#quantity").text();
             	let color = $("#color").val();
             	let size = $("#size").val();
+            	let quantity = $("#quantity").text();
+            	
+            	alert(quantity);
+            	
             	
             	$.ajax({
             		type: "POST",
-            		url: "/horsepower/cart/add",
-            		data: {"producId":productId, 
-            			"quantity":quantity, 
-            			"color":color, 
+            		url: "/horsepower/checkout/add",
+            		data: {"productId":productId,
+            			"quantity":quantity,
+            			"color":color,
             			"size":size}
-            		});
+
+            		, success:function (data) {
+	            		if (data.code == 200) {
+							alert("Product has been successfully added to your cart.");
+						} else {
+							alert(data.error_message);
+						}
+	                }            	
+            		
+            		, error:function(e) {
+            			alert("Failed to add the product to your cart.");
+            		}
+            	});
             	
-            	
-            	//alert(productId);
+            		
             });
          });
     </script>

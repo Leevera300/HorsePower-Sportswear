@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.horsepower.AOP.TimeTrace;
 import com.horsepower.product.bo.ProductBO;
 import com.horsepower.product.domain.ProductInfo;
 
@@ -19,6 +20,7 @@ public class ProductController {
 	@Autowired
 	private ProductBO productBO;
 	
+	@TimeTrace
 	@GetMapping("/product-list")
 	public String productList(Model model) {
 		

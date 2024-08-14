@@ -20,6 +20,11 @@ public interface ProductDetailMapper {
 	
 	public List<ProductDetail> selectProductDetailListByProductId(int productId);
 	
+	public ProductDetail selectProductDetailByProductIdAndColorAndSize(
+			@Param("productId") int productId,
+			@Param("color") String color, 
+			@Param("size") String size);
+	
 	public void deleteProductDetailByProductId(int productId);
 	
 	public void updateProductDetailByProductId(

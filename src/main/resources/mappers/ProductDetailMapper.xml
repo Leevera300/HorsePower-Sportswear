@@ -44,6 +44,24 @@
 		WHERE
 			`productId` = #{productId}
  	</select>
+ 	<select id="selectProductDetailByProductIdAndColorAndSize" parameterType="map" resultType="com.horsepower.product.domain.ProductDetail">
+ 		SELECT
+	 		`id`
+			, `productId`
+			, `color`
+			, `size`
+			, `quantity`
+			, `sale`
+			, `price`
+			, `createdAt`
+			 ,`updatedAt`
+		FROM
+			`product_detail`
+		WHERE
+			`productId` = #{productId}
+			AND `color` = #{color}
+			AND `size` = #{size}
+ 	</select>
  	
  	<update id="updateProductDetailByProductId" parameterType="map">
  		UPDATE

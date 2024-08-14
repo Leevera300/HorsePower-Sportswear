@@ -28,6 +28,11 @@ public class ProductDetailBO {
 		return productDetailMapper.selectProductDetailListByProductId(productId);
 	}
 	
+	public ProductDetail getProductDetailByProductIdAndColorAndSize(int productId, String color, String size) {
+
+		return productDetailMapper.selectProductDetailByProductIdAndColorAndSize(productId, color, size);
+	}
+	
 	public void deleteProductDetailByProductId(int productId) {
 		
 		productDetailMapper.deleteProductDetailByProductId(productId);

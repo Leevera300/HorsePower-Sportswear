@@ -123,6 +123,12 @@ public class ProductBO {
 		return productInfo;
 	}
 	
+	public Product getProductByProductId(int productId) {
+		Product product = productMapper.selectProductById(productId);
+		
+		return product;
+	}
+	
 	public void deleteProductById(int id) {
 		
 		Product product = productMapper.selectProductById(id);
