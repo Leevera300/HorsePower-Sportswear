@@ -56,4 +56,9 @@ public class ProductPicsBO {
 			}
 		}
 	}
+
+	public ProductPics getProductPicByProductIdLimit1(int productId) {
+		return productPicsMapper.selectProductPicByProductIdLimit1(productId);
+	}
+
 }

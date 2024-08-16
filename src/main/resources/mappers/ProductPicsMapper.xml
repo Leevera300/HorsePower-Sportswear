@@ -33,6 +33,20 @@
 			`productId` = #{productId}
  	</select>
  	
+ 	<select id="selectProductPicByProductIdLimit1" parameterType="int" resultType="com.horsepower.product.domain.ProductPics">
+ 		SELECT
+ 			`id`
+			, `productId`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product_pics`
+		WHERE
+			`productId` = #{productId}
+		LIMIT 1
+ 	</select>
+ 	
  	<delete id="deleteProductPicsByProductId" parameterType="int">
  		DELETE FROM
  			`product_pics`

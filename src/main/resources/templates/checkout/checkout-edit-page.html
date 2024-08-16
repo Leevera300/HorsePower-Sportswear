@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayoutAdmin}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <div>
+	    <table class="table">
+	    	<thead>
+	    		<tr>
+	    			<th>Product</th>
+	    			<th>Product Name</th>
+	    			<th>Color</th>
+	    			<th>Size</th>
+	    			<th>Quantity</th>
+	    			<th>Delete</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr class="checkoutInfo" th:each="checkout : ${checkoutinfoList}">
+	    			<td>
+	    			    <img th:src="${checkout.productPic.imagePath}" alt="productImg" width=100px; height=100px;>
+					</td>
+	    			<td th:text="${checkout.product.name}">aaaa</td>
+	    			<td th:text="${checkout.productDetail.color}">user</td>
+	    			<td th:text="${checkout.productDetail.size}">1234</td>
+	    			<td>
+		    			<div class="d-flex justify-content-between align-items-center">
+	                        <button type="button" class="minusQuantitybtn btn btn-dark"  style="width: 20px; height: 20px;">-</button>
+	                        <div class="quantity" th:text="${checkout.checkout.quantity}">1</div>
+	                        <button type="button" class="addQuantitybtn btn btn-dark" style="width: 20px; height: 20px;">+</button>
+	               		</div>
+               		</td>
+	    			<td><a href=""><button class="deleteBtn btn btn-danger" th:data-checkout-id=${checkout.checkout.id}>DELETE</button></a></td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+	    <div class="d-flex justify-content-center">
+        	<a href="/horsepower/checkout/pay-info"><button class="payBtn btn btn-dark" style="width: 300px; height: 50px;">Proceed to Pay</button></a>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+    $(document).ready(function() {
+    	$(".addQuantitybtn").click(function(e) {
+			e.preventDefault();
+			let quantityDiv = $(this).siblings(".quantity");
+	        let quantity = quantityDiv.text();
+	        //alert(quantity);
+	        if (quantity < 10) {
+	            quantity++;
+	            quantityDiv.text(quantity);
+	        }
+		});
+        $(".minusQuantitybtn").click(function(e) {  
+        	e.preventDefault();
+        	 let quantityDiv = $(this).siblings(".quantity");
+             let quantity = quantityDiv.text();
+             //alert(quantity);
+             if (quantity > 1) {
+                 quantity--;
+                 quantityDiv.text(quantity);
+             }
+        });
+        
+        $(".deleteBtn").click(function(e) {
+        	e.preventDefault();
+        	let checkoutId = $(this).data('checkout-id');
+        	//alert(checkoutId);
+        	//return;
+        	
+        	$.ajax({
+        		type: "POST",
+        		url: "/horsepower/checkout/delete",
+        		data: {"checkoutId":checkoutId},
+        		success: function(data) {
+        			location.reload();
+        		},
+        		error: function(e) {
+        			alert("Failed to delete the item.");
+        		}
+        	});
+        });
+        
+        $(".payBtn").click(function() {
+        	$.ajax({
+        		type: "PUT",
+        		url: "/horsepower/checkout/update",
+        		success: function(data) {
+        			location.href = "/horsepower/checkout/pay-info";
+        		}
+        	
+        		, error: function(e) {
+        			alert("Failed to go to payment page.");
+        		}
+        	});
+        });
+    });
+    </script>
+</th:block>

@@ -17,4 +17,7 @@ public interface ProductPicsMapper {
 	public List<ProductPics> selectProductPicsByProductId(int productId);
 	
 	public int deleteProductPicsByProductId(int productId);
+
+	public ProductPics selectProductPicByProductIdLimit1(int productId);
+
 }

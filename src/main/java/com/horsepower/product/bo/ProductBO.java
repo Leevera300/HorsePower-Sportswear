@@ -154,4 +154,8 @@ public class ProductBO {
 			productPicsBO.addProdcutPics(product.getId(), imgFile1);
 		}
 	}
+
+	public Product getProductById(int productId) {
+		return productMapper.selectProductById(productId);
+	}
 }

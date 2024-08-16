@@ -34,4 +34,6 @@ public interface ProductDetailMapper {
 			@Param("quantity") int quantity, 
 			@Param("price") double price, 
 			@Param("sale") Integer sale);
+
+	public ProductDetail selectProductDetailById(int Id);
 }

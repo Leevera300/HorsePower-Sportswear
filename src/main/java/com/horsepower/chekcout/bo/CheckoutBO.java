@@ -45,4 +45,8 @@ public class CheckoutBO {
 		
 		return checkoutList;
 	}
+
+	public void deleteCheckoutById(int checkoutId) {
+        checkoutRepository.deleteById(checkoutId);		
+	}
 }

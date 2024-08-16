@@ -46,4 +46,8 @@ public class ProductDetailBO {
 					detail.getQuantity(), detail.getPrice(), detail.getSale());
 		}
 	}
+
+	public ProductDetail getProductDetailById(int productDetailId) {
+		return productDetailMapper.selectProductDetailById(productDetailId);
+	}
 }

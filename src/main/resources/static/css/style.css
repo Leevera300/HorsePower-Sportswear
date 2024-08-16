@@ -36,6 +36,12 @@ a, a:hover {text-decoration:none; color:#000;}
     min-height: 100%;
 	width: 400px;
 }
+
+.btn-dark {
+    text-align: center;
+    line-height: 20px;
+    padding: 0;
+}
 	
 
 footer {padding-top: 6.751rem;}
