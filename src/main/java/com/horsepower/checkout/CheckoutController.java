@@ -67,4 +67,37 @@ public class CheckoutController {
 
 		return "checkout/checkout-edit-page";
 	}
+	
+	@GetMapping("/pay-info")
+	public String payInfo(HttpSession session,
+			Model model) {
+		
+		String userEmail = (String) session.getAttribute("userEmail");
+		
+List<CheckoutEntity> checkoutList = checkoutBO.getCheckoutListByUserEmail(userEmail);
+		
+		List<CheckoutInfo> checkoutinfoList = new ArrayList<>();
+
+		for (CheckoutEntity checkout : checkoutList) {
+			CheckoutInfo checkoutinfo = new CheckoutInfo();
+			
+			checkoutinfo.setCheckout(checkout);
+			
+			Product product = productBO.getProductById(checkout.getProductId());
+			checkoutinfo.setProduct(product);
+			
+			ProductDetail productDetail = productDetailBO.getProductDetailById(checkout.getProductDetailId());
+            checkoutinfo.setProductDetail(productDetail);
+            
+            ProductPics productPic = productPicBO.getProductPicByProductIdLimit1(product.getId());
+            checkoutinfo.setProductPic(productPic);
+            
+            checkoutinfoList.add(checkoutinfo);
+		}
+		
+		model.addAttribute("checkoutinfoList", checkoutinfoList);
+		
+		return "checkout/pay-info";
+    }
+	
 }

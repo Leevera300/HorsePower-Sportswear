@@ -2,6 +2,17 @@
 
 a, a:hover {text-decoration:none; color:#000;}
 
+.deliveryInfo {width: 50%;}
+.deliveryInfoBox {width: 80%;
+                 margin: 0 auto;}
+
+.chekcoutInfo {width: 50%;}
+.checkoutInfoBox {width: 50%;
+                 margin: 0 auto;
+                 background-color: LightGray;}
+
+.payInfoProductDetails {font-size: 8px;}
+
 .header {
 		position: fixed;
   		top: 0;

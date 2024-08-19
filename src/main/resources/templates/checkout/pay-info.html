@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayoutAdmin}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <div class="deliveryInfo">
+    	<div class="deliveryInfoBox">
+	    	<div class="">
+		    	<span>Account</span><br>
+		    	<span th:text="${session.userEmail}"></span>
+	    	<hr>
+	    	</div>
+	    	<div class="">
+	        	<h3>Delivery</h3>
+	        	<div class="font-weight-bold">Country/Region</div>
+	        	<input type="text" class="form-control" id="country" name="country" value="South Korea">
+	        	<div class="d-flex my-2">
+            		<input type="text" class="form-control mr-2" id="FirstName" name="FirstName" placeholder="First Name">
+            		<input type="text" class="form-control" id="LastName" name="LastName" placeholder="Last Name">
+	        	</div>
+	        	<input type="text" class="form-control" id="address1" name="address1" placeholder="AddressLine1">
+	        	<input type="text" class="form-control my-2" id="address2" name="address2" placeholder="AddressLine2">
+	        	<div class="d-flex">
+	        		<input type="text" class="form-control" id="postalCode" name="postalCode" placeholder="Postal code">
+	        		<input type="text" class="form-control mx-2" id="city" name="city" placeholder="City">
+	        		<input type="text" class="form-control" id="state" name="state" placeholder="State">
+	        	</div>
+	        	<input type="text" class="form-control my-2" id="phone" name="phone" placeholder="Phone">
+	        </div>	
+	        <button class="payBtn btn btn-dark col-12">Pay now</button>
+    	</div>
+    </div>
+    <div class="chekcoutInfo">
+    	<div class="checkoutInfoBox" th:each="checkout : ${checkoutinfoList}">
+    		<div class="d-flex mb-2">
+    			<img th:src="${checkout.productPic.imagePath}" alt="productImg" width=50px; height=50px;>
+    			<div class="payInfoProductDetails ml-3">
+    				<div th:text="${checkout.product.name}" th:data-checkout-id="${checkout.checkout.id}">ProductName</div>
+    				<div th:text="${checkout.productDetail.color}">Color</div>
+    				<div th:text="${checkout.productDetail.size}">Size</div>
+    				<div th:text="${checkout.checkout.quantity}">Quantity</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+    $(document).ready(function() {
+    	$(".payBtn").on('click', function(e) {
+    		e.preventDefault();
+    		let country = $("#country").val();
+    		let firstName = $("#FirstName").val().trim();
+    		let lastName = $("#LastName").val().trim();
+    		let address1 = $("#address1").val().trim();
+    		let address2 = $("#address2").val().trim();
+    		let postalCode = $("#postalCode").val();
+    		let city = $("#city").val();
+    		let state = $("#state").val();
+    		let phone = $("#phone").val().trim();
+    		let checkoutItems = [];
+    		$(".checkoutInfoBox").each(function() {
+    			let checkoutId = $(this).find(".payInfoProductDetails div:nth-child(1)").attr("data-checkout-id");
+    			let productName = $(this).find(".payInfoProductDetails div:nth-child(1)").text();
+    			let color = $(this).find(".payInfoProductDetails div:nth-child(2)").text();
+    			let size = $(this).find(".payInfoProductDetails div:nth-child(3)").text();
+    			let quantity = $(this).find(".payInfoProductDetails div:nth-child(4)").text();
+    			let checkout = {
+    				"checkoutId": checkoutId,
+    				"productName": productName,
+    				"color": color,
+    				"size": size,
+    				"quantity": quantity
+    			};
+    			checkoutItems.push(checkout);
+    		});
+    		let delieveryInfo = {
+    			"country": country,
+    			"firstName": firstName,
+    			"lastName": lastName,
+    			"address1": address1,
+    			"address2": address2,
+    			"postalCode": postalCode,
+    			"city": city,
+    			"state": state,
+    			"phone": phone,
+    			"checkoutItems": checkoutItem
+    		};
+    		console.log(delieveryInfo);
+    		$.ajax({
+    			type: "POST",
+    			contentType: "application/json",
+    			url: "/horsepower/checkout/pay",
+    			data: JSON.stringify(delieveryInfo),
+    			dataType: 'json',
+    			success: function(data) {
+    				alert("Payment successful");
+    				window.location.href = "/horsepower/checkout/pay-success";
+    			},
+    			error: function(e) {
+    				alert("Payment failed");
+    				console.log("ERROR: ", e);
+    			}
+    		});
+    	});
+    });
+    </script>
+</th:block>

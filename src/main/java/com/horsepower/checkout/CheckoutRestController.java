@@ -7,7 +7,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.horsepower.chekcout.bo.CheckoutBO;
 import com.horsepower.chekcout.entity.CheckoutEntity;
 import com.horsepower.chekcout.entity.CheckoutInfo;
+import com.horsepower.chekcout.entity.CheckoutUpdate;
+import com.horsepower.order.bo.OrderBO;
+import com.horsepower.order.entity.DelieveryInfo;
 import com.horsepower.product.bo.ProductBO;
 import com.horsepower.product.bo.ProductDetailBO;
 import com.horsepower.product.bo.ProductPicsBO;
@@ -39,6 +45,8 @@ public class CheckoutRestController {
 	
 	@Autowired
 	private ProductPicsBO productPicBO;
+	
+	@Autowired OrderBO orderBO;
 
 	@PostMapping("/add")
 	public Map<String, Object> add(@RequestParam("productId") int productId, @RequestParam("quantity") int quantity,
@@ -100,11 +108,29 @@ public class CheckoutRestController {
 	}
 	
 	@PutMapping("/update")
-	public Map<String, Object> update(@RequestParam("checkoutId") int checkoutId,
-			@RequestParam("quantity") int quantity) {
+	public Map<String, Object> update(@ModelAttribute CheckoutUpdate checkoutUpdate) {
 
-		checkoutBO.updateCheckoutById(checkoutId, quantity);
+		List<Integer> checkoutIds = checkoutUpdate.getCheckoutIds();
+		List<Integer> quantities = checkoutUpdate.getQuantities();
+		
+		checkoutBO.updateCheckoutByIdAndQuantity(checkoutIds, quantities);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "success");
 
+		return result;
+	}
+	
+	@PostMapping("/pay")
+	public Map<String, Object> pay(@RequestBody DelieveryInfo delieveryInfo,
+			HttpSession session) {
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		String userEmail = (String) session.getAttribute("userEmail");
+		
+		orderBO.addOrder(userId, userEmail, delieveryInfo);
+        
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
 		result.put("result", "success");

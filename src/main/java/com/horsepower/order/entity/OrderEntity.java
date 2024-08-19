@@ -1,4 +1,4 @@
-package com.horsepower.chekcout.entity;
+package com.horsepower.order.entity;
 
 import java.time.LocalDateTime;
 
@@ -24,13 +24,21 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@Table(name = "checkout")
+@Table(name = "`order`")
 @Entity
-public class CheckoutEntity {
+public class OrderEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name = "orderNumber")
+	private String orderNumber;
+	
+	@Column(name = "userId")
+	private int userId;
+	
+	private String email;
 	
 	@Column(name = "productId")
 	private int productId;
@@ -38,10 +46,13 @@ public class CheckoutEntity {
 	@Column(name = "productDetailId")
 	private int productDetailId;
 	
-	@Column(name = "userEmail")
-	private String userEmail;
-	
 	private int quantity;
+	
+	@Column(name = "orderStatus")
+	private String orderStatus;
+	
+	@Column(name = "paymentType")
+	private String paymentType;
 	
 	@CreationTimestamp
 	@Column(name = "createdAt")

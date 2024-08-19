@@ -20,7 +20,7 @@
 	    			<td>
 	    			    <img th:src="${checkout.productPic.imagePath}" alt="productImg" width=100px; height=100px;>
 					</td>
-	    			<td th:text="${checkout.product.name}">aaaa</td>
+	    			<td class="productName" th:text="${checkout.product.name}" th:data-checkout-id=${checkout.checkout.id}>aaaa</td>
 	    			<td th:text="${checkout.productDetail.color}">user</td>
 	    			<td th:text="${checkout.productDetail.size}">1234</td>
 	    			<td>
@@ -83,10 +83,33 @@
         	});
         });
         
-        $(".payBtn").click(function() {
+        $(".payBtn").click(function(e) {
+        	e.preventDefault();
+        	
+        	let checkoutIds = $(".productName").map(function() {
+                return $(this).data('checkout-id');
+            }).get();
+
+        	let quantities = $(".quantity").map(function() {
+                return $(this).text();
+            }).get();
+        	console.log(checkoutIds);
+        	console.log(quantities);
+        	
+        	
+        	let formData = new FormData();
+            checkoutIds.forEach((id, index) => {
+                formData.append(`checkoutIds[${index}]`, checkoutIds[index]);
+                formData.append(`quantities[${index}]`, quantities[index]);
+            });
+        		
         	$.ajax({
         		type: "PUT",
         		url: "/horsepower/checkout/update",
+        		data: formData,
+        	    processData: false,
+        	    contentType: false,
+        	    
         		success: function(data) {
         			location.href = "/horsepower/checkout/pay-info";
         		}

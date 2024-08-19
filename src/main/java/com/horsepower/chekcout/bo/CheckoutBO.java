@@ -45,8 +45,22 @@ public class CheckoutBO {
 		
 		return checkoutList;
 	}
+	
+	public CheckoutEntity getCheckoutEntityById(int id) {
+		return checkoutRepository.findById(id).orElse(null);
+	}
 
+	public void updateCheckoutByIdAndQuantity(List<Integer> checkoutId, List<Integer> quantity) {
+		for (int i = 0; i < checkoutId.size(); i++) {
+			CheckoutEntity checkout = checkoutRepository.findById(checkoutId.get(i)).orElse(null);
+			checkout.setQuantity(quantity.get(i));
+			checkoutRepository.save(checkout);
+		}
+	}
+	
 	public void deleteCheckoutById(int checkoutId) {
         checkoutRepository.deleteById(checkoutId);		
 	}
+
+
 }

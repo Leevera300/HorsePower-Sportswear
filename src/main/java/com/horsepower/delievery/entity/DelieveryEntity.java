@@ -1,4 +1,4 @@
-package com.horsepower.chekcout.entity;
+package com.horsepower.delievery.entity;
 
 import java.time.LocalDateTime;
 
@@ -24,24 +24,39 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@Table(name = "checkout")
+@Table(name = "delievery_address")
 @Entity
-public class CheckoutEntity {
+public class DelieveryEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "productId")
-	private int productId;
+	@Column(name = "orderNumber")
+	private String orderNumber;
 	
-	@Column(name = "productDetailId")
-	private int productDetailId;
+	@Column(name = "countryRegion")
+	private String countryRegion;
 	
-	@Column(name = "userEmail")
-	private String userEmail;
+	@Column(name = "firstName")
+	private String firstName;
 	
-	private int quantity;
+	@Column(name = "lastName")
+	private String lastName;
+	
+	private String adress1;
+	
+	private String adress2;
+	
+	@Column(name = "postalCode")
+	private int postalCode;
+	
+	private String city;
+	
+	private String state;
+	
+	@Column(name = "phoneNumber")
+	private String phoneNumber;
 	
 	@CreationTimestamp
 	@Column(name = "createdAt")
