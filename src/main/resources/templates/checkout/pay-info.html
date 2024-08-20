@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/defaultLayoutAdmin}">
+      layout:decorate="~{layout/defaultLayout}">
 <div layout:fragment="content" class="content d-flex justify-content-center">
     <div class="deliveryInfo">
     	<div class="deliveryInfoBox">
@@ -10,8 +10,8 @@
 		    	<span th:text="${session.userEmail}"></span>
 	    	<hr>
 	    	</div>
-	    	<div class="DelieveryAdd">
-	        	<h3 class="typeOfAdd">Delivery</h3>
+	    	<div class="typeOfAdd">
+	        	<h3 class="DeliveryAdd">Delivery</h3>
 	        	<div class="font-weight-bold">Country/Region</div>
 	        	<input type="text" class="form-control" id="country" name="country" value="South Korea">
 	        	<div class="d-flex my-2">
@@ -52,14 +52,25 @@
     	$(".payBtn").on('click', function(e) {
     		e.preventDefault();
     		let country = $("#country").val();
-    		let firstName = $("#FirstName").val().trim();
-    		let lastName = $("#LastName").val().trim();
-    		let address1 = $("#address1").val().trim();
-    		let address2 = $("#address2").val().trim();
+    		let firstName = $("#FirstName").val();
+    		let lastName = $("#LastName").val();
+    		let address1 = $("#address1").val();
+    		let address2 = $("#address2").val();
     		let postalCode = $("#postalCode").val();
     		let city = $("#city").val();
     		let state = $("#state").val();
-    		let phone = $("#phone").val().trim();
+    		let phone = $("#phone").val();
+    		let billingCountry = $(".BillingAdd #country").val();
+    		console.log("billingCountry: ", billingCountry);
+            let billingFirstName = $(".BillingAdd #FirstName").val();
+            console.log("billingFirstName: ", billingFirstName);
+            let billingLastName = $(".BillingAdd #LastName").val();
+            let billingAddress1 = $(".BillingAdd #address1").val();
+            let billingAddress2 = $(".BillingAdd #address2").val();
+            let billingPostalCode = $(".BillingAdd #postalCode").val();
+            let billingCity = $(".BillingAdd #city").val();
+            let billingState = $(".BillingAdd #state").val();
+            let billingPhone = $(".BillingAdd #phone").val();
     		let checkoutItems = [];
     		$(".checkoutInfoBox").each(function() {
     			let checkoutId = $(this).find(".payInfoProductDetails div:nth-child(1)").attr("data-checkout-id");
@@ -86,7 +97,16 @@
     			"city": city,
     			"state": state,
     			"phone": phone,
-    			"checkoutItems": checkoutItem
+    			"billingCountry": billingCountry,
+                "billingFirstName": billingFirstName,
+                "billingLastName": billingLastName,
+                "billingAddress1": billingAddress1,
+                "billingAddress2": billingAddress2,
+                "billingPostalCode": billingPostalCode,
+                "billingCity": billingCity,
+                "billingState": billingState,
+                "billingPhone": billingPhone,
+    			"checkoutItems": checkoutItems
     		};
     		console.log(delieveryInfo);
     		$.ajax({
@@ -107,22 +127,23 @@
     	});
 		$('#BillingAdd').on('change', function() {
 		    if ($(this).is(':checked')) {
+		    	$('.BillingAdd').remove();
 		      // Checkbox is checked, do something
-		      console.log("Checkbox is checked");
+		      	console.log("Checkbox is checked");
 		    } else {
 				// Clone the last .productDetail
-				var BillingAddress = $('.DelieveryAdd:last').clone();
+				var BillingAddress = $('.typeOfAdd:last').clone();
 				
 				BillingAddress.addClass('BillingAdd');
 				
-				BillingAddress.find('.typeOfAdd').text('Billing');
+				BillingAddress.find('.DeliveryAdd').text('Billing');
 				
 				// Clear the input fields in the cloned .productDetail
 				BillingAddress.find('input').val('');
 				BillingAddress.find('select').prop('selectedIndex', 0);
 
 				// Append the cloned .productDetail to the parent container
-				$('.DelieveryAdd:last').after(BillingAddress);
+				$('.typeOfAdd:last').after(BillingAddress);
 		      console.log("Checkbox is not checked");
 		    }
 		  });

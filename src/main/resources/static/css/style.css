@@ -13,6 +13,11 @@ a, a:hover {text-decoration:none; color:#000;}
 
 .payInfoProductDetails {font-size: 8px;}
 
+.paymentConfirmed {width: 80%;
+                   margin: 0 auto;
+                   background-color: LightGray;
+                   height: 500px;}
+
 .header {
 		position: fixed;
   		top: 0;

@@ -20,10 +20,14 @@ public interface ProductDetailMapper {
 	
 	public List<ProductDetail> selectProductDetailListByProductId(int productId);
 	
+	public List<ProductDetail> selectProductDetailListById(int id);
+	
 	public ProductDetail selectProductDetailByProductIdAndColorAndSize(
 			@Param("productId") int productId,
 			@Param("color") String color, 
 			@Param("size") String size);
+	
+	public ProductDetail selectProductDetailById(int Id);
 	
 	public void deleteProductDetailByProductId(int productId);
 	
@@ -35,5 +39,6 @@ public interface ProductDetailMapper {
 			@Param("price") double price, 
 			@Param("sale") Integer sale);
 
-	public ProductDetail selectProductDetailById(int Id);
+
+	
 }

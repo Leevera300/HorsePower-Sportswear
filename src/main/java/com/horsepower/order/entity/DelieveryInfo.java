@@ -20,5 +20,15 @@ public class DelieveryInfo {
 	private String city;
 	private String state;
 	private String phone;
+	private String billingCountry;
+	private String billingFirstName;
+	private String billingLastName;
+	private String billingAddress1;
+	private String billingAddress2;
+	private Integer billingPostalCode;
+	private String billingCity;
+	private String billingState;
+	private String billingPhone;
+	
 	private List<CheckoutItem> checkoutItems;
 }

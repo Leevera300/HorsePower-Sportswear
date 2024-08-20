@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <div>
+	    <table class="table">
+	    	<thead>
+	    		<tr>
+	    			<th>Order #</th>
+	    			<th>Product Name</th>
+	    			<th>Color</th>
+	    			<th>Size</th>
+	    			<th>Quantity</th>
+	    			<th>Order Status</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr th:each="productOrder : ${productOrders}">
+	    			<td th:text="${productOrder.order.orderNumber}">1</td>
+        			<td th:text="${productOrder.productInfo.product.name}">abcde</td>
+        			<td th:each="productDetail : ${productOrder.productInfo.productDetailList}" th:text="${productDetail.color}"></td>
+        			<td th:each="productDetail : ${productOrder.productInfo.productDetailList}" th:text="${productDetail.size}">1234123</td>
+	    			<td th:text="${productOrder.order.quantity}">asdf</td>
+	    			<td th:text="${productOrder.order.orderStatus}">asf</td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+    $(document).ready(function() {
+    });
+    </script>
+</th:block>

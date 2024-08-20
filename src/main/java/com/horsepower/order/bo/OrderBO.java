@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.horsepower.chekcout.bo.CheckoutBO;
 import com.horsepower.chekcout.entity.CheckoutEntity;
 import com.horsepower.chekcout.entity.CheckoutItem;
+import com.horsepower.delievery.bo.BillingBO;
 import com.horsepower.delievery.bo.DelieveryBO;
 import com.horsepower.order.entity.DelieveryInfo;
 import com.horsepower.order.entity.OrderEntity;
@@ -17,6 +18,9 @@ import com.horsepower.order.repository.OrderRepository;
 
 @Service
 public class OrderBO {
+	
+	@Autowired
+	private BillingBO billingBO;
 	
 	@Autowired
 	private DelieveryBO delieveryBO;
@@ -59,6 +63,8 @@ public class OrderBO {
 		
 		delieveryBO.addDelieveryInfo(delieveryInfo, orderNumber);
 		
+		billingBO.addBillingInfo(delieveryInfo, orderNumber);
+		
 		List<CheckoutItem> checkoutItems = delieveryInfo.getCheckoutItems();
 		
 		for (CheckoutItem checkoutItem : checkoutItems) {
@@ -80,4 +86,7 @@ public class OrderBO {
 			}
 		}
 	}
+
+	public List<OrderEntity> getOrderStatusListByUserId(int userId) {
+        return orderRepository.findByUserId(userId);	}
 }

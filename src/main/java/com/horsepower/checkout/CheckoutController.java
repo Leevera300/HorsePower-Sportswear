@@ -100,4 +100,9 @@ List<CheckoutEntity> checkoutList = checkoutBO.getCheckoutListByUserEmail(userEm
 		return "checkout/pay-info";
     }
 	
+	@GetMapping("/pay-success")
+	public String paySuccess() {
+		return "checkout/pay-success";
+	}
+	
 }

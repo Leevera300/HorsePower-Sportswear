@@ -78,6 +78,22 @@
 		WHERE
 			`id` = #{Id}
  	</select>
+ 	<select id="selectProductDetailListById" parameterType="int" resultType="com.horsepower.product.domain.ProductDetail">
+ 		SELECT
+	 		`id`
+			, `productId`
+			, `color`
+			, `size`
+			, `quantity`
+			, `sale`
+			, `price`
+			, `createdAt`
+			 ,`updatedAt`
+		FROM
+			`product_detail`
+		WHERE
+			`id` = #{Id}
+ 	</select>
  	
  	<update id="updateProductDetailByProductId" parameterType="map">
  		UPDATE

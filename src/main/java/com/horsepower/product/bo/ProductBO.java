@@ -123,10 +123,29 @@ public class ProductBO {
 		return productInfo;
 	}
 	
+	public ProductInfo getProductInfoByProductIdAndProductDetailId(int productId, int productDetailId) {
+		ProductInfo productInfo = new ProductInfo();
+		
+		Product product = productMapper.selectProductById(productId);
+		productInfo.setProduct(product);
+		
+		List<ProductDetail> productDetailList = productDetailBO.getProductDetailListById(productDetailId);
+		productInfo.setProductDetailList(productDetailList);
+		
+		List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(productId);
+		productInfo.setProductPics(productPics);
+		
+		return productInfo;
+	}
+	
 	public Product getProductByProductId(int productId) {
 		Product product = productMapper.selectProductById(productId);
 		
 		return product;
+	}
+	
+	public Product getProductById(int productId) {
+		return productMapper.selectProductById(productId);
 	}
 	
 	public void deleteProductById(int id) {
@@ -155,7 +174,7 @@ public class ProductBO {
 		}
 	}
 
-	public Product getProductById(int productId) {
-		return productMapper.selectProductById(productId);
-	}
+
+
+	
 }

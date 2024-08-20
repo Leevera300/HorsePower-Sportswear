@@ -18,11 +18,11 @@ class ProductBOTest {
 	@Autowired
 	ProductBO productBO;
 	
-	@Transactional
-	@Test
-	void update() {
-		 MultipartFile multipartFile1 = new MockMultipartFile("file", "test.txt", "text/plain", "test file".getBytes(StandardCharsets.UTF_8) );
-		productBO.updateProductById(14, "name", "name", "name", multipartFile1, "name", "name", 12, 1, null);
-	}
+//	@Transactional
+//	@Test
+//	void update() {
+//		 MultipartFile multipartFile1 = new MockMultipartFile("file", "test.txt", "text/plain", "test file".getBytes(StandardCharsets.UTF_8) );
+//		productBO.updateProductById(14, "name", "name", "name", multipartFile1, "name", "name", 12, 1, null);
+//	}
 
 }

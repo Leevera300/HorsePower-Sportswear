@@ -28,6 +28,10 @@ public class ProductDetailBO {
 		return productDetailMapper.selectProductDetailListByProductId(productId);
 	}
 	
+	public List<ProductDetail> getProductDetailListById(int id) {
+		return productDetailMapper.selectProductDetailListById(id);
+	}
+	
 	public ProductDetail getProductDetailByProductIdAndColorAndSize(int productId, String color, String size) {
 
 		return productDetailMapper.selectProductDetailByProductIdAndColorAndSize(productId, color, size);
@@ -50,4 +54,6 @@ public class ProductDetailBO {
 	public ProductDetail getProductDetailById(int productDetailId) {
 		return productDetailMapper.selectProductDetailById(productDetailId);
 	}
+
+
 }
