@@ -10,8 +10,8 @@
 		    	<span th:text="${session.userEmail}"></span>
 	    	<hr>
 	    	</div>
-	    	<div class="">
-	        	<h3>Delivery</h3>
+	    	<div class="DelieveryAdd">
+	        	<h3 class="typeOfAdd">Delivery</h3>
 	        	<div class="font-weight-bold">Country/Region</div>
 	        	<input type="text" class="form-control" id="country" name="country" value="South Korea">
 	        	<div class="d-flex my-2">
@@ -27,6 +27,7 @@
 	        	</div>
 	        	<input type="text" class="form-control my-2" id="phone" name="phone" placeholder="Phone">
 	        </div>	
+				<input type="checkbox" id="BillingAdd" name="BillingAdd" checked>Click here to use Shipping address as Billing address.
 	        <button class="payBtn btn btn-dark col-12">Pay now</button>
     	</div>
     </div>
@@ -104,6 +105,27 @@
     			}
     		});
     	});
+		$('#BillingAdd').on('change', function() {
+		    if ($(this).is(':checked')) {
+		      // Checkbox is checked, do something
+		      console.log("Checkbox is checked");
+		    } else {
+				// Clone the last .productDetail
+				var BillingAddress = $('.DelieveryAdd:last').clone();
+				
+				BillingAddress.addClass('BillingAdd');
+				
+				BillingAddress.find('.typeOfAdd').text('Billing');
+				
+				// Clear the input fields in the cloned .productDetail
+				BillingAddress.find('input').val('');
+				BillingAddress.find('select').prop('selectedIndex', 0);
+
+				// Append the cloned .productDetail to the parent container
+				$('.DelieveryAdd:last').after(BillingAddress);
+		      console.log("Checkbox is not checked");
+		    }
+		  });
     });
     </script>
 </th:block>
