@@ -1,5 +1,6 @@
 package com.horsepower.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.horsepower.order.bo.OrderBO;
+import com.horsepower.order.entity.OrderEntity;
+import com.horsepower.order.entity.ProductOrder;
 import com.horsepower.product.bo.ProductBO;
 import com.horsepower.product.domain.ProductInfo;
 import com.horsepower.user.bo.UserBO;
@@ -25,6 +29,9 @@ public class AdminController {
 	
 	@Autowired
 	private ProductBO productBO;
+	
+	@Autowired
+	private OrderBO orderBO;
 
 	@GetMapping("/manage-user")
 	public String manageUser(HttpSession session,
@@ -114,8 +121,31 @@ public class AdminController {
 	}
 	
 	@GetMapping("/order-status")
-	public String orderStatus(HttpSession session) {
-String authority = (String)session.getAttribute("userAuthority");
+	public String orderStatus(HttpSession session,
+			Model model) {
+		
+		List<OrderEntity> orderList = orderBO.getOrderStatusList();
+		
+		int productId;
+		int productDetailId;
+		ProductInfo productInfo = new ProductInfo();
+		List<ProductOrder> productOrders = new ArrayList<>();
+		for (OrderEntity order : orderList) {
+			ProductOrder productOrder = new ProductOrder();
+			productOrder.setOrder(order);
+			
+			productId = order.getProductId();
+			productDetailId = order.getProductDetailId();
+			
+			productInfo = productBO.getProductInfoByProductIdAndProductDetailId(productId, productDetailId);
+			productOrder.setProductInfo(productInfo);
+			
+			productOrders.add(productOrder);
+		}
+		
+		model.addAttribute("productOrders", productOrders);
+		
+		String authority = (String)session.getAttribute("userAuthority");
 		
 		if (authority.contains("Admin")) {
 			return "admin/order-status";
@@ -123,6 +153,31 @@ String authority = (String)session.getAttribute("userAuthority");
 			return "redirect:/horsepower/product/product-list";
 		}
 		
-		
+	}
+	
+	@GetMapping("/order-status-detail")
+	public String orderStatusDetail(@RequestParam("orderId") int orderId, 
+			HttpSession session, 
+			Model model) {
+
+		OrderEntity order = orderBO.getOrderEntityById(orderId);
+
+		int productId = order.getProductId();
+		int productDetailId = order.getProductDetailId();
+		ProductInfo productInfo = productBO.getProductInfoByProductIdAndProductDetailId(productId, productDetailId);
+
+		ProductOrder productOrder = new ProductOrder();
+		productOrder.setOrder(order);
+		productOrder.setProductInfo(productInfo);
+
+		model.addAttribute("productOrder", productOrder);
+
+		String authority = (String) session.getAttribute("userAuthority");
+
+		if (authority.contains("Admin")) {
+			return "admin/order-status-detail";
+		} else {
+			return "redirect:/horsepower/product/product-list";
+		}
 	}
 }

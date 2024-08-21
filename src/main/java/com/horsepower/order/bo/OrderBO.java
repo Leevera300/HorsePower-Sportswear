@@ -89,4 +89,16 @@ public class OrderBO {
 
 	public List<OrderEntity> getOrderStatusListByUserId(int userId) {
         return orderRepository.findByUserId(userId);	}
+
+	public List<OrderEntity> getOrderStatusList() {
+		return orderRepository.findAll();
+	}
+
+	public void deleteOrderEntityById(int orderId) {
+        orderRepository.deleteById(orderId);		
+	}
+
+	public OrderEntity getOrderEntityById(int id) {
+		return orderRepository.findById(id).get();
+	}
 }

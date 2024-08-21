@@ -10,50 +10,39 @@
 	    			<th>Order #</th>
 	    			<th>User Email</th>
 	    			<th>Order Status</th>
+	    			<th>Product</th>
+	    			<th>Product Info</th>
+	    			<th>Ordered Quantity</th>
 	    			<th>Ordered Date</th>
-	    			<th>Delete Order</th>
-	    			<th>Detail View</th>
 	    		</tr>
 	    	</thead>
 	    	<tbody>
-	    		<tr th:each="productOrder : ${productOrders}">
+	    		<tr th:each="productOrder : ${productOrder}">
 	    			<td th:text="${productOrder.order.orderNumber}">1</td>
         			<td th:text="${productOrder.order.email}">abcde</td>
 	    			<td th:text="${productOrder.order.orderStatus}">asf</td>
+	    			<td>
+					    <img th:src="${productOrder.productInfo.productPics[0].imagePath}" width=100px;>
+					</td>
+					<td>
+						<p th:text="|Product Name: ${productOrder.productInfo.product.Name}|"></p>
+                        <p th:each="productDetail : ${productOrder.productInfo.productDetailList}" th:text="|Color: ${productDetail.color}|"></p>
+                        <p th:each="productDetail : ${productOrder.productInfo.productDetailList}" th:text="|Size: ${productDetail.size}|"></p>
+					</td>
+					<td th:text="${productOrder.order.quantity}"></td>
 	    			<td th:text="${#temporals.format(productOrder.order.createdAt, 'yyyy-MM-dd HH:mm:ss')}">asdf</td>
-	    			<td><a href=""><button class="deleteBtn btn btn-danger" th:data-order-id="${productOrder.order.id}">DELETE</button></a></td>
-	    			<td><a th:href="|/horsepower/admin/order-status-detail?orderId=${productOrder.order.id}|"><button class="btn btn-warning">Detail</button></a></td>
 	    		</tr>
 	    	</tbody>
 	    </table>
+	    <div class="d-flex justify-content-end">
+	    	<button class="btn btn-success" onclick="history.back()">Back</button>
+	    </div>
     </div>
 </div>
 
 <th:block layout:fragment="script">
     <script>
     $(document).ready(function() {
-    	$(".deleteBtn").on('click', function(e) {
-    		e.preventDefault();
-    		let orderId = $(this).data("order-id");
-    		alert(orderId);
-    		
-    		$.ajax({
-    			type:"DELETE"
-    			, url:"/horsepower/admin/order-status-delete"
-    			, data:{"orderId": orderId}
-    		
-    			, success:function(data) {
-    				if (data.code == 200) {
-    					alert("Order has been deleted.");
-    					location.reload(true);
-    				}
-    			}
-    			
-    			, error:function(e) {
-    				alert("Failed to delete order.");
-    			}
-    		});
-    	});
     });
     </script>
 </th:block>

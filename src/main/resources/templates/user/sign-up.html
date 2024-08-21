@@ -64,7 +64,10 @@
                 dateFormat: 'yy-mm-dd'
             });
     	$('#dob').datepicker({
-            showButtonPanel: true
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:' + new Date().getFullYear()
     	});
     		// alert("준비");
     		$("#loginemailCheckBtn").on('click', function() {
@@ -130,6 +133,11 @@
     				return false;
     			}
     			
+    			if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+    				alert("Enter a valid email address.")
+    				return false;
+    			}
+    			
     			let password = $("#password").val();
     			
     			if (!password) {
@@ -156,6 +164,7 @@
     				, success:function(data) {
     					if (data.code == 200) {
     						alert("Welcome to the family!")
+    						location.href = "/horsepower/user/sign-in";
     						return;
     					} else {
     						alert(data.error_message);

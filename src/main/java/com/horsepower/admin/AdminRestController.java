@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.horsepower.order.bo.OrderBO;
 import com.horsepower.product.bo.ProductBO;
 import com.horsepower.product.domain.ProductDetail;
 import com.horsepower.product.domain.ProductDetailListWrapper;
@@ -31,6 +32,9 @@ public class AdminRestController {
 	
 	@Autowired
 	private ProductBO productBO;
+	
+	@Autowired
+	private OrderBO orderBO;
 	
 	@PutMapping("/manage-user-update")
 	public Map<String, Object> manageUserUpdate(
@@ -160,5 +164,28 @@ public class AdminRestController {
 		
 		return result;
 	}
+	
+	
+		@DeleteMapping("/order-status-delete")
+		public Map<String, Object> orderStatusDelete(
+            @RequestParam("orderId") int orderId,
+            HttpSession session) {
 			
+			String authority = (String)session.getAttribute("userAuthority");
+			
+			if (authority.contains("Admin") == false) {
+				Map<String, Object> result = new HashMap<>();
+				result.put("code", 403);
+				result.put("error_message", "Please log in with Admin account.");
+				return result;
+			}
+			
+			orderBO.deleteOrderEntityById(orderId);
+			
+			Map<String, Object> result = new HashMap<>();
+			result.put("code", 200);
+			result.put("result", "success");
+			
+			return result;
+		}
 }
