@@ -26,6 +26,8 @@ public class ProductBO {
 	@Autowired
 	private ProductMapper productMapper;
 	
+	private static final int POST_MAX_SIZE = 4;
+	
 	@Transactional
 	public void addProduct(String name, String category,  String description, MultipartFile imgFile1,
 			List<ProductDetail> productDetail) {
@@ -65,9 +67,10 @@ public class ProductBO {
 	}
 	
 	public List<ProductInfo> getProductInfoOrderByCreatedAtDESC() {
+		
 		List<ProductInfo> newProductInfoList = new ArrayList<>();
 		
-		List<Product> newProductList = productMapper.selectProductOrderByCreatedAtDESC();
+		List<Product> newProductList = productMapper.selectProductOrderByCreatedAtDESC(POST_MAX_SIZE);
 
 		for (Product product : newProductList) {
 			ProductInfo productInfo = new ProductInfo();
@@ -89,7 +92,7 @@ public class ProductBO {
 	public List<ProductInfo> getProductInfoOrderByUpdatedAt() {
 		List<ProductInfo> hotProductInfoList = new ArrayList<>();
 		
-		List<Product> hotProductList = productMapper.selectProductOrderByUpdatedAt();
+		List<Product> hotProductList = productMapper.selectProductOrderByUpdatedAt(POST_MAX_SIZE);
 
 		for (Product product : hotProductList) {
 			ProductInfo productInfo = new ProductInfo();

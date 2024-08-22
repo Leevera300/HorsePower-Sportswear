@@ -62,6 +62,7 @@
 			`product`
 		ORDER BY
 			`createdAt` DESC
+		LIMIT #{limit}
  	</select>
  	<select id="selectProductOrderByUpdatedAt" resultType="com.horsepower.product.domain.Product">
  		SELECT
@@ -75,6 +76,7 @@
 			`product`
 		ORDER BY
 			`updatedAt`
+		LIMIT #{limit}
  	</select>
  	
  	<update id="updateProductById" parameterType="map">

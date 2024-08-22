@@ -14,9 +14,9 @@ public interface ProductMapper {
 	
 	public List<Product> selectProduct();
 	
-	public List<Product> selectProductOrderByCreatedAtDESC();
+	public List<Product> selectProductOrderByCreatedAtDESC(int limit);
 	
-	public List<Product> selectProductOrderByUpdatedAt();
+	public List<Product> selectProductOrderByUpdatedAt(int limit);
 	
 	public Product selectProductById(int id);
 	

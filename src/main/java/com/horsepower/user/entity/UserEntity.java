@@ -5,12 +5,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.horsepower.user.enums.Role;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -56,11 +52,5 @@ public class UserEntity {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 	
-	@Enumerated(EnumType.STRING) 
-    @Column(nullable = false)
-    private Role role;
 	
-	public String getRoleKey() {
-        return this.role.getKey();
-    }
 }
