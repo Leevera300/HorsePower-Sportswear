@@ -66,49 +66,147 @@ public class ProductBO {
 		return productInfoList;
 	}
 	
-	public List<ProductInfo> getProductInfoOrderByCreatedAtDESC() {
-		
+	public List<ProductInfo> getProductInfoOrderByCreatedAtDESC(Integer prevIndexNewParam, Integer nextIndexNewParam) {
+		int prevIndexNew = (prevIndexNewParam != null) ? prevIndexNewParam : 0;
+		int nextIndexNew = (nextIndexNewParam != null) ? nextIndexNewParam : 0;
 		List<ProductInfo> newProductInfoList = new ArrayList<>();
 		
-		List<Product> newProductList = productMapper.selectProductOrderByCreatedAtDESC(POST_MAX_SIZE);
-
-		for (Product product : newProductList) {
-			ProductInfo productInfo = new ProductInfo();
-			
-			productInfo.setProduct(product);
-			
-			List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(product.getId());
-			productInfo.setProductDetailList(productDetailList);
-			
-			List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(product.getId());
-			productInfo.setProductPics(productPics);
-			
-			newProductInfoList.add(productInfo);
-		}
+		List<Product> newProductList = productMapper.selectProductOrderByCreatedAtDESC();
 		
-		return newProductInfoList;
+		if (prevIndexNew != 0) {
+			prevIndexNew = prevIndexNew - 1;
+			nextIndexNew = POST_MAX_SIZE + prevIndexNew - 1;
+			for (int i = prevIndexNew; i <= nextIndexNew; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndexNew);
+				productInfo.setNextIndexNew(prevIndexNew);
+				
+				productInfo.setProduct(newProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(newProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(newProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				newProductInfoList.add(productInfo);
+		}
+			
+			return newProductInfoList;
+		} else if (nextIndexNew != 0) {
+			nextIndexNew = nextIndexNew + 1;
+			prevIndexNew = nextIndexNew - POST_MAX_SIZE + 1;
+			for (int i = prevIndexNew; i <= nextIndexNew; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndexNew);
+				productInfo.setNextIndexNew(nextIndexNew);
+				
+				productInfo.setProduct(newProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(newProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(newProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				newProductInfoList.add(productInfo);
+			}
+			return newProductInfoList;
+		} else {
+			prevIndexNew = 0;
+			nextIndexNew = POST_MAX_SIZE - 1;
+			for (int i = 0; i <= POST_MAX_SIZE - 1; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndexNew);
+				productInfo.setNextIndexNew(nextIndexNew);
+				
+				productInfo.setProduct(newProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(newProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(newProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				newProductInfoList.add(productInfo);
+			}
+			
+			return newProductInfoList;
+		}
+
+		
 	}
 	
-	public List<ProductInfo> getProductInfoOrderByUpdatedAt() {
+	public List<ProductInfo> getProductInfoOrderByUpdatedAt(Integer prevIndexHotParam, Integer nextIndexHotParam) {
+		int prevIndexHot = (prevIndexHotParam != null) ? prevIndexHotParam : 0;
+		int nextIndexHot = (nextIndexHotParam != null) ? nextIndexHotParam : 0;
+		
 		List<ProductInfo> hotProductInfoList = new ArrayList<>();
 		
-		List<Product> hotProductList = productMapper.selectProductOrderByUpdatedAt(POST_MAX_SIZE);
+		List<Product> hotProductList = productMapper.selectProductOrderByUpdatedAt();
 
-		for (Product product : hotProductList) {
-			ProductInfo productInfo = new ProductInfo();
+			if (prevIndexHot != 0) {
+				prevIndexHot = prevIndexHot - 1;
+				nextIndexHot = POST_MAX_SIZE + prevIndexHot - 1;
+				for (int i = prevIndexHot; i <= nextIndexHot; i++) {
+					ProductInfo productInfo = new ProductInfo();
+					productInfo.setPrevIndexNew(prevIndexHot);
+					productInfo.setNextIndexNew(nextIndexHot);
+					
+					productInfo.setProduct(hotProductList.get(i));
+					
+					List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(hotProductList.get(i).getId());
+					productInfo.setProductDetailList(productDetailList);
+					
+					List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(hotProductList.get(i).getId());
+					productInfo.setProductPics(productPics);
+					
+					hotProductInfoList.add(productInfo);
+			}
+				
+				return hotProductInfoList;
+				
+		} else if (nextIndexHot != 0) {
+			nextIndexHot = nextIndexHot + 1;
+			prevIndexHot = nextIndexHot - POST_MAX_SIZE + 1;
+			for (int i = prevIndexHot; i <= nextIndexHot; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndexHot);
+				productInfo.setNextIndexNew(nextIndexHot);
+				
+				productInfo.setProduct(hotProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(hotProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(hotProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				hotProductInfoList.add(productInfo);
+			}
+			return hotProductInfoList;
+		} else {
+			prevIndexHot = 0;
+			nextIndexHot = POST_MAX_SIZE - 1;
+			for (int i = 0; i <= POST_MAX_SIZE - 1; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndexHot);
+				productInfo.setNextIndexNew(nextIndexHot);
+				
+				productInfo.setProduct(hotProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(hotProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(hotProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				hotProductInfoList.add(productInfo);
+			}
 			
-			productInfo.setProduct(product);
-			
-			List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(product.getId());
-			productInfo.setProductDetailList(productDetailList);
-			
-			List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(product.getId());
-			productInfo.setProductPics(productPics);
-			
-			hotProductInfoList.add(productInfo);
+			return hotProductInfoList;
 		}
 		
-		return hotProductInfoList;
 	}
 	
 	public ProductInfo getProductInfoByProductId(int productId) {
@@ -176,6 +274,11 @@ public class ProductBO {
 			productPicsBO.addProdcutPics(product.getId(), imgFile1);
 		}
 	}
+
+	public void deleteProductDetailById(int productDetailId) {
+		productDetailBO.deleteProductDetailById(productDetailId);
+    }
+		
 
 
 

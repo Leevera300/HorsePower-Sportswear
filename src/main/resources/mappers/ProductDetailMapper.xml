@@ -117,4 +117,10 @@
 		WHERE
 			`productId` = #{productId}	
  	</delete>
+ 	<delete id="deleteProductDetailById" parameterType="int">
+ 		DELETE FROM
+ 			`product_detail`
+        WHERE
+            `id` = #{id}
+    </delete>
  </mapper>

@@ -46,13 +46,23 @@ public class ProductDetailBO {
 		
 		for (int i = 0; productDetail.size() > i; i++) {
 			ProductDetail detail = productDetail.get(i);
-			productDetailMapper.updateProductDetailByProductId(productId, detail.getColor(), detail.getSize(),
-					detail.getQuantity(), detail.getPrice(), detail.getSale());
+			ProductDetail prodDetail = productDetailMapper.selectProductDetailByProductIdAndColorAndSize(productId, detail.getColor(), detail.getSize());
+			if (prodDetail == null) {
+				productDetailMapper.insertProdcutDetail(productId, detail.getColor(), detail.getSize(),
+						detail.getQuantity(), detail.getPrice(), detail.getSale());
+			} else {
+				productDetailMapper.updateProductDetailByProductId(productId, detail.getColor(), detail.getSize(),
+						detail.getQuantity(), detail.getPrice(), detail.getSale());
+			}
 		}
 	}
 
 	public ProductDetail getProductDetailById(int productDetailId) {
 		return productDetailMapper.selectProductDetailById(productDetailId);
+	}
+
+	public void deleteProductDetailById(int id) {
+        productDetailMapper.deleteProductDetailById(id);		
 	}
 
 

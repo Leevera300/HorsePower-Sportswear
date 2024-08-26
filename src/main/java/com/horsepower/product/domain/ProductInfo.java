@@ -14,4 +14,8 @@ public class ProductInfo {
 	private List<ProductDetail> productDetailList;
 	
 	private List<ProductPics> productPics;
+	
+	private int prevIndexNew;
+	
+    private int nextIndexNew;
 }

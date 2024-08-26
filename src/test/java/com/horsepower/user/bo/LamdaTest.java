@@ -30,4 +30,14 @@ public class LamdaTest {
 		log.info("$$$$ {}", fruits);
     
 	}
+	@Test
+	void methodReference() {
+		List<String> fruits = Arrays.asList("apple", "banana", "cherry", "orange", "lemon");
+		
+		fruits = fruits.stream()
+		.map(String::toUpperCase) // element -> element.toUpperCase()
+		.collect(Collectors.toList());
+		
+		log.info("%%%% {}", fruits);
+	}
 }

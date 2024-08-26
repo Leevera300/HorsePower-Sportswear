@@ -7,7 +7,7 @@ z<!DOCTYPE html>
    		<div class="product_titles mb-3">
     		<h2>NEW ARRIVALS</h2>
 	    </div>
-	   	<section class="w-100 bg-light mb-3">
+	   	<section class="w-100 bg-light mb-3 carousel slide">
         	<div class="media-parent-box d-flex justify-content-between">
             	<article th:each="newProductInfo, prodStat : ${newProductInfoList}" class="media-box mx-3">
                 	<div th:id="'carouselIndicatorsNew' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
@@ -31,6 +31,10 @@ z<!DOCTYPE html>
 						Shop now</a></div>
                 </article>
             </div>
+            <div class="d-flex justify-content-between">
+				<div><a th:if="${prevIndexNew != 0}" th:href="|/horsepower/product/product-list?prevIndexNew=${prevIndexNew}|" class=""> &lt;&lt;</a></div>
+				<div><a th:if="${nextIndexNew != 20}" th:href="|/horsepower/product/product-list?nextIndexNew=${nextIndexNew}|"> &gt;&gt;</a></div>
+			</div>
         </section>
    		<div class="product_titles mb-3">
     		<h2>WHAT'S HOT</h2>
@@ -58,6 +62,10 @@ z<!DOCTYPE html>
                 	<div class="media-text font-weight-bold"><a th:href="|/horsepower/product/product-detail?productId=${hotProductInfo.product.id}|">Shop now</a></div>
                 </article>
             </div>
+            <div class="d-flex justify-content-between">
+				<div><a th:if="${prevIndexHot != 0}" th:href="|/horsepower/product/product-list?prevIndexHot=${prevIndexHot}|" class=""> &lt;&lt;</a></div>
+				<div><a th:if="${nextIndexHot != 20}" th:href="|/horsepower/product/product-list?nextIndexHot=${nextIndexHot}|"> &gt;&gt;</a></div>
+			</div>
         </section>
 	 </div>
 </div>

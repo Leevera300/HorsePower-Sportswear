@@ -136,6 +136,27 @@ public class AdminRestController {
 		return result;
 	}
 	
+	@DeleteMapping("/product-manage-delete-product-detail")
+	public Map<String, Object> prodcutManageDeleteProductDetail(@RequestParam("productDetailId") int productDetailId,
+			HttpSession session) {
+
+		String authority = (String) session.getAttribute("userAuthority");
+
+		Map<String, Object> result = new HashMap<>();
+		if (authority.contains("Admin") == false) {
+			result.put("code", 403);
+			result.put("error_message", "Please log in with Admin account.");
+			return result;
+		}
+
+		productBO.deleteProductDetailById(productDetailId);
+
+		result.put("code", 200);
+		result.put("result", "success");
+
+		return result;
+	}
+	
 	@PutMapping("/product-manage-update")
 	public Map<String, Object> prodcutManageUpdate(
 			@RequestParam("productId") int productId,

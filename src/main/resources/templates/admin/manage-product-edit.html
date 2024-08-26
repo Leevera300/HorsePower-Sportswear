@@ -14,9 +14,9 @@
     			<div>Category</div>
     			<select id="category" class="form-control col-4" >
             		<option th:text="${productInfo.product.category}" th:value="${productInfo.product.category}">--select category--</option>
-            		<option th:unless="|${productInfo.product.category} == MEN'S|" value="MEN'S">MEN'S</option>
-            		<option th:unless="|${productInfo.product.category} == WOMEN'S|" value="WOMEN'S">WOMEN'S</option>
-            		<option th:unless="|${productInfo.product.category} == ACCESSORIES|" value="ACCESSORIES">ACCESSORIES</option>
+            		<option value="MEN'S">MEN'S</option>
+            		<option value="WOMEN'S">WOMEN'S</option>
+            		<option value="ACCESSORIES">ACCESSORIES</option>
         		</select>
     		</div>
     		<div>
@@ -42,6 +42,9 @@
     		</div>
     		<div class="d-flex my-5">
     			<div th:each="productDetail : ${productInfo.productDetailList}" class="productDetail mx-2">
+    				<div class="d-flex justify-content-end">
+    					<a href="" class="deleteProductDetails" th:data-product-detail-id="${productDetail.id}"><img src="/img/images.png" alt="imgFile" width=25></a>
+    				</div>
     				<div>
     					<div>Color</div>
     					<select id="color" class="form-control">
@@ -79,8 +82,7 @@
     			</div>
     			<div class="addProductDetail d-flex align-items-center mx-5">
     				<input type="button" id="addFile" class="d-none">
-    				<img src="/img/plus-sign.jpg" alt="imgFile"
-    				width=25>
+    				<a href="" id="addProductDetails"><img src="/img/plus-sign.jpg" alt="imgFile" width=25></a>
     			</div>
     		</div>
     		<div class="d-flex justify-content-end">
@@ -125,10 +127,31 @@
 			$("#fileName1").text(fileName1);
     	});
     	
+    	$("#addProductDetails").on('click', function(e) {
+			e.preventDefault();
+			$("#addFile").click();
+		});
+
+		 $('#addFile').click(function(e) {
+		   e.preventDefault();
+
+		   // Clone the last .productDetail
+		   var newProductDetail = $('.productDetail:last').clone();
+
+		   // Clear the input fields in the cloned .productDetail
+		   newProductDetail.find('input').val('');
+		   newProductDetail.find('select').prop('selectedIndex', 0);
+
+		   // Append the cloned .productDetail to the parent container
+		   $('.productDetail:last').after(newProductDetail);
+		 });
+    	
     	$(".saveBtn").on('click', function() {
     		//alert("add");
     		//return;
     		let productId = $(this).data("product-id");
+    		//alert(productId);
+    		//return;
     		
     		let productName = $("#productName").val().trim();
     		if (!productName) {
@@ -191,6 +214,7 @@
     		//alert(productId);
     		//return;
     		
+    		
     		let formData = new FormData();
 				formData.append("productId", productId); 
 				formData.append("productName", productName); 
@@ -230,6 +254,31 @@
     			}
     		});
     	});    	
+    	$(".deleteProductDetails").on('click', function(e) {
+    		e.preventDefault();
+    		let productDetailId = $(this).data("product-detail-id");
+    		//alert(productDetailId);
+    		
+    		$.ajax({
+    			type:"DELETE"
+    			, url:"/horsepower/admin/product-manage-delete-product-detail"
+    			, data:{"productDetailId":productDetailId}
+    			, success:function(data) {
+    				if (data.code == 200) {
+    					alert("Product detail has been successfully deleted.");
+    					location.href = "/horsepower/admin/manage-product";
+    				} else if (data.code == 403) {
+    					alert(data.error_message);
+    					location.href = "/horsepower/product/product-list";
+    				} else {
+    					alert(data.error_message);
+    				}
+    			}
+    			, error:function(e) {
+    				alert("Failed to delete the product detail.");
+    			}
+    		});
+    	});
     });
     </script>
 </th:block>

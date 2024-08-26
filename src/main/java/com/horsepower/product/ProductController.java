@@ -22,12 +22,34 @@ public class ProductController {
 	
 	@TimeTrace
 	@GetMapping("/product-list")
-	public String productList(Model model) {
+	public String productList(Model model,
+			@RequestParam(value = "prevIndexNew", required = false) Integer prevIndexNewParam,
+			@RequestParam(value = "nextIndexNew", required = false) Integer nextIndexNewParam,
+			@RequestParam(value = "prevIndexHot", required = false) Integer prevIndexHotParam,
+			@RequestParam(value = "nextIndexHot", required = false) Integer nextIndexHotParam) {
 		
-		List<ProductInfo> newProductInfoList = productBO.getProductInfoOrderByCreatedAtDESC();
+		int prevIndexNew = 0;
+		int nextIndexNew = 0;
+		int prevIndexHot = 0;
+		int nextIndexHot = 0;
 		
-		List<ProductInfo> hotProductInfoList = productBO.getProductInfoOrderByUpdatedAt();
 		
+		List<ProductInfo> newProductInfoList = productBO.getProductInfoOrderByCreatedAtDESC(prevIndexNewParam, nextIndexNewParam);
+		if (newProductInfoList.isEmpty() == false) {
+			prevIndexNew = newProductInfoList.get(0).getPrevIndexNew();
+			nextIndexNew = newProductInfoList.get(0).getNextIndexNew();
+		}
+		
+		List<ProductInfo> hotProductInfoList = productBO.getProductInfoOrderByUpdatedAt(prevIndexHotParam, nextIndexHotParam);
+		if (hotProductInfoList.isEmpty() == false) {
+			prevIndexHot = hotProductInfoList.get(0).getPrevIndexNew();
+			nextIndexHot = hotProductInfoList.get(0).getNextIndexNew();
+		}
+		
+		model.addAttribute("prevIndexNew", prevIndexNew);
+		model.addAttribute("nextIndexNew", nextIndexNew);
+		model.addAttribute("prevIndexHot", prevIndexHot);
+		model.addAttribute("nextIndexHot", nextIndexHot);
 		model.addAttribute("newProductInfoList", newProductInfoList);
 		model.addAttribute("hotProductInfoList", hotProductInfoList);
 		

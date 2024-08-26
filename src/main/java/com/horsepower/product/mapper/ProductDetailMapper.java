@@ -39,6 +39,8 @@ public interface ProductDetailMapper {
 			@Param("price") double price, 
 			@Param("sale") Integer sale);
 
+	public void deleteProductDetailById(int id);
+
 
 	
 }
