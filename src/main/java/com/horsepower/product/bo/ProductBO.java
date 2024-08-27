@@ -1,6 +1,7 @@
 package com.horsepower.product.bo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class ProductBO {
 	
 	private static final int POST_MAX_SIZE = 4;
 	
+	private static final int LIST_MAX_SIZE = 10;
+	
 	@Transactional
 	public void addProduct(String name, String category,  String description, MultipartFile imgFile1,
 			List<ProductDetail> productDetail) {
@@ -43,10 +46,25 @@ public class ProductBO {
 		productPicsBO.addProdcutPics(product.getId(), imgFile1);
 	}
 	
-	public List<ProductInfo> getProductInfo() {
+	public List<ProductInfo> getProductInfo(Integer prevId, Integer nextId) {
 		List<ProductInfo> productInfoList = new ArrayList<>();
 		
-		List<Product> productList = productMapper.selectProduct();
+		List<Product> productList = new ArrayList<>();
+		Integer standardId = null; // 기준 postId;
+		String direction = null; // 방향
+		if (prevId != null) { // 2) 이전
+			standardId = prevId;
+			direction = "prev";
+			productList = productMapper.selectProduct(standardId, direction, LIST_MAX_SIZE);
+			Collections.reverse(productList); // void = 뒤집고 저장까지 해준다
+		} else if (nextId != null) { // 1) 다음
+			standardId = nextId;
+			direction = "next";
+			productList = productMapper.selectProduct(standardId, direction, LIST_MAX_SIZE);
+		} else {
+			productList = productMapper.selectProduct(standardId, direction, LIST_MAX_SIZE);
+		}
+		
 
 		for (Product product : productList) {
 			ProductInfo productInfo = new ProductInfo();
@@ -278,6 +296,16 @@ public class ProductBO {
 	public void deleteProductDetailById(int productDetailId) {
 		productDetailBO.deleteProductDetailById(productDetailId);
     }
+
+	public boolean isPrevLastPageByUserId(int prevId) {
+		int maxPostId = productMapper.selectProudcutIdAsSort("DESC");
+		return maxPostId == prevId;
+	}
+
+	public boolean isNextLastPageByUserId(int nextId) {
+		int minPostId = productMapper.selectProudcutIdAsSort("ASC");
+		return minPostId == nextId;
+	}
 		
 
 

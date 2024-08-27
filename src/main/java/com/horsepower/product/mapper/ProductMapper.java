@@ -12,7 +12,10 @@ public interface ProductMapper {
 
 	public void insertProduct(Product product);
 	
-	public List<Product> selectProduct();
+	public List<Product> selectProduct(
+			@Param("standardId") Integer standardId,
+			@Param("direction") String direction,
+			@Param("limit") int limit);
 	
 	public List<Product> selectProductOrderByCreatedAtDESC();
 	
@@ -27,5 +30,7 @@ public interface ProductMapper {
 			@Param("name") String name, 
 			@Param("category") String category,  
 			@Param("description") String description);
+
+	public int selectProudcutIdAsSort(String sort);
 	
 }

@@ -29,6 +29,10 @@
 		<div class="d-flex justify-content-end">
 			<a href="/horsepower/admin/manage-product-create"><button class="btn btn-success">ADD</button></a>
 		</div>
+		<div class="text-center">
+			<a th:if="${prevId != 0}" th:href="|/horsepower/admin/manage-product?prevId=${prevId}|" class="mr-5">&lt;&lt;</a>
+			<a th:if="${nextId != 0}" th:href="'/horsepower/admin/manage-product?nextId=' + ${nextId}"> &gt;&gt;</a>
+		</div>
 	</div>
 </div>
 

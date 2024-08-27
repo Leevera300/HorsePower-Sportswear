@@ -1,5 +1,7 @@
 package com.horsepower.user.bo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ public class UserBO {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	private static final int LIST_MAX_SIZE = 10;
 	
 	// input: params
 	// output: UserEntity
@@ -28,8 +32,22 @@ public class UserBO {
 				.build());
 	}
 	
-	public List<UserEntity> getUserEntityList() {
-		return userRepository.findAll();
+	public List<UserEntity> getUserEntityList(Integer prevId, Integer nextId) {
+		
+		List<UserEntity> userList = new ArrayList<>();
+		Integer standardId = null; // 기준 postId;
+		if (prevId != null) { // 2) 이전
+			standardId = prevId;
+			userList = userRepository.findUserIdLessOrderByIdASC(standardId, LIST_MAX_SIZE);
+			Collections.reverse(userList); // void = 뒤집고 저장까지 해준다
+		} else if (nextId != null) { // 1) 다음
+			standardId = nextId;
+			userList = userRepository.findUserIdGreaterOrderByIdDESC(standardId, LIST_MAX_SIZE);
+		} else {
+			userList = userRepository.findUserOrderByIdDESCLimit(LIST_MAX_SIZE);
+		}
+		
+		return userList;
 	}
 	
 	public UserEntity getUserEntityById(int Id) {
@@ -64,6 +82,16 @@ public class UserBO {
 	
 	public void deleteUserById(int Id) {
 		userRepository.deleteById(Id);
+	}
+
+	public boolean isPrevLastPageByUserId(int prevId) {
+		int maxPostId = userRepository.findUserOrderByIdDESC().get(0).getId();
+		return maxPostId == prevId;
+	}
+
+	public boolean isNextLastPageByUserId(int nextId) {
+		int minPostId = userRepository.findUserOrderByIdASC().get(0).getId();
+		return minPostId == nextId;
 	}
 	
 }

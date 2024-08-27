@@ -30,10 +30,10 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "first_name")
+	@Column(name = "firstName")
 	private String firstName;
 	
-	@Column(name = "last_name")
+	@Column(name = "lastName")
 	private String lastName;
 	
 	private String dob;
@@ -45,11 +45,11 @@ public class UserEntity {
 	private String authority;
 	
 	@CreationTimestamp
-	@Column(name = "created_at")
+	@Column(name = "createdAt")
 	private LocalDateTime createdAt;
 	
 	@UpdateTimestamp
-	@Column(name = "updated_at")
+	@Column(name = "updatedAt")
 	private LocalDateTime updatedAt;
 	
 	

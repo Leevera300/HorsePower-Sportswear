@@ -35,9 +35,26 @@ public class AdminController {
 
 	@GetMapping("/manage-user")
 	public String manageUser(HttpSession session,
-			Model model) {
-		List<UserEntity> usersList = userBO.getUserEntityList();
-		
+			Model model,
+			@RequestParam(value = "prevId", required = false) Integer prevIdParam,
+			@RequestParam(value = "nextId", required = false) Integer nextIdParam) {
+		List<UserEntity> usersList = userBO.getUserEntityList(prevIdParam, nextIdParam);
+		int prevId = 0;
+		int nextId = 0;
+		if (usersList.isEmpty() == false) { 
+			prevId = usersList.get(0).getId(); 
+			nextId = usersList.get(usersList.size() - 1).getId(); 
+			
+			if (userBO.isPrevLastPageByUserId(prevId)) {
+				prevId=0;
+			}
+			
+			if (userBO.isNextLastPageByUserId(nextId)) {
+				nextId=0;
+			}
+		}
+		model.addAttribute("prevId", prevId);
+		model.addAttribute("nextId", nextId);
 		model.addAttribute("usersList", usersList);
 		
 		String authority = (String)session.getAttribute("userAuthority");
@@ -73,10 +90,27 @@ public class AdminController {
 	
 	@GetMapping("/manage-product")
 	public String manageProduct(HttpSession session,
-			Model model) {
+			Model model,
+			@RequestParam(value = "prevId", required = false) Integer prevIdParam,
+			@RequestParam(value = "nextId", required = false) Integer nextIdParam) {
 		
-		List<ProductInfo> productInfoList = productBO.getProductInfo();
-		
+		List<ProductInfo> productInfoList = productBO.getProductInfo(prevIdParam, nextIdParam);
+		int prevId = 0;
+		int nextId = 0;
+		if (productInfoList.isEmpty() == false) { // 글목록이 비어있지 않을때
+			prevId = productInfoList.get(0).getProduct().getId(); // 첫번째 칸 id
+			nextId = productInfoList.get(productInfoList.size() - 1).getProduct().getId(); // 마지막 칸 id
+			
+			if (productBO.isPrevLastPageByUserId(prevId)) {
+				prevId=0;
+			}
+			
+			if (productBO.isNextLastPageByUserId(nextId)) {
+				nextId=0;
+			}
+		}
+		model.addAttribute("prevId", prevId);
+		model.addAttribute("nextId", nextId);
 		model.addAttribute("productInfoList", productInfoList);
 		
 		String authority = (String)session.getAttribute("userAuthority");
