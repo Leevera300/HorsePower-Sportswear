@@ -32,5 +32,7 @@ public interface ProductMapper {
 			@Param("description") String description);
 
 	public int selectProudcutIdAsSort(String sort);
+
+	public List<Product> selectProductByCategory(String category);
 	
 }

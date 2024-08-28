@@ -1,0 +1,48 @@
+z<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content d-flex justify-content-center">
+    <div class="w-100">
+   		<div class="product_titles mb-3">
+    		<h2 th:text="${category}"></h2>
+	    </div>
+	   	<section class="w-100 bg-light mb-3 carousel slide">
+        	<div class="media-parent-box d-flex justify-content-between">
+            	<article th:each="ProductInfo, prodStat : ${productInfoList}" class="media-box mx-3">
+                	<div th:id="'carouselIndicatorsNew' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
+       					<div class="carousel-inner">
+		                	<div class="d-flex justify-content-center product" th:each="ProductPic, picStat : ${ProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+		                		<a th:href="|/horsepower/product/product-detail?productId=${ProductInfo.product.id}|"><img th:src="${ProductPic.imagePath}" alt="ProductImg" width=300px; height=300px;></a>
+		                	</div>
+		                </div>
+		                <a class="carousel-control-prev" th:href="'#carouselIndicatorsNew' + ${prodStat.index}" role="button" data-slide="prev">
+				            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				            <span class="sr-only">Previous</span>
+				        </a> 
+				        <a class="carousel-control-next" th:href="'#carouselIndicatorsNew' + ${prodStat.index}" role="button" data-slide="next">
+				            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				            <span class="sr-only">Next</span>
+				        </a>
+		            </div>
+                	<div th:text="${ProductInfo.product.name}" class="font-weight-bold">Product Name</div>
+                	<div th:text="${ProductInfo.product.description}" class="media-text">Product Detail</div>
+                	<div class="media-text font-weight-bold"><a th:href="|/horsepower/product/product-detail?productId=${ProductInfo.product.id}|">
+						Shop now</a></div>
+                </article>
+            </div>
+            <div class="d-flex justify-content-between">
+				<div><a th:if="${prevIndex != 0}" th:href="|/horsepower/product/product-list-category?category=${category}&prevIndex=${prevIndex}|" class=""> &lt;&lt;</a></div>
+				<div><a th:if="${nextIndex != 20}" th:href="|/horsepower/product/product-list-category?category=${category}&nextIndex=${nextIndex}|"> &gt;&gt;</a></div>
+			</div>
+        </section>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+    	$(document).ready(function() {
+			
+    	});
+    </script>
+</th:block>

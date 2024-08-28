@@ -156,9 +156,25 @@ public class AdminController {
 	
 	@GetMapping("/order-status")
 	public String orderStatus(HttpSession session,
-			Model model) {
+			Model model,
+			@RequestParam(value = "prevId", required = false) Integer prevIdParam,
+			@RequestParam(value = "nextId", required = false) Integer nextIdParam) {
 		
-		List<OrderEntity> orderList = orderBO.getOrderStatusList();
+		List<OrderEntity> orderList = orderBO.getOrderStatusList(prevIdParam, nextIdParam);
+		int prevId = 0;
+		int nextId = 0;
+		if (orderList.isEmpty() == false) { 
+			prevId = orderList.get(0).getId(); 
+			nextId = orderList.get(orderList.size() - 1).getId(); 
+			
+			if (orderBO.isPrevLastPageById(prevId)) {
+				prevId=0;
+			}
+			
+			if (orderBO.isNextLastPageById(nextId)) {
+				nextId=0;
+			}
+		}
 		
 		int productId;
 		int productDetailId;

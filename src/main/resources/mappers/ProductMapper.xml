@@ -103,6 +103,19 @@
  		ORDER BY `id` ${sort}
  		LIMIT 1
  	</select>
+ 	<select id="selectProductByCategory" parameterType="String" resultType="com.horsepower.product.domain.Product">
+ 		SELECT
+ 			`id`
+			, `name`
+			, `description`
+			, `category`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product`
+		WHERE
+		    `category` LIKE CONCAT(#{category}, '%')
+ 	</select>
  	
  	<update id="updateProductById" parameterType="map">
  		UPDATE

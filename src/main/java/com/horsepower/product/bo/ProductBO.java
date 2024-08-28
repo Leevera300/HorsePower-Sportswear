@@ -306,9 +306,76 @@ public class ProductBO {
 		int minPostId = productMapper.selectProudcutIdAsSort("ASC");
 		return minPostId == nextId;
 	}
+
+	public List<ProductInfo> getProductInfoByCategory(String category, Integer prevIndexParam, Integer nextIndexParam) {
+		int prevIndex = (prevIndexParam != null) ? prevIndexParam : 0;
+		int nextIndex = (nextIndexParam != null) ? nextIndexParam : 0;
+		List<ProductInfo> catProductInfoList = new ArrayList<>();
+		
+		List<Product> catProductList = productMapper.selectProductByCategory(category);
+		if (prevIndex != 0) {
+			prevIndex = prevIndex - 1;
+			nextIndex = POST_MAX_SIZE + prevIndex - 1;
+			for (int i = prevIndex; i <= nextIndex; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndex);
+				productInfo.setNextIndexNew(prevIndex);
+				
+				productInfo.setProduct(catProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(catProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(catProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				catProductInfoList.add(productInfo);
+		}
+			
+			return catProductInfoList;
+		} else if (nextIndex != 0) {
+			nextIndex = nextIndex + 1;
+			prevIndex = nextIndex - POST_MAX_SIZE + 1;
+			for (int i = prevIndex; i <= nextIndex; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndex);
+				productInfo.setNextIndexNew(nextIndex);
+				
+				productInfo.setProduct(catProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(catProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(catProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				catProductInfoList.add(productInfo);
+			}
+			return catProductInfoList;
+		} else {
+			prevIndex = 0;
+			nextIndex = POST_MAX_SIZE - 1;
+			for (int i = 0; i <= POST_MAX_SIZE - 1; i++) {
+				ProductInfo productInfo = new ProductInfo();
+				productInfo.setPrevIndexNew(prevIndex);
+				productInfo.setNextIndexNew(nextIndex);
+				
+				productInfo.setProduct(catProductList.get(i));
+				
+				List<ProductDetail> productDetailList = productDetailBO.getProductDetailListByProductId(catProductList.get(i).getId());
+				productInfo.setProductDetailList(productDetailList);
+				
+				List<ProductPics> productPics = productPicsBO.getProductPicsByProductId(catProductList.get(i).getId());
+				productInfo.setProductPics(productPics);
+				
+				catProductInfoList.add(productInfo);
+			}
+		
+		return catProductInfoList;
+	}
 		
 
-
+	}
 
 	
 }

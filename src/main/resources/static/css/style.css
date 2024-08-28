@@ -2,6 +2,8 @@
 
 a, a:hover {text-decoration:none; color:#000;}
 
+.media-box {width: 25%;}
+
 .deliveryInfo {width: 50%;}
 .deliveryInfoBox {width: 80%;
                  margin: 0 auto;}
@@ -61,4 +63,12 @@ a, a:hover {text-decoration:none; color:#000;}
 	
 
 footer {padding-top: 6.751rem;}
+
+.securePayment {
+	font-size: big;
+	font-weight: bold;}
+	
+.CreditCard {
+			margin: 0 auto;
+			background-color: LightGray;}
 		

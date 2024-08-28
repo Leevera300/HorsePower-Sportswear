@@ -12,8 +12,8 @@ z<!DOCTYPE html>
             	<article th:each="newProductInfo, prodStat : ${newProductInfoList}" class="media-box mx-3">
                 	<div th:id="'carouselIndicatorsNew' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
        					<div class="carousel-inner">
-		                	<div th:each="newProductPic, picStat : ${newProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'" class="product">
-		                		<img th:src="${newProductPic.imagePath}" alt="ProductImg" width=450px; height=300px;>
+		                	<div class="d-flex justify-content-center product" th:each="newProductPic, picStat : ${newProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+		                		<a th:href="|/horsepower/product/product-detail?productId=${newProductInfo.product.id}|"><img th:src="${newProductPic.imagePath}" alt="ProductImg" width=300px; height=300px;></a>
 		                	</div>
 		                </div>
 		                <a class="carousel-control-prev" th:href="'#carouselIndicatorsNew' + ${prodStat.index}" role="button" data-slide="prev">
@@ -44,8 +44,8 @@ z<!DOCTYPE html>
             	<article th:each="hotProductInfo, prodStat : ${hotProductInfoList}" class="media-box mx-3">
                 	<div th:id="'carouselIndicatorsHot' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
        					<div class="carousel-inner">
-		                	<div th:each="hotProductPic, picStat: ${hotProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
-		                		<img th:src="${hotProductPic.imagePath}" alt="ProductImg" width=450px; height=300px;>
+		                	<div class="d-flex justify-content-center product" th:each="hotProductPic, picStat: ${hotProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+		                		<a th:href="|/horsepower/product/product-detail?productId=${hotProductInfo.product.id}|"><img th:src="${hotProductPic.imagePath}" alt="ProductImg" width=300px; height=300px;></a>
 		                	</div>
 		                </div>
 		                <a class="carousel-control-prev" th:href="'#carouselIndicatorsHot' + ${prodStat.index}" role="button" data-slide="prev">

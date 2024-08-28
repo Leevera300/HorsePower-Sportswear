@@ -67,4 +67,30 @@ public class ProductController {
 		
 		return "product/product-detail";
 	}
+	
+	@GetMapping("/product-list-category")
+	public String productListByCategory(@RequestParam("category") String category, 
+			Model model,
+			@RequestParam(value = "prevIndex", required = false) Integer prevIndexParam,
+			@RequestParam(value = "nextIndex", required = false) Integer nextIndexParam) {
+		
+		int prevIndex = 0;
+		int nextIndex = 0;
+		
+		category = category.toUpperCase();
+		
+
+		List<ProductInfo> productInfoList = productBO.getProductInfoByCategory(category, prevIndexParam, nextIndexParam);
+		if (productInfoList.isEmpty() == false) {
+			prevIndex = productInfoList.get(0).getPrevIndexNew();
+			nextIndex = productInfoList.get(0).getNextIndexNew();
+		}
+
+		model.addAttribute("productInfoList", productInfoList);
+		model.addAttribute("category", category);
+		model.addAttribute("prevIndex", prevIndex);
+		model.addAttribute("nextIndex", nextIndex);
+
+		return "product/product-list-category";
+	}
 }

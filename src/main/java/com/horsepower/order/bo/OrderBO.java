@@ -1,5 +1,7 @@
 package com.horsepower.order.bo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -30,6 +32,8 @@ public class OrderBO {
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	private static final int LIST_MAX_SIZE = 10;
 
 	public OrderEntity getOrderEntityByOrderNumber(String orderNumber) {
 		return orderRepository.findByOrderNumber(orderNumber);
@@ -90,8 +94,21 @@ public class OrderBO {
 	public List<OrderEntity> getOrderStatusListByUserId(int userId) {
         return orderRepository.findByUserId(userId);	}
 
-	public List<OrderEntity> getOrderStatusList() {
-		return orderRepository.findAll();
+	public List<OrderEntity> getOrderStatusList(Integer prevId, Integer nextId) {
+		List<OrderEntity> orderList = new ArrayList<>();
+		Integer standardId = null; // 기준 postId;
+		if (prevId != null) { // 2) 이전
+			standardId = prevId;
+			orderList = orderRepository.findOrderIdLessOrderByIdASC(standardId, LIST_MAX_SIZE);
+			Collections.reverse(orderList); // void = 뒤집고 저장까지 해준다
+		} else if (nextId != null) { // 1) 다음
+			standardId = nextId;
+			orderList = orderRepository.findOrderIdGreaterOrderByIdDESC(standardId, LIST_MAX_SIZE);
+		} else {
+			orderList = orderRepository.findOrderOrderByIdDESCLimit(LIST_MAX_SIZE);
+		}
+		
+		return orderList;
 	}
 
 	public void deleteOrderEntityById(int orderId) {
@@ -100,5 +117,15 @@ public class OrderBO {
 
 	public OrderEntity getOrderEntityById(int id) {
 		return orderRepository.findById(id).get();
+	}
+
+	public boolean isPrevLastPageById(int prevId) {
+		int maxPostId = orderRepository.findOrderOrderByIdDESC().get(0).getId();
+		return maxPostId == prevId;
+	}
+
+	public boolean isNextLastPageById(int nextId) {
+		int minPostId = orderRepository.findOrderOrderByIdASC().get(0).getId();
+		return minPostId == nextId;
 	}
 }

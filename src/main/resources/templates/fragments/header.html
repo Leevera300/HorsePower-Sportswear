@@ -15,17 +15,17 @@
 					<div class="col-3">
 						<h1><a href="/horsepower/product/product-list">LOGO</a></h1>
 					</div>
-					<div class="col-6 d-flex justify-content-center aligin-items-center font-weight-bold">
-						<div class="mr-5"><a href="" >MEN'S</a></div>
-						<div class="mr-5"><a href="">WOMEN'S</a></div>
-						<div class=""><a href="">ACCESSORIES</a></div>
+					<div class="col-6 d-flex justify-content-center aligin-items-center font-weight-bold category">
+						<div class="mr-5"><a href="" id="men">MEN'S</a></div>
+						<div class="mr-5"><a href="" id="women">WOMEN'S</a></div>
+						<div class=""><a href="" id="accessories">ACCESSORIES</a></div>
 					</div>
 					<!-- 유저 메뉴 영역 -->
 					<div class="col-3 d-flex justify-content-end aligin-items-center">
 						<div class="user-menu d-flex justify-content-end aligin-items-center">
 							<div class="mr-2" th:if="${session.userAuthority} == user"><a href="" >WISHLIST</a></div>
 							<div class="mr-2" th:if="${session.userAuthority} == Admin"><a href="/horsepower/admin/manage-product" >MANAGE</a></div>
-							<div class="mr-2"><a href="">ACCOUNT</a></div>
+							<div class="mr-2"><a href="/horsepower/user/user-order-status">ACCOUNT</a></div>
 							<div class=""><a href="" class="checkOut-btn"
 							data-toggle="modal" data-target="#modal">CHECKCOUT</a></div>
 						</div>
@@ -45,6 +45,7 @@
     					<div class="py-3 border-top">
     						<a href="/horsepower/checkout/check">Checkout</a>
     					</div>
+						<div class="mini-cart_payment-icons-desktop__uRA0N"><img alt="Visa" loading="lazy" width="40" height="24" decoding="async" data-nimg="1" src="https://images.ctfassets.net/wl6q2in9o7k3/5PrfyA9tb7E5sX4VJOvUXU/5c7d1da15bcb3ea9bc846698b14da4c0/visa-card.svg" style="color: transparent;"><img alt="Mastercard" loading="lazy" width="40" height="24" decoding="async" data-nimg="1" src="https://images.ctfassets.net/wl6q2in9o7k3/LwfpWwq8TXIansB91xPmD/d20403df94193ad356b8ea0a2df4e9f1/mastercard-card.svg" style="color: transparent;"><img alt="American Express" loading="lazy" width="40" height="24" decoding="async" data-nimg="1" src="https://images.ctfassets.net/wl6q2in9o7k3/7shmU9DfzLDbUk4b6obKoX/d3dd37478163f60363dc9c982b6fd56e/amex-card.svg" style="color: transparent;"><img alt="Paypal" loading="lazy" width="40" height="24" decoding="async" data-nimg="1" src="https://images.ctfassets.net/wl6q2in9o7k3/30jtAlNtcunM6pu0L8Xar/f528a13df611d9585b73a36fe35b8797/paypal-card.svg" style="color: transparent;"><img alt="Apple Pay" loading="lazy" width="40" height="24" decoding="async" data-nimg="1" src="https://images.ctfassets.net/wl6q2in9o7k3/5AUy4FwF2qwCL5Xog760Xf/1839c30ce2dbe6b7119f4dab3f15920b/applepay-card.svg" style="color: transparent;"></div>
     				</div>
   				</div>
 			</div>
@@ -83,7 +84,25 @@
                         }
                       });
                     });
-                    
+                    $(".category").on('click', function(e) {
+						e.preventDefault();
+						let category = e.target.id;
+						//alert(category);
+						//return;
+					
+						$.ajax({
+							url: "/horsepower/product/product-list-category?category=" + category
+							, method: 'GET'
+							, data: {}
+							, success: function (data) {
+								//alert(data);
+								location.href = "/horsepower/product/product-list-category?category=" + category;
+							}
+							, error: function (e) {
+								alert("Failed to load product list.");
+							}
+						});
+					});
 
                 });
             </script>

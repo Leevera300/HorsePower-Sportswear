@@ -27,10 +27,37 @@
 	        	</div>
 	        	<input type="text" class="form-control my-2" id="phone" name="phone" placeholder="Phone">
 	        </div>	
-				<input type="checkbox" id="BillingAdd" name="BillingAdd" checked>Click here to use Shipping address as Billing address.
+			<input type="checkbox" id="BillingAdd" name="BillingAdd" checked>Click here to use Shipping address as Billing address.
+			<div class="CreditCard">
+				<div class="securePayment">All transactions are secure and encrypted.</div>
+			    <div class="securePayment">Choose a payment method</div>
+
+			    <form>
+					<div class="d-flex justify-content-between mb-3">
+						<div>
+			        		<input type="radio" name="paymentMethod" value="card"> Credit/Debit Card
+						</div>
+						<div >
+							<img alt="VISA" src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/0169695890db3db16bfe.svg" role="img" width="38" height="24" class="_1fragemwu _1fragemwp _1fragemx3 _1fragemsc _1tgdqw66">
+							<img alt="MASTERCARD" src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/ae9ceec48b1dc489596c.svg" role="img" width="38" height="24" class="_1fragemwu _1fragemwp _1fragemx3 _1fragemsc _1tgdqw66">
+							<img alt="AMEX" src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/f11b90c2972f3811f2d5.svg" role="img" width="38" height="24" class="_1fragemwu _1fragemwp _1fragemx3 _1fragemsc _1tgdqw66">
+						</div>
+					</div>
+			        <div class="d-flex justify-content-center mb-3">
+						<input class="col-11 form-control" type="text" id="cardNumber" name="cardNumber" placeholder="Card Number">
+					</div>
+					<div class="d-flex justify-content-center mb-3">
+						<input class="col-5 form-control mr-4" type="text" id="expiryDate" name="expiryDate" placeholder="Expiration date (MM / YY)">
+						<input class="col-5 form-control ml-4" type="text" id="securityCode" name="securityCode" placeholder="Security Code">
+					</div>
+					<div class="d-flex justify-content-center mb-3 pb-3">
+						<input class="col-11 form-control" type="text" id="nameOnCard" name="nameOnCard" placeholder="Name on Card">
+					</div>
+			    </form>
+			</div>
 	        <button class="payBtn btn btn-dark col-12">Pay now</button>
     	</div>
-    </div>
+	</div>
     <div class="chekcoutInfo">
     	<div class="checkoutInfoBox" th:each="checkout : ${checkoutinfoList}">
     		<div class="d-flex mb-2">
