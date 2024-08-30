@@ -39,8 +39,9 @@ public class OrderBO {
 		return orderRepository.findByOrderNumber(orderNumber);
 	}
 
+	@SuppressWarnings("null")
 	@Transactional
-	public void addOrder(Integer userId, String userEmail, DelieveryInfo delieveryInfo) {
+	public List<OrderEntity> addOrder(Integer userId, String userEmail, DelieveryInfo delieveryInfo) {
 		
 		char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
         StringBuilder sb = new StringBuilder(16);
@@ -71,6 +72,7 @@ public class OrderBO {
 		
 		List<CheckoutItem> checkoutItems = delieveryInfo.getCheckoutItems();
 		
+		List<OrderEntity> orderInfoList = new ArrayList<>();
 		for (CheckoutItem checkoutItem : checkoutItems) {
 			CheckoutEntity checkout = checkoutBO.getCheckoutEntityById(checkoutItem.getCheckoutId());
 			
@@ -85,10 +87,14 @@ public class OrderBO {
 					.paymentType("Credit Card")
 					.build());
 			
+			orderInfoList.add(orderInfo);
+			
 			if (orderInfo != null) {
 				checkoutBO.deleteCheckoutById(checkout.getId());
 			}
 		}
+		
+		return orderInfoList;
 	}
 
 	public List<OrderEntity> getOrderStatusListByUserId(int userId) {

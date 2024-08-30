@@ -21,6 +21,7 @@ import com.horsepower.chekcout.entity.CheckoutInfo;
 import com.horsepower.chekcout.entity.CheckoutUpdate;
 import com.horsepower.order.bo.OrderBO;
 import com.horsepower.order.entity.DelieveryInfo;
+import com.horsepower.order.entity.OrderEntity;
 import com.horsepower.product.bo.ProductBO;
 import com.horsepower.product.bo.ProductDetailBO;
 import com.horsepower.product.bo.ProductPicsBO;
@@ -129,7 +130,9 @@ public class CheckoutRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		String userEmail = (String) session.getAttribute("userEmail");
 		
-		orderBO.addOrder(userId, userEmail, delieveryInfo);
+		List<OrderEntity> orderList = orderBO.addOrder(userId, userEmail, delieveryInfo);
+		
+		productDetailBO.updateProductDetailQuantity(orderList);
         
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);

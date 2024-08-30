@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.horsepower.order.entity.OrderEntity;
 import com.horsepower.product.domain.ProductDetail;
 import com.horsepower.product.mapper.ProductDetailMapper;
 
@@ -63,6 +64,13 @@ public class ProductDetailBO {
 
 	public void deleteProductDetailById(int id) {
         productDetailMapper.deleteProductDetailById(id);		
+	}
+
+	public void updateProductDetailQuantity(List<OrderEntity> orderList) {
+		for (OrderEntity order : orderList) {
+			productDetailMapper.updateProductDetailQuantity(order.getProductDetailId(), order.getQuantity());
+		}
+		
 	}
 
 

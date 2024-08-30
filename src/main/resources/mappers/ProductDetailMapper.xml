@@ -110,6 +110,15 @@
  			AND `color` = #{color}
 			AND `size` = #{size}
  	</update>
+ 	<update id="updateProductDetailQuantity" parameterType="map">
+ 		UPDATE
+ 			`product_detail`
+ 		SET
+			`quantity` = `quantity` - #{quantity}
+			, `updatedAt`= NOW()
+ 		WHERE
+ 			`id` = #{id}
+ 	</update>
  	
  	<delete id="deleteProductDetailByProductId" parameterType="int">
  		DELETE FROM

@@ -67,9 +67,12 @@
     				<div th:text="${checkout.productDetail.color}">Color</div>
     				<div th:text="${checkout.productDetail.size}">Size</div>
     				<div th:text="${checkout.checkout.quantity}">Quantity</div>
+					<div class="productPrice" th:text="|$ ${#numbers.formatDecimal((checkout.productDetail.price * checkout.checkout.quantity), 1, 2)}|">Price</div>
+					<div th:if="${checkout.checkout.quantity} > 1" class="text-small" th:text="|Each Price: $ ${#numbers.formatDecimal(checkout.productDetail.price, 1, 2)}|">Price</div>
     			</div>
     		</div>
     	</div>
+		<div class="text-center" id="totalPrice" th:text="|Total Price: $ ${#numbers.formatDecimal(#aggregates.sum(checkoutinfoList.![productDetail.price * checkout.quantity]), 1, 2)}|">Total Price</div>
     </div>
 </div>
 

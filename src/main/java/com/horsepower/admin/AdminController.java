@@ -193,6 +193,8 @@ public class AdminController {
 			productOrders.add(productOrder);
 		}
 		
+		model.addAttribute("prevId", prevId);
+		model.addAttribute("nextId", nextId);
 		model.addAttribute("productOrders", productOrders);
 		
 		String authority = (String)session.getAttribute("userAuthority");

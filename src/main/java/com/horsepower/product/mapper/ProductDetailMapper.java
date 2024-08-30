@@ -41,6 +41,10 @@ public interface ProductDetailMapper {
 
 	public void deleteProductDetailById(int id);
 
+	public void updateProductDetailQuantity(
+			@Param("id") int id, 
+			@Param("quantity") int quantity);
+
 
 	
 }
