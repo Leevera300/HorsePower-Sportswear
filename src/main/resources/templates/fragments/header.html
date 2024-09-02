@@ -13,7 +13,7 @@
 				<div class="logo-menu w-100 d-flex justify-content-between align-items-center">
 					<!-- 로고 영역 -->
 					<div class="col-3">
-						<h1><a href="/horsepower/product/product-list">LOGO</a></h1>
+						<a href="/horsepower/product/product-list"><img src="/img/temp_logo.jpg" alt="logo" width="100px" class="pb-1"></a>
 					</div>
 					<div class="col-6 d-flex justify-content-center aligin-items-center font-weight-bold category">
 						<div class="mr-5"><a href="" id="men">MEN'S</a></div>
@@ -73,6 +73,7 @@
                         	console.log(data);
                         	var html = '';
                             for (var i = 0; i < data.length; i++) {
+								html += '<img src="' + data[i].productPic.imagePath + '" alt = "Product Image" width=50px; height=50px;>';
                             	html += '<p>Product Name: ' + data[i].product.name + '</p>';
                             	html += '<p>Quantity: ' + data[i].checkout.quantity + '</p>';
                               // Add more properties here as needed
