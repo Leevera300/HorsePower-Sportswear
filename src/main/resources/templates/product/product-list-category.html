@@ -10,7 +10,7 @@ z<!DOCTYPE html>
 	   	<section class="w-100 bg-light mb-3 carousel slide">
         	<div class="media-parent-box d-flex justify-content-between">
             	<article th:each="ProductInfo, prodStat : ${productInfoList}" class="media-box mx-3">
-                	<div th:id="'carouselIndicatorsNew' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
+                	<div th:unless="${#lists.isEmpty(ProductInfo.productPics)}" th:id="'carouselIndicatorsNew' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
        					<div class="carousel-inner">
 		                	<div class="d-flex justify-content-center product" th:each="ProductPic, picStat : ${ProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
 		                		<a th:href="|/horsepower/product/product-detail?productId=${ProductInfo.product.id}|"><img th:src="${ProductPic.imagePath}" alt="ProductImg" width=300px; height=300px;></a>
@@ -25,6 +25,7 @@ z<!DOCTYPE html>
 				            <span class="sr-only">Next</span>
 				        </a>
 		            </div>
+					<div th:if="${#lists.isEmpty(ProductInfo.productPics)}"><img src="/img/no-img.png" width=300px; height=300px;></div>
                 	<div th:text="${ProductInfo.product.name}" class="font-weight-bold">Product Name</div>
                 	<div th:text="${ProductInfo.product.description}" class="media-text">Product Detail</div>
                 	<div class="media-text font-weight-bold"><a th:href="|/horsepower/product/product-detail?productId=${ProductInfo.product.id}|">

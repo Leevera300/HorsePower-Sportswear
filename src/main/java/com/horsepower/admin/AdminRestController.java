@@ -90,7 +90,7 @@ public class AdminRestController {
 			@RequestParam("productName") String productName,
 			@RequestParam("category") String category,
 			@RequestParam("productDesc") String productDesc,
-			@RequestParam("imgFile1") MultipartFile imgFile1,
+			@RequestParam("imgFile") MultipartFile[] imgFile,
 			@ModelAttribute ProductDetailListWrapper productDetailsWrapper,
 			HttpSession session) {
 		
@@ -106,7 +106,7 @@ public class AdminRestController {
 		List<ProductDetail> productDetail = productDetailsWrapper.getProductDetails();
 		
 		
-		productBO.addProduct(productName, category, productDesc, imgFile1, productDetail);
+		productBO.addProduct(productName, category, productDesc, imgFile, productDetail);
 		
 		result.put("code", 200);
 		result.put("result", "success");
@@ -207,6 +207,28 @@ public class AdminRestController {
 			result.put("code", 200);
 			result.put("result", "success");
 			
+			return result;
+		}
+		
+		@DeleteMapping("/product-manage/delete-product-pic")
+		public Map<String, Object> deleteProductPic(@RequestParam("productPicId") int productPicId,
+				HttpSession session) {
+
+			String authority = (String) session.getAttribute("userAuthority");
+
+			if (authority.contains("Admin") == false) {
+				Map<String, Object> result = new HashMap<>();
+				result.put("code", 403);
+				result.put("error_message", "Please log in with Admin account.");
+				return result;
+			}
+
+			productBO.deleteProductPicById(productPicId);
+
+			Map<String, Object> result = new HashMap<>();
+			result.put("code", 200);
+			result.put("result", "success");
+
 			return result;
 		}
 }

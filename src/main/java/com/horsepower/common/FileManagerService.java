@@ -16,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 public class FileManagerService {
 	
 	// 실제 업로드가 된 이미지가 저장되 서버의 경로  / 끝에 붙이기
-		//public static final String FILE_UPLOAD_PATH = "C:\\Users\\201-10\\Desktop\\Michael\\horsepower\\workspace\\images/";
-		public static final String FILE_UPLOAD_PATH = "C:\\Users\\micha\\Desktop\\coding\\horsepower\\workspace\\images/";
+		public static final String FILE_UPLOAD_PATH = "C:\\Users\\201-10\\Desktop\\Michael\\horsepower\\workspace\\images/";
+		//public static final String FILE_UPLOAD_PATH = "C:\\Users\\micha\\Desktop\\coding\\horsepower\\workspace\\images/";
 		
 		// input: MultipartFile userLoginId 난 나중에 userId 쓰자
 		// output: String(이미지 경로)

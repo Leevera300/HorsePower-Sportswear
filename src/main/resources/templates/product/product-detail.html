@@ -39,7 +39,7 @@
 				<div class="d-flex justify-content-center">
 					<div class="mt-5 mb-2">
 						<select class="form-control" id="size">
-	                        <option th:each="detail : ${productInfo.productDetailList}" th:text="${detail.size}"></option>
+	                        <option th:each="detail : ${#sets.toSet(productInfo.productDetailList.![size])}" th:text="${detail}"></option>
 	                    </select>
 					</div>
 				</div>

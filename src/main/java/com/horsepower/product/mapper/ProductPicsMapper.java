@@ -20,4 +20,6 @@ public interface ProductPicsMapper {
 
 	public ProductPics selectProductPicByProductIdLimit1(int productId);
 
+	public void deleteProductPicById(int id);
+
 }

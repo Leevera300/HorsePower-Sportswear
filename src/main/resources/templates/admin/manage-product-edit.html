@@ -27,13 +27,12 @@
     		<div class="d-flex">
 	    		<div th:each="productPic : ${productInfo.productPics}" class="firstImg my-2">
 	    			<img th:src="${productPic.imagePath}" alt="productImg" width="300" height="300">
-	    			
-	    			
+					<a href="" class="deleteProductPics" th:data-product-pic-id="${productPic.id}"><img src="/img/images.png" alt="imgFile" width=25></a>
 	    		</div>
 	    			<div>
 		    			<a href="" id="imgUpdateBtn1" class="mx-3"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="imgFile"
 		    			width=25></a>
-		    			<input type="file" id="imgFile1" accept=".jpg, .png, .gif" class="d-none">
+		    			<input type="file" id="imgFile1" accept=".jpg, .png, .gif, .webp" class="d-none">
 		    			<a href="" id="imgAddBtn1"><img src="/img/plus-sign.jpg" alt="imgFile"
 		    			width=25 class="mt-5"></a>
 		    			
@@ -80,6 +79,44 @@
     					th:value=${productDetail.sale}>
     				</div>
     			</div>
+				<div th:if="${#lists.isEmpty(productInfo.productDetailList)}">
+					<div class="productDetail mx-2">
+						<div>
+							<div>Color</div>
+							<select id="color" class="form-control">
+								<option>--select color--</option>
+								<option value="Blue">Blue</option>
+								<option value="Red">Red</option>
+								<option value="Yellow">Yellow</option>
+								<option value="White">White</option>
+								<option value="Pink">Pink</option>
+							</select>
+							<input type="text" id="newColor" placeholder="Type a new color here">
+							<button id="addColor">Add Color</button>
+						</div>
+						<div>
+							<div>Size</div>
+							<select id="size" class="form-control">
+								<option>--select size--</option>
+								<option value="S">Small</option>
+								<option value="M">Medium</option>
+								<option value="L">Large</option>
+							</select>
+						</div>
+						<div>
+							<div>Quantity</div>
+							<input type="text" id="quantity" class="form-control col-4" name="quantity">
+						</div>
+						<div>
+							<div>Price</div>
+							<input type="text" id="price" class="form-control col-4" name="price">
+						</div>
+						<div>
+							<div>Sale</div>
+							<input type="text" id="sale" class="form-control col-4" name="sale">
+						</div>
+					</div>
+				</div>
     			<div class="addProductDetail d-flex align-items-center mx-5">
     				<input type="button" id="addFile" class="d-none">
     				<a href="" id="addProductDetails"><img src="/img/plus-sign.jpg" alt="imgFile" width=25></a>
@@ -117,8 +154,8 @@
 			let ext = fileName1.split(".").pop().toLowerCase();
 			console.log(ext);
 			
-			if (ext != "gif" && ext != "png" && ext != "jpg") {
-				alert("이미지 파일만 업로드 할수 있습니다. (.gif, .png, .jpg)");
+			if (ext != "gif" && ext != "png" && ext != "jpg" && ext != "webp") {
+				alert("이미지 파일만 업로드 할수 있습니다. (.gif, .png, .jpg, .webp)");
 				$("#imgFile1").val(""); 
 				$("#fileName1").text(""); 
 				return;
@@ -178,8 +215,8 @@
 				let ext = fileName1.split(".").pop().toLowerCase();
 				//console.log(ext);
 				
-				if($.inArray(ext, ["jpg", "gif", "png"]) == -1) {
-					alert("Upload image files only. (.jpg, .gif, .png)");
+				if($.inArray(ext, ["jpg", "gif", "png", "webp"]) == -1) {
+					alert("Upload image files only. (.jpg, .gif, .png, .webp)");
 					$("#imgFile1").val(""); // 파일 초기화
 					return;
 				}
@@ -279,6 +316,32 @@
     			}
     		});
     	});
+		
+		$(".deleteProductPics").on('click', function(e) {
+			e.preventDefault();
+			let productPicId = $(this).data("product-pic-id");
+			//alert(productPicId);
+
+			$.ajax({
+				type: "DELETE"
+				, url: "/horsepower/admin/product-manage/delete-product-pic"
+				, data: {"productPicId": productPicId}
+				, success: function (data) {
+					if (data.code == 200) {
+						alert("Product picture has been successfully deleted.");
+						location.href = "/horsepower/admin/manage-product";
+					} else if (data.code == 403) {
+						alert(data.error_message);
+						location.href = "/horsepower/product/product-list";
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error: function (e) {
+					alert("Failed to delete the product picture.");
+				}
+			});
+		});
     });
     </script>
 </th:block>

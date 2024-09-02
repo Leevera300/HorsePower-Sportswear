@@ -22,15 +22,26 @@ public class ProductPicsBO {
 	@Autowired
 	private ProductPicsMapper productPicsMapper;
 	
-	public void addProdcutPics(int productId, MultipartFile file1) {
+	public void addProdcutPics(int productId, MultipartFile[] files) {
 		
 		String imagePath = null;
-		if(file1 != null) {
-			// 파일이 업로드 할 이미지가 있을 때에만 업로드
-			imagePath = fileManagerService.uploadFile(file1);
+//		if(files != null) {
+//			imagePath = fileManagerService.uploadFile(files);
+//			// 파일이 업로드 할 이미지가 있을 때에만 업로드
+//		}
+//		imagePath = fileManagerService.uploadFile(files);
+		for (MultipartFile file : files) {
+			if (file.isEmpty()) {
+				continue;
+			}
+			imagePath = fileManagerService.uploadFile(file);
+			
+			productPicsMapper.insertProductPics(productId, imagePath);
 		}
+			
+			// 파일이 업로드 할 이미지가 있을 때에만 업로드
 		
-		productPicsMapper.insertProductPics(productId, imagePath);
+		
 	}
 	
 	public List<ProductPics> getProductPicsByProductId(int productId) {
@@ -59,6 +70,11 @@ public class ProductPicsBO {
 
 	public ProductPics getProductPicByProductIdLimit1(int productId) {
 		return productPicsMapper.selectProductPicByProductIdLimit1(productId);
+	}
+
+	public void deleteProductPicById(int id) {
+		productPicsMapper.deleteProductPicById(id);
+		
 	}
 
 }

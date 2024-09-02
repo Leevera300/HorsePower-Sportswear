@@ -32,7 +32,7 @@ public class ProductBO {
 	private static final int LIST_MAX_SIZE = 10;
 	
 	@Transactional
-	public void addProduct(String name, String category,  String description, MultipartFile imgFile1,
+	public void addProduct(String name, String category,  String description, MultipartFile[] imgFiles,
 			List<ProductDetail> productDetail) {
 		
 		Product product = new Product();
@@ -43,7 +43,7 @@ public class ProductBO {
 		
 		productDetailBO.addProductDetail(product.getId(), productDetail);
 		
-		productPicsBO.addProdcutPics(product.getId(), imgFile1);
+		productPicsBO.addProdcutPics(product.getId(), imgFiles);
 	}
 	
 	public List<ProductInfo> getProductInfo(Integer prevId, Integer nextId) {
@@ -375,6 +375,11 @@ public class ProductBO {
 	}
 		
 
+	}
+
+	public void deleteProductPicById(int productPicId) {
+		productPicsBO.deleteProductPicById(productPicId);
+		
 	}
 
 	

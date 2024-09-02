@@ -10,10 +10,12 @@ z<!DOCTYPE html>
 	   	<section class="w-100 bg-light mb-3 carousel slide">
         	<div class="media-parent-box d-flex justify-content-between">
             	<article th:each="newProductInfo, prodStat : ${newProductInfoList}" class="media-box mx-3">
-                	<div th:id="'carouselIndicatorsNew' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
-       					<div class="carousel-inner">
-		                	<div class="d-flex justify-content-center product" th:each="newProductPic, picStat : ${newProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
-		                		<a th:href="|/horsepower/product/product-detail?productId=${newProductInfo.product.id}|"><img th:src="${newProductPic.imagePath}" alt="ProductImg" width=300px; height=300px;></a>
+					<div th:unless="${#lists.isEmpty(newProductInfo.productPics)}" th:id="'carouselIndicatorsNew' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
+					    <div class="carousel-inner">
+					        <div class="text-center product" th:each="newProductPic, picStat : ${newProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+					            <a th:href="|/horsepower/product/product-detail?productId=${newProductInfo.product.id}|">
+					                <img th:src="${newProductPic.imagePath}" alt="ProductImg" width=300px; height=300px;>
+					            </a>
 		                	</div>
 		                </div>
 		                <a class="carousel-control-prev" th:href="'#carouselIndicatorsNew' + ${prodStat.index}" role="button" data-slide="prev">
@@ -25,6 +27,7 @@ z<!DOCTYPE html>
 				            <span class="sr-only">Next</span>
 				        </a>
 		            </div>
+					<div th:if="${#lists.isEmpty(newProductInfo.productPics)}"><img src="/img/no-img.png" width=300px; height=300px;></div>
                 	<div th:text="${newProductInfo.product.name}" class="font-weight-bold">Product Name</div>
                 	<div th:text="${newProductInfo.product.description}" class="media-text">Product Detail</div>
                 	<div class="media-text font-weight-bold"><a th:href="|/horsepower/product/product-detail?productId=${newProductInfo.product.id}|">
@@ -42,9 +45,9 @@ z<!DOCTYPE html>
 	    <section class="w-100 bg-light mb-3">
         	<div class="media-parent-box d-flex justify-content-between">
             	<article th:each="hotProductInfo, prodStat : ${hotProductInfoList}" class="media-box mx-3">
-                	<div th:id="'carouselIndicatorsHot' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
+                	<div th:unless="${#lists.isEmpty(hotProductInfo.productPics)}" th:id="'carouselIndicatorsHot' + ${prodStat.index}" class="carousel slide" data-ride="carousel">
        					<div class="carousel-inner">
-		                	<div class="d-flex justify-content-center product" th:each="hotProductPic, picStat: ${hotProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+		                	<div class="text-center product" th:each="hotProductPic, picStat: ${hotProductInfo.productPics}" th:classappend="${picStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
 		                		<a th:href="|/horsepower/product/product-detail?productId=${hotProductInfo.product.id}|"><img th:src="${hotProductPic.imagePath}" alt="ProductImg" width=300px; height=300px;></a>
 		                	</div>
 		                </div>
@@ -57,6 +60,7 @@ z<!DOCTYPE html>
 				            <span class="sr-only">Next</span>
 				        </a>
 		            </div>
+					<div th:if="${#lists.isEmpty(hotProductInfo.productPics)}"><img src="/img/no-img.png" width=300px; height=300px;></div>
                 	<div th:text=${hotProductInfo.product.name} class="font-weight-bold">Product Name</div>
                 	<div th:text=${hotProductInfo.product.description} class="media-text">Product Detail</div>
                 	<div class="media-text font-weight-bold"><a th:href="|/horsepower/product/product-detail?productId=${hotProductInfo.product.id}|">Shop now</a></div>

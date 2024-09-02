@@ -53,4 +53,10 @@
  		WHERE
 			`productId` = #{productId}
  	</delete>
+	<delete id="deleteProductPicById" parameterType="int">
+	DELETE FROM
+	`product_pics`
+	WHERE
+	`id` = #{id}
+	</delete>
  </mapper>
