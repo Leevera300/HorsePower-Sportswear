@@ -279,7 +279,7 @@ public class ProductBO {
 	}
 	
 	@Transactional
-	public void updateProductById(int id, String name, String category,  String description, MultipartFile imgFile1,
+	public void updateProductById(int id, String name, String category,  String description, MultipartFile[] imgFiles,
 			List<ProductDetail> productDetail) {
 		
 		Product product = productMapper.selectProductById(id);
@@ -288,8 +288,8 @@ public class ProductBO {
 		
 		productDetailBO.updateProductDetailByProductId(product.getId(), productDetail);
 		
-		if (imgFile1 != null) {
-			productPicsBO.addProdcutPics(product.getId(), imgFile1);
+		if (imgFiles != null) {
+			productPicsBO.addProdcutPics(product.getId(), imgFiles);
 		}
 	}
 

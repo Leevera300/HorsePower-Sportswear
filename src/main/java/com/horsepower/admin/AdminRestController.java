@@ -90,7 +90,7 @@ public class AdminRestController {
 			@RequestParam("productName") String productName,
 			@RequestParam("category") String category,
 			@RequestParam("productDesc") String productDesc,
-			@RequestParam("imgFile") MultipartFile[] imgFile,
+			@RequestParam("imgFile[]") MultipartFile[] imgFile,
 			@ModelAttribute ProductDetailListWrapper productDetailsWrapper,
 			HttpSession session) {
 		
@@ -163,7 +163,7 @@ public class AdminRestController {
 			@RequestParam("productName") String productName,
 			@RequestParam("category") String category,
 			@RequestParam("productDesc") String productDesc,
-			@RequestParam(value = "imgFile1", required = false) MultipartFile imgFile1,
+			@RequestParam(value = "imgFile[]", required = false) MultipartFile[] imgFiles,
 			@ModelAttribute ProductDetailListWrapper productDetailsWrapper,
 			HttpSession session) {
 		
@@ -178,7 +178,7 @@ public class AdminRestController {
 		
 		List<ProductDetail> productDetail = productDetailsWrapper.getProductDetails();
 		
-		productBO.updateProductById(productId, productName, category, productDesc, imgFile1, productDetail);
+		productBO.updateProductById(productId, productName, category, productDesc, imgFiles, productDetail);
 		
 		result.put("code", 200);
 		result.put("result", "success");

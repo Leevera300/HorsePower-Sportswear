@@ -31,8 +31,6 @@
 					<div class="ml-2 fileName"></div>
 
 				</div>
-				<input type="button" id="addImg" class="d-none">
-				<a href="" id="imgAddBtn"><img src="/img/plus-sign.jpg" alt="imgFile" width=25 class="mt-5"></a>
 			</div>
 			<div class="d-flex my-5">
 				<div class="productDetail mx-2">
@@ -108,31 +106,33 @@
 				// Append the cloned image to the desired container
 				$('.firstImg:last').after(newfirstImg);
 			});
-
+			let allFiles = [];
 			$(".imgFile").on('change', function (e) {
-				let files = e.target.files;
-				if (files.length == null) {
-					$(".imgFile").val("");
-					$(".fileName").text("");
-					return;
-				}
-
-				for (let i = 0; i < files.length; i++) {
-					let file = files[i];
-					let fileName = file.name;
-					let ext = fileName.split(".").pop().toLowerCase();
-
-					if (ext != "gif" && ext != "png" && ext != "jpg" && ext != "webp") {
-						alert("You can only upload image files (.gif, .png, .jpg, .webp)");
+					let files = e.target.files;
+					if (files.length == null) {
 						$(".imgFile").val("");
 						$(".fileName").text("");
 						return;
 					}
-					
-					// Display the file name
-					$(".fileName").append('<p>' + fileName + '</p>');
-				}
-			});
+
+					for (let i = 0; i < files.length; i++) {
+						allFiles.push(files[i]);
+						let file = files[i];
+						let fileName = file.name;
+						let ext = fileName.split(".").pop().toLowerCase();
+
+						if (ext != "gif" && ext != "png" && ext != "jpg" && ext != "webp") {
+							alert("You can only upload image files (.gif, .png, .jpg, .webp)");
+							$(".imgFile").val("");
+							$(".fileName").text("");
+							return;
+						}
+						
+						// Display the file name
+						console.log(allFiles);
+						$(".fileName").append('<p>' + fileName + '</p>');
+					}
+				});
 
 			$("#addProductDetails").on('click', function (e) {
 				e.preventDefault();
@@ -219,9 +219,9 @@
 				}
 
 				let sale = $("#sale").val().trim();
-
-				let files = $(".imgFile")[0].files;
-
+				
+				let imgFile = $(".imgFile").val();
+				
 				//alert(quantity);
 				//return;
 
@@ -229,12 +229,9 @@
 				formData.append("productName", productName);
 				formData.append("category", category);
 				formData.append("productDesc", productDesc);
-				$(".imgFile").each(function (index) {
-				    let files = this.files;
-				    for (let i = 0; i < files.length; i++) {
-				        formData.append("imgFile", files[i]);
-				    }
-				});
+				for (let i = 0; i < allFiles.length; i++) {
+				    formData.append('imgFile[]', allFiles[i]);
+				}
 
 				$(document).ready(function () {
 					$('.addProductDetail').click(function (e) {
@@ -299,7 +296,7 @@
 				}
 			});
 
-
+			
 		});
 	</script>
 </th:block>
