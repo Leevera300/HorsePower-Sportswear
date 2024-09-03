@@ -27,10 +27,11 @@ public class PermissionIncterceptor implements HandlerInterceptor {
 		// 로그인 여부를 꺼낸다
 		HttpSession session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
+		String authority = (String)session.getAttribute("userAuthority");
 		
 		// 비로그인 && /post	=> 로그인 페이지로 이동, 컨트롤러 수행 방지
-		if (userId == null && uri.startsWith("/horsepower/admin")) {
-			response.sendRedirect("/horsepower/user/sign-in");
+		if (userId == null && uri.startsWith("/horsepower/admin") || authority.equals("Admin") == false && uri.startsWith("/horsepower/admin")	) {
+			response.sendRedirect("/horsepower/product/product_list");
 			return false; // 원래 요청 주소에 대한 컨트롤러 수행 X
 		}
 		
