@@ -30,6 +30,7 @@ public class ProductPicsBO {
 //			// 파일이 업로드 할 이미지가 있을 때에만 업로드
 //		}
 //		imagePath = fileManagerService.uploadFile(files);
+		log.info("$$$$$$$$$$$$$$$$$$$$$ [IMAGES 파일업로드] files:{}", files);
 		for (MultipartFile file : files) {
 			if (file.isEmpty()) {
 				continue;

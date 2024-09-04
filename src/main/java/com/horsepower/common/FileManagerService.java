@@ -16,8 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 public class FileManagerService {
 	
 	// 실제 업로드가 된 이미지가 저장되 서버의 경로  / 끝에 붙이기
-		public static final String FILE_UPLOAD_PATH = "C:\\Users\\201-10\\Desktop\\Michael\\horsepower\\workspace\\images/";
+		//public static final String FILE_UPLOAD_PATH = "C:\\Users\\201-10\\Desktop\\Michael\\horsepower\\workspace\\images/";
 		//public static final String FILE_UPLOAD_PATH = "C:\\Users\\micha\\Desktop\\coding\\horsepower\\workspace\\images/";
+		//AWS
+		public static final String FILE_UPLOAD_PATH = "/home/ec2-user/images/";
 		
 		// input: MultipartFile userLoginId 난 나중에 userId 쓰자
 		// output: String(이미지 경로)
@@ -30,8 +32,10 @@ public class FileManagerService {
 			
 			// 폴더 생성
 			File directory = new File(filePath);
+			log.info("$$$$$$$$$$$$$ [FileManagerService 파일업로드] dir:{}", directory);
 			if(directory.mkdir() == false) {
 				// 폴더 생성 시 실패하면 경로를 null로 리턴
+				log.warn("$$$$$$[FileManagerService 파일업로드] 디렉토리 생성 실패. path:{}", filePath);
 				return null;
 			}
 			
