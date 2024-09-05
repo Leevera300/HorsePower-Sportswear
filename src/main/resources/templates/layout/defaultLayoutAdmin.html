@@ -5,17 +5,17 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
 	<!-- head config -->
-	<th:block th:replace="fragments/config :: configFragment"></th:block>
+	<th:block th:replace="~{fragments/config :: configFragment}"></th:block>
 <body>
 	<div id="wrap">
 	 	<!-- header -->
-		<header th:replace="fragments/headerAdmin :: headerFragmentAdmin"></header>
+		<header th:replace="~{fragments/headerAdmin :: headerFragmentAdmin}"></header>
 		
 		<!-- content -->
 		<section layout:fragment="content"></section>
 		
 		<!-- footer -->
-    	<footer th:replace="fragments/footer :: footerFragment"></footer>
+    	<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
 		
 		<!-- script -> content 조각 안에 있음 -->
 		<th:block layout:fragment="script"></th:block>
