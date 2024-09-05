@@ -33,9 +33,10 @@ public class FileManagerService {
 			// 폴더 생성
 			File directory = new File(filePath);
 			log.info("$$$$$$$$$$$$$ [FileManagerService 파일업로드] dir:{}", directory);
-			if(directory.mkdir() == false) {
+			boolean result = directory.mkdir();
+			if(result == false) {
 				// 폴더 생성 시 실패하면 경로를 null로 리턴
-				log.warn("$$$$$$[FileManagerService 파일업로드] 디렉토리 생성 실패. path:{}", filePath);
+				log.warn("Failed to create directory. Does the parent directory exist: {}", directory.getParentFile().exists());
 				return null;
 			}
 			
